@@ -19,6 +19,7 @@ import { UpdateSummaryVariables } from "./types/updateSummary";
 import Lightbox from 'react-image-lightbox';
 import ImageModal from "./ImageModal";
 import './Gallery.css';
+import useCompletedForm from '@/graphql/getCompletedTrainingForm';
 
 interface GalleryItem {
   answer: string;
@@ -35,6 +36,8 @@ const Profile: FC = () => {
   const { dataUser, errorUser, isLoadingUser } = useUserData(userId || "");
   const { dataPhoto, errorPhoto, isLoadingPhoto } = usePhotoData(userId || "");
   const {dataSkill, errorSkill, isLoadingSkill} = useUserSkill(userId || "");
+  const {dataCompleted, errorCompleted, isLoadingCompleted} =
+      useCompletedForm(userId || "");
 
   const { mutateAsync: updatePreferences } = useUpdatePreferencesMutation(client);
   const { mutateAsync: updateUserSummary } = useUpdateSummaryMutation(client);
@@ -52,6 +55,9 @@ const Profile: FC = () => {
   const [galleryData, setGalleryData] = useState<GalleryItem[]>([]);
   const [isEditingSkills, setIsEditingSkills] = useState(false);
   const [newSkills, setNewSkills] = useState(dataSkill || []);
+  const [trainingFormCount, setTrainingFormCount] = useState<number>(0);
+  const [completedFormCount, setCompletedFormCount] = useState<number>(0);
+
 
   const workTypeLabels: { [key: string]: string } = {
     '1': 'Full-time',
@@ -192,6 +198,20 @@ const Profile: FC = () => {
       window.location.href = "https://form.sanspaper.com/";
     };
     
+    useEffect(() => {
+      if (dataCompleted) {
+        // const trainingFormName =dataCompleted.filter(node => node.form.isSpecial !== null)?.map(node => node.form.name);
+  
+        const trainingFormCount = dataCompleted.filter(
+          node => node.form.isSpecial !== null,
+        ).length;
+        const completedFormCount = dataCompleted.length;
+  
+        setTrainingFormCount(trainingFormCount);
+        setCompletedFormCount(completedFormCount);
+      }
+    }, [dataCompleted]);
+
   return (
     <DefaultLayout>
       <div className="mx-auto ">
@@ -377,11 +397,11 @@ const Profile: FC = () => {
               <div className="mt-10 flex items-center">
                 <div className="">
                 <p className="mr-10">FORM SUBMITTED</p>
-                <p className="text-black font-semibold">200</p>
+                <p className="text-black font-semibold">{completedFormCount}</p>
                 </div>
                 <div className="">
                 <p className="mr-10">TRAINING COMPLETED</p>
-                <p className="text-black font-semibold ">50</p>
+                <p className="text-black font-semibold ">{trainingFormCount}</p>
                 </div>
               </div>
               <p className="mt-5">Ranking</p>
