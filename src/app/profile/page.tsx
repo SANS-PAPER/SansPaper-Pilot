@@ -7,7 +7,7 @@ import {useUserData} from "@/graphql/useUserData";
 //import { PhotoData } from "./types/PhotoData";
 import { FC, useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faSave, faTrashAlt, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Button, Divider, Form, Input, Modal, Select, Spin, Switch } from 'antd';
 import { client } from "@/app/api/client";
 import { useUpdatePreferencesMutation, useUpdateProfileMutation, useUpdateSummaryMutation } from "@/gql/_generated";
@@ -20,6 +20,7 @@ import Lightbox from 'react-image-lightbox';
 import ImageModal from "./ImageModal";
 import './Gallery.css';
 import AWS from 'aws-sdk';
+import useReviewData from "@/graphql/getReviews";
 
 interface GalleryItem {
   answer: string;
@@ -35,6 +36,12 @@ type UploadResponseType = {
   Key: string;
 } | null;
 
+interface ReviewItemProps {
+  title: string;
+  stars: number;
+  reviewerPhoto: string;
+}
+
 const Profile: FC = () => {
 
   const { userId, userAuth } = useUserStore();
@@ -43,6 +50,7 @@ const Profile: FC = () => {
   const { dataUser, errorUser, isLoadingUser } = useUserData(userId || "");
   const { dataPhoto, errorPhoto, isLoadingPhoto } = usePhotoData(userId || "");
   const {dataSkill, errorSkill, isLoadingSkill} = useUserSkill(userId || "");
+  const {dataReview, errorReview, isLoadingReview} = useReviewData(userId || "");
 
   const { mutateAsync: updatePreferences } = useUpdatePreferencesMutation(client);
   const { mutateAsync: updateUserSummary } = useUpdateSummaryMutation(client);
@@ -286,13 +294,11 @@ const Profile: FC = () => {
       let input;
       
       if (type === 1) {
-        // Use the camera (mobile browsers may trigger camera)
         input = document.createElement('input');
         input.type = 'file';
         input.accept = 'image/*';
-        input.capture = 'environment'; // Use 'user' for the front camera
+        input.capture = 'environment';
       } else {
-        // Use the image library
         input = document.createElement('input');
         input.type = 'file';
         input.accept = 'image/*';
@@ -307,7 +313,7 @@ const Profile: FC = () => {
             reader.onload = function(e) {
               if (e.target) {
                 const imageUrl = e.target.result;
-                uploadPhoto(file); // Use the file for uploading
+                uploadPhoto(file); 
               }
             };
             reader.readAsDataURL(file);
@@ -315,9 +321,34 @@ const Profile: FC = () => {
         }
       };
     
-      input.click(); // Programmatically open the file picker
+      input.click(); 
     
-      setShowModal(false); // Close the modal
+      setShowModal(false);
+    };
+    
+    const ReviewItem: FC<ReviewItemProps> = ({title, stars, reviewerPhoto}) => {
+      return (
+        <div >
+          <Image
+            src={
+              reviewerPhoto
+                ? reviewerPhoto
+                : 'https://icons.iconarchive.com/icons/papirus-team/papirus-status/512/avatar-default-icon.png'
+            }
+            alt="Reviewer"
+            width={50}
+            height={50}
+          />
+          <div >
+            <p>{title}</p>
+            <div >
+              {Array.from({length: stars}).map((_, index) => (
+                <FontAwesomeIcon key={index} icon={faStar} size="lg" color="#ffd700" />
+              ))}
+            </div>
+          </div>
+        </div>
+      );
     };
     
   return (
@@ -723,9 +754,30 @@ const Profile: FC = () => {
       </div>
     )}
   </div>
-</div>
 
+          <div className="flex justify-between items-center mb-5">
+          <p className="font-bold text-lg mb-5"> REVIEWS</p>
+          </div>
+          <div className="profile-description-parent">
+      <p className="profile-description skills-typo">
+        {dataReview && dataReview.length > 0
+          ? `Review (${dataReview.length})`
+          : 'Review (0)'}
+      </p>
 
+      <ul className="review-list" style={{ marginTop: '10px' }}>
+        {dataReview && dataReview.map((item: any) => (
+          <li key={item.id}>
+            <ReviewItem
+              title={item.recText}
+              stars={item.recValue}
+              reviewerPhoto={item.recommenderProfilePic}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+    </div>
         </div>
         </div>
       </div>

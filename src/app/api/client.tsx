@@ -2,97 +2,69 @@ import crossFetch from 'cross-fetch';
 import { GraphQLClient } from "graphql-request";
 import { getAccessToken } from './auth0Service';
 
-
 let client: GraphQLClient; // Declare client variable with explicit type
 
 async function customCrossFetch(input: RequestInfo | URL, init?: RequestInit) {
-
     const response = await crossFetch(input, init);
-    // const body: unknown = await response.json();
-    const clonedResponse = (await response.clone().json()) ;
-  
+    const clonedResponse = await response.clone().json();
+
     if (Array.isArray(clonedResponse.errors) && clonedResponse.errors.length === 1) {
-      const firstError = clonedResponse.errors[0];
-  
-      switch (firstError.extensions?.code) {
-        case 'INTERNAL_SERVER_ERROR':
-          // The literal response must be thrown here to prevent stale data being
-          // removed on the client in cases where the API server is not available.
-          // This ensures cached client data can be usable until it can revalidate.
-  
-          throw clonedResponse; // eslint-disable-line @typescript-eslint/no-throw-literal
-        default:
-          return response;
-      }
+        const firstError = clonedResponse.errors[0];
+
+        switch (firstError.extensions?.code) {
+            case 'INTERNAL_SERVER_ERROR':
+                throw clonedResponse;
+            default:
+                return response;
+        }
     }
-  
+
     return response;
-  }
+}
 
-
-  
-
-   export const getAndLogAccessToken = async () => {
-    // console.log('enter this function>>>>');
+export const getAndLogAccessToken = async (): Promise<string> => {
     try {
+        const postGraphileToken = await getAccessToken();
+        let parsedAuthToken = postGraphileToken ? JSON.parse(postGraphileToken) : null;
 
-      const postGraphileToken = await getAccessToken();
-    //    console.log('postgraphileToken>>>>',postGraphileToken);
-
-  
-
-       let parsedAuthToken = postGraphileToken ? JSON.parse(postGraphileToken): null
-
-      if(parsedAuthToken.access_token){
-        //  console.log('ada token--good', parsedAuthToken.access_token)
-
-
-        //CHECK TOKEN EXPIRY
-        if (parsedAuthToken.expirationTime > Date.now()) {
-
-        return parsedAuthToken.access_token;
+        if (parsedAuthToken?.access_token) {
+            // Check token expiry
+            if (parsedAuthToken.expirationTime > Date.now()) {
+                return parsedAuthToken.access_token;
+            } else {
+                return getAndLogAccessToken(); // Recursive call, but needs improvement
+            }
+        } else {
+            return getAndLogAccessToken(); // Recursive call, but needs improvement
         }
-        else{
-
-          getAndLogAccessToken(); //need improvement on this code 
-
-        }
-
-     }
-      else{
-
-        getAndLogAccessToken();    //need improvement on this code
-        }
-      
     } catch (error) {
-      console.error('Error getting access token from AsyncStorage:', error);
-      throw error;
+        console.error('Error getting access token:', error);
+        throw error;
     }
-  };
+};
 
-
-   export const initializeGraphQLClient = async () => {
-
+export const initializeGraphQLClient = async (): Promise<GraphQLClient> => {
     const REACT_APP_GQL_HOST_GRAPHILE = 'https://form-staging2.sanspaper.com:20991/graphql';
 
     try {
         const authToken = await getAndLogAccessToken();
 
-        //  console.log('DAPAT TAK TOKEN NIE', authToken)
         client = new GraphQLClient(REACT_APP_GQL_HOST_GRAPHILE, {
             headers: {
                 Authorization: `Bearer ${authToken}`,
             },
-           // errorPolicy: 'all',
-           // fetch: customCrossFetch,
+            // errorPolicy: 'all',
+            // fetch: customCrossFetch,
         });
+
+        return client; // Return the client instance
     } catch (error) {
         console.error('Error setting up GraphQL client:', error);
         throw error;
     }
-  };
+};
 
-
+// Initialize the client at the start
 initializeGraphQLClient();
 
 export { client };

@@ -44285,6 +44285,13 @@ export type GetFillupFormIdFromProfileQueryVariables = Exact<{
 
 export type GetFillupFormIdFromProfileQuery = { __typename?: 'Query', profiles?: { __typename?: 'ProfilesConnection', nodes: Array<{ __typename?: 'Profile', skills?: string | null }> } | null };
 
+export type GetReviewsQueryVariables = Exact<{
+  userID?: InputMaybe<Scalars['BigInt']['input']>;
+}>;
+
+
+export type GetReviewsQuery = { __typename?: 'Query', reviews?: { __typename?: 'ReviewsConnection', nodes: Array<{ __typename?: 'Review', id: any, userId: any, recValue?: any | null, recText?: string | null, recommenderUserId?: any | null, recommenderProfilePic?: string | null, createdAt?: any | null }> } | null };
+
 export type GetSkillDropdDownListQueryVariables = Exact<{
   fillupFormId?: InputMaybe<Array<Scalars['BigInt']['input']> | Scalars['BigInt']['input']>;
 }>;
@@ -44436,6 +44443,54 @@ export const useInfiniteGetFillupFormIdFromProfileQuery = <
     return useInfiniteQuery<GetFillupFormIdFromProfileQuery, TError, TData>(
       ['GetFillupFormIdFromProfile.infinite', variables],
       (metaData) => fetcher<GetFillupFormIdFromProfileQuery, GetFillupFormIdFromProfileQueryVariables>(client, GetFillupFormIdFromProfileDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      options
+    )};
+
+export const GetReviewsDocument = `
+    query GetReviews($userID: BigInt) {
+  reviews(condition: {userId: $userID}) {
+    nodes {
+      id
+      userId
+      recValue
+      recText
+      recommenderUserId
+      recommenderProfilePic
+      createdAt
+    }
+  }
+}
+    `;
+
+export const useGetReviewsQuery = <
+      TData = GetReviewsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetReviewsQueryVariables,
+      options?: UseQueryOptions<GetReviewsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useQuery<GetReviewsQuery, TError, TData>(
+      variables === undefined ? ['GetReviews'] : ['GetReviews', variables],
+      fetcher<GetReviewsQuery, GetReviewsQueryVariables>(client, GetReviewsDocument, variables, headers),
+      options
+    )};
+
+export const useInfiniteGetReviewsQuery = <
+      TData = GetReviewsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetReviewsQueryVariables,
+      options?: UseInfiniteQueryOptions<GetReviewsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useInfiniteQuery<GetReviewsQuery, TError, TData>(
+      variables === undefined ? ['GetReviews.infinite'] : ['GetReviews.infinite', variables],
+      (metaData) => fetcher<GetReviewsQuery, GetReviewsQueryVariables>(client, GetReviewsDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     )};
 
