@@ -8,9 +8,9 @@ import {useUserData} from "@/graphql/useUserData";
 import { FC, useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faSave, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { Button, Form, Input, Select, Spin, Switch } from 'antd';
+import { Button, Divider, Form, Input, Modal, Select, Spin, Switch } from 'antd';
 import { client } from "@/app/api/client";
-import { useUpdatePreferencesMutation, useUpdateSummaryMutation } from "@/gql/_generated";
+import { useUpdatePreferencesMutation, useUpdateProfileMutation, useUpdateSummaryMutation } from "@/gql/_generated";
 import { UpdateAvailableInput } from "./types/updatePreferences";
 import { showSuccessNotification, showErrorNotification } from "@/components/Notification/NotificationUtil";
 import usePhotoData from "@/graphql/usePhotoData";
@@ -19,6 +19,7 @@ import { UpdateSummaryVariables } from "./types/updateSummary";
 import Lightbox from 'react-image-lightbox';
 import ImageModal from "./ImageModal";
 import './Gallery.css';
+import AWS from 'aws-sdk';
 
 interface GalleryItem {
   answer: string;
@@ -26,6 +27,13 @@ interface GalleryItem {
   componentId: string;
   fillupFormFields: string;
 }
+
+type UploadResponseType = {
+  Location: string;
+  ETag: string;
+  Bucket: string;
+  Key: string;
+} | null;
 
 const Profile: FC = () => {
 
@@ -52,6 +60,11 @@ const Profile: FC = () => {
   const [galleryData, setGalleryData] = useState<GalleryItem[]>([]);
   const [isEditingSkills, setIsEditingSkills] = useState(false);
   const [newSkills, setNewSkills] = useState(dataSkill || []);
+  const [imageUri, setImageUri] = useState(null);
+  const [uploadResponse, setUploadResponse] = useState<UploadResponseType>(null);
+  const [avatar, setAvatar] = useState<any>(null);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const workTypeLabels: { [key: string]: string } = {
     '1': 'Full-time',
@@ -191,6 +204,121 @@ const Profile: FC = () => {
     const handleAddSkillRedirect = () => {
       window.location.href = "https://form.sanspaper.com/";
     };
+
+    const mutateProfile = useUpdateProfileMutation(client, {
+      onSuccess: () => {
+        window.alert('Profile Pic updated successfully');
+      },
+      onError: () => {
+        window.alert('Error updating profile pic');
+      },
+    });
+
+    const handleUpdateProfilePic = async (filename:any) => {
+
+
+      if (!client) {
+        window.alert('Error: GraphQL client not initialized for update photos');
+        return;
+      }
+  
+      try {
+        await mutateProfile.mutate({
+          patch: {
+            id: userId,
+            patch: {
+              photo: filename,
+              
+            },
+          },
+        });
+  
+        setAvatar(
+          <Image
+            src={filename}  // Use the correct image URL or path
+            width={160}
+            height={160}
+            alt="Profile Picture"  // Provide a meaningful alt text
+          />,
+        );
+  
+      } catch (error) {
+        console.error('Error updating profile pic:', error);
+      }
+    };
+  
+  
+  
+    const uploadPhoto = async (file: File) => {
+  
+      const spaceName = 'sanspaperform-images';
+      const region = 'us-east-1';
+      const accessKeyId = 'DO002ZJA2DJ47XK9CRWM';
+      const secretAccessKey = 'YVcyXLV/azI27bKDA81Ywu9FmB8r5UYHuw6VHkUgM1s';
+      const fileNameForDB = file.name;
+  
+      // Configure AWS SDK
+      const spacesEndpoint = new AWS.Endpoint('nyc3.digitaloceanspaces.com');
+      const s3 = new AWS.S3({
+        endpoint: spacesEndpoint,
+        accessKeyId: accessKeyId,
+        secretAccessKey: secretAccessKey,
+        region: region,
+      });
+
+      try {
+        const params = {
+          Bucket: spaceName,
+          Key: `staging/photo-uploads/${file.name}`,
+          Body: file,
+          ACL: 'public-read',
+          ContentType: file.type,
+        };
+        const data = await s3.upload(params).promise();
+        handleUpdateProfilePic(`https://sanspaperform-images.nyc3.cdn.digitaloceanspaces.com/staging/photo-uploads/${fileNameForDB}`)
+        setUploadResponse(data as UploadResponseType);
+      } catch (error) {
+        console.error('Error uploading image: ', error);
+      }
+    };
+  
+    const handleOpenPicker = async (type:any) => {
+      let input;
+      
+      if (type === 1) {
+        // Use the camera (mobile browsers may trigger camera)
+        input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.capture = 'environment'; // Use 'user' for the front camera
+      } else {
+        // Use the image library
+        input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+      }
+    
+      input.onchange = (event) => {
+        if (event.target) {
+          const input = event.target as HTMLInputElement;
+          const file = input.files ? input.files[0] : null;
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              if (e.target) {
+                const imageUrl = e.target.result;
+                uploadPhoto(file); // Use the file for uploading
+              }
+            };
+            reader.readAsDataURL(file);
+          }
+        }
+      };
+    
+      input.click(); // Programmatically open the file picker
+    
+      setShowModal(false); // Close the modal
+    };
     
   return (
     <DefaultLayout>
@@ -215,17 +343,19 @@ const Profile: FC = () => {
             </div>
           </div>
 
+          {/* Update profile Picture */}
+
           <div className="px-4 pb-6 text-center lg:pb-8 xl:pb-11.5">
           <div className="relative z-30 mx-auto -mt-45 h-30 w-full max-w-30 rounded-full bg-white/20 p-1 backdrop-blur sm:h-44 sm:max-w-44 sm:p-3 overflow-hidden">
   <div className="relative w-full h-full rounded-full overflow-hidden drop-shadow-2">
-    <Image
-      src={userAuth?.picture ?? "/images/logo/SansPaperID.svg"}
-      width={160}
-      height={160}
-      alt="profile"
-      className="object-cover w-full h-full"
-
-    />
+  <Image
+        src={avatar || '/images/logo/SansPaperID.svg'}
+        width={160}
+        height={160}
+        alt="profile"
+        className="object-cover w-full h-full"
+        onClick={() => setShowModal(true)} // Show modal on image click
+      />
   </div>
   <label
     htmlFor="profile"
@@ -261,6 +391,26 @@ const Profile: FC = () => {
     />
   </label>
 </div>
+<Modal
+    visible={showModal}
+    onCancel={() => setShowModal(false)} // Use onCancel for closing the modal
+    footer={null} // Optional, to remove default footer buttons
+  >
+    <div className="flex flex-row justify-center p-4">
+      <p>Select Options</p>
+    </div>
+    <button
+      onClick={() => handleOpenPicker(1)} 
+    >
+      <p>Open Camera</p>
+    </button>
+    <Divider />
+    <button
+      onClick={() => handleOpenPicker(2)} 
+    >
+      <p>Choose from Image Gallery </p>
+    </button>
+  </Modal>
 
             <div className="mt-4">
               <h3 className="align-left mb-1.5 font-semibold mb-5">

@@ -1,0 +1,8 @@
+mutation updateProfile($patch: UpdateProfileInput!) {
+  updateProfile(input: $patch) {
+    profile {
+      id
+      photo
+    }
+  }
+}
