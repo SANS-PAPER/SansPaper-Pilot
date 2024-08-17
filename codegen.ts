@@ -35,7 +35,9 @@ const config: CodegenConfig = {
     {
       [GQL_STAGING_ENDPOINT]: {
         headers:   {
+
           Authorization:`Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlpOU0dyLWNmQmN3XzNTYVNRMlQ5WiJ9.eyJpc3MiOiJodHRwczovL3NhbnNwYXBlci5hdS5hdXRoMC5jb20vIiwic3ViIjoiTjMzaWFyVERkWGhDOGFXaWRsT2p4WVdWN0dxU3JjMnBAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vc2Fuc3BhcGVyLmNvbS9wb3N0Z3JhcGhpbGUiLCJpYXQiOjE3MjM3NzMzMzcsImV4cCI6MTcyMzg1OTczNywiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoiTjMzaWFyVERkWGhDOGFXaWRsT2p4WVdWN0dxU3JjMnAifQ.EVzVRFRtj1c1DfgvHag7CzJHEIGh-mVsI7dSz-R8DeJVuS900RBdlRFzpO83y6AbnLcAvXZ-Pd9Y9UdzYlze30DXUtwP2_17G7QzsfmhkVDbA0Z-_WQnlmyNyWbdPUnnYTBm6HABq3UpF4mQdsjmxgtHET0MK823jIvpytZK4X9b9_oJqwTt1ryf_RrPRUSn35U5acRUsHFHHMaenVgvfvK6-uPCyN_cnEAbrzvuW8dxj1-G-8mCPeKgkw7i7sZwF4zNweznFy2XUBB3koZWZAE5dBrTL2BuTgnae08dFdo2FqlOJcV933DKC9EXZaMqKDdwHpT87LU2BrsrTpPbPw`}
+
       },
     },
   ],

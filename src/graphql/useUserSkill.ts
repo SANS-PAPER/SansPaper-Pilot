@@ -26,6 +26,7 @@ const useUserSkill = (userId: string): UseUserSkillReturnType => {
         }
 
         if (client) {
+          console.log('ada client fetchUserSkill >>>>>>>>>', userId);
           const response = await fetchFillupFormIdFromProfile(client, userId);
 
           if (response.length === 0) {

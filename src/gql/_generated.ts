@@ -44278,6 +44278,13 @@ export type UpdateSummaryMutationVariables = Exact<{
 
 export type UpdateSummaryMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'UpdateUserPayload', user?: { __typename?: 'User', id: any, name: string, phoneNumber?: string | null, jobTitle?: string | null, summaryBio?: string | null } | null } | null };
 
+export type GetCompletedFormTrainingQueryVariables = Exact<{
+  userID: Scalars['BigInt']['input'];
+}>;
+
+
+export type GetCompletedFormTrainingQuery = { __typename?: 'Query', fillupForms?: { __typename?: 'FillupFormsConnection', nodes: Array<{ __typename?: 'FillupForm', id: any, userId: any, isDraft?: number | null, form?: { __typename?: 'Form', id: any, name: string, isSpecial?: number | null } | null }> } | null };
+
 export type GetFillupFormIdFromProfileQueryVariables = Exact<{
   userId: Scalars['BigInt']['input'];
 }>;
@@ -44401,6 +44408,55 @@ export const useUpdateSummaryMutation = <
     return useMutation<UpdateSummaryMutation, TError, UpdateSummaryMutationVariables, TContext>(
       ['updateSummary'],
       (variables?: UpdateSummaryMutationVariables) => fetcher<UpdateSummaryMutation, UpdateSummaryMutationVariables>(client, UpdateSummaryDocument, variables, headers)(),
+      options
+    )};
+
+export const GetCompletedFormTrainingDocument = `
+    query GetCompletedFormTraining($userID: BigInt!) {
+  fillupForms(condition: {userId: $userID, isDraft: 0}) {
+    nodes {
+      id
+      userId
+      isDraft
+      form {
+        id
+        name
+        isSpecial
+      }
+    }
+  }
+}
+    `;
+
+export const useGetCompletedFormTrainingQuery = <
+      TData = GetCompletedFormTrainingQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetCompletedFormTrainingQueryVariables,
+      options?: UseQueryOptions<GetCompletedFormTrainingQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useQuery<GetCompletedFormTrainingQuery, TError, TData>(
+      ['GetCompletedFormTraining', variables],
+      fetcher<GetCompletedFormTrainingQuery, GetCompletedFormTrainingQueryVariables>(client, GetCompletedFormTrainingDocument, variables, headers),
+      options
+    )};
+
+export const useInfiniteGetCompletedFormTrainingQuery = <
+      TData = GetCompletedFormTrainingQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetCompletedFormTrainingQueryVariables,
+      options?: UseInfiniteQueryOptions<GetCompletedFormTrainingQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useInfiniteQuery<GetCompletedFormTrainingQuery, TError, TData>(
+      ['GetCompletedFormTraining.infinite', variables],
+      (metaData) => fetcher<GetCompletedFormTrainingQuery, GetCompletedFormTrainingQueryVariables>(client, GetCompletedFormTrainingDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     )};
 

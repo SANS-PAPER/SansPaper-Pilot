@@ -8,8 +8,6 @@ const usePhotoData = (userID: string) => {
   const [errorPhoto, setError] = useState(null);
   const [isLoadingPhoto, setIsLoading] = useState(true);
 
-  console.log('dataPhoto >>>>>>>>>', dataPhoto);
-
   const [client, setClient] = useState<any>(null); // State to hold the GraphQL client
 
   useEffect(() => {
