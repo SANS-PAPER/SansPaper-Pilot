@@ -5,17 +5,17 @@ import { GetFillupFormIdFromProfileResponse, SkillNode } from '@/app/profile/typ
 import { FillupFormFieldNode } from '@/app/profile/types/fillupFormFields';
 
 interface UseUserSkillReturnType {
-  dataSkill: any[]; // Adjust based on your final expected structure
+  dataSkill: any[]; 
   errorSkill: Error | null;
   isLoadingSkill: boolean;
 }
 
 const useUserSkill = (userId: string): UseUserSkillReturnType => {
-  const [dataSkill, setDataSkill] = useState<any[]>([]); // Adjust based on your final expected structure
+  const [dataSkill, setDataSkill] = useState<any[]>([]); 
   const [errorSkill, setErrorSkill] = useState<Error | null>(null);
   const [isLoadingSkill, setIsLoadingSkill] = useState<boolean>(true);
 
-  const [client, setClient] = useState<any | null>(null); // State to hold the GraphQL client
+  const [client, setClient] = useState<any | null>(null); 
 
   useEffect(() => {
     const fetchData = async () => {
