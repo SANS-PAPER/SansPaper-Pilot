@@ -22,7 +22,7 @@
     "@typescript-eslint/parser": "^8.0.0",
     "antd": "^5.19.3",
     "apexcharts": "^3.45.2",
-    "aws-sdk": "^2.1676.0",
+    "aws-sdk": "^2.1679.0",
     "axios": "^1.7.2",
     "babel-plugin-inline-dotenv": "^1.7.0",
     "dotenv": "^16.4.5",
