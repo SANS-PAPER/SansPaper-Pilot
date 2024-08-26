@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import SidebarLinkGroup from "./SidebarLinkGroup";
-import { FaBriefcase } from "react-icons/fa";
+import { FaBriefcase, FaSearch } from "react-icons/fa";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -261,6 +261,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Feeds
                 </Link>
               {/* <!-- Menu Item Feeds --> */}
+
+              {/* <!-- Menu Item AdminSearch --> */}
+              <Link
+                  href="/search"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("search") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                 <FaSearch width={18} height={18}/>
+                  Search
+                </Link>
+              {/* <!-- Menu Item AdminSearch --> */}
 
               {/* <!-- Menu Item Calendar --> */}
               <li>
