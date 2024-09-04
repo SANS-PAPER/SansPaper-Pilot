@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import Profile from "./profile/page";
+import { useUserStore } from "@/store/user/userStore";
 
 export const metadata: Metadata = {
   title: "SPI Web",

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Avatar, List, Button, Spin, Rate } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
 import useGetUserList from '@/graphql/getUserList';
 import FormLoader from '@/components/FormLoader';
-import './SearchWorkersScreen.css'; 
+//import './SearchWorkersScreen.css'; 
 import { UserNode } from './types/getUserList';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface SearchWorkersScreenProps {
   searchQuery: string;
@@ -14,8 +15,8 @@ interface SearchWorkersScreenProps {
 }
 
 const SearchWorkersScreen: React.FC<SearchWorkersScreenProps> = ({ searchQuery, sortCategory }) => {
+const pathname = usePathname();
   
-  const navigate = useNavigate();
   const { dataUserList, isLoadingUserList, errorUserList } = useGetUserList();
   const [structuredData, setStructuredData] = useState<UserNode[]>([]);
   const [filteredData, setFilteredData] = useState<UserNode[]>([]);
@@ -122,18 +123,20 @@ const SearchWorkersScreen: React.FC<SearchWorkersScreenProps> = ({ searchQuery, 
     );
   };
 
-  const renderItem = (item:any) => (
-    <List.Item
-     // className={styles.listItem}
-      onClick={() =>
-        navigate(`/profile/${item.id}`, {
-            state: {
-                userID: item.id,
-                profileData: item,
-            }
-        })
-      }
-    >
+  const renderItem = (item:UserNode) => (
+    <List.Item>
+   
+    <Link
+              // to={{
+              //   pathname: `/profile/${item.id}`,
+              //   state: {
+              //     userID: item.id,
+              //     profileData: item,
+              //   },
+              // }}
+              className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${pathname.includes(`/profile/${item.id}`) && "bg-graydark dark:bg-meta-4"}`}
+              style={{ display: 'flex', width: '100%' }} 
+              href={`/profile/${item.id}`}      >
       <List.Item.Meta
         avatar={getPhotos(item?.profile?.photo)}
         title={`${item?.name} - ${item?.jobTitle}`}
@@ -141,10 +144,11 @@ const SearchWorkersScreen: React.FC<SearchWorkersScreenProps> = ({ searchQuery, 
       />
       <div>
         <Rate disabled defaultValue={item?.reviews?.totalAverageCount} />
-        <div>{item?.fillupForms?.totalCount} Forms Completed</div>
-        <div>{item?.fillupForms?.totalCountTraining} Training Completed</div>
+        <p className="text=black">{item?.fillupForms?.totalCount} Forms Completed</p>
+        <p>{item?.fillupForms?.totalCountTraining} Training Completed</p>
       </div>
-    </List.Item>
+    </Link>
+  </List.Item>
   );
 
   return (

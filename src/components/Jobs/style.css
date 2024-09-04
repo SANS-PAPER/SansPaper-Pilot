@@ -1,4 +1,13 @@
 .vertical-line {
     border-left: 2px solid #e0e0e0; /* Change the color and width as needed */
   }
+
+  .experiencedConstructionForem {
+    display: -webkit-box;       /* Enables the use of -webkit-line-clamp */
+    -webkit-line-clamp: 3;      /* Limits the paragraph to 3 lines */
+    -webkit-box-orient: vertical; /* Sets the box orientation to vertical */
+    overflow: hidden;           /* Hides overflow content */
+    text-overflow: ellipsis;    /* Adds ellipsis (...) at the end */
+  }
+  
   

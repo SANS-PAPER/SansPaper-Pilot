@@ -18,7 +18,7 @@ export interface GetUserListResponse {
     summaryBio?: string;
     profile?: UserProfile;
     availables?: AvailableConnection;
-    reviews?: ReviewConnection;
+    reviews?: ReviewConnection & { totalAverageCount?: number };
     fillupForms?: FillupFormConnection & { totalCountTraining?: number }; 
   }
   
