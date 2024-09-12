@@ -1,3 +1,5 @@
+"use client";
+
 import {useEffect, useState} from 'react';
 import {initializeGraphQLClient} from '@/app/api/client';
 import {GetUserListDocument} from '@/gql/_generated';
