@@ -4737,6 +4737,8 @@ export type CreateJobFeedPayload = {
   jobFeed?: Maybe<JobFeed>;
   /** An edge for our `JobFeed`. May be used by Relay 1. */
   jobFeedEdge?: Maybe<JobFeedsEdge>;
+  /** Reads a single `JobType` that is related to this `JobFeed`. */
+  jobTypes?: Maybe<JobType>;
   /** Reads a single `PayPeriod` that is related to this `JobFeed`. */
   payPeriods?: Maybe<PayPeriod>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
@@ -8628,6 +8630,8 @@ export type DeleteJobFeedPayload = {
   jobFeed?: Maybe<JobFeed>;
   /** An edge for our `JobFeed`. May be used by Relay 1. */
   jobFeedEdge?: Maybe<JobFeedsEdge>;
+  /** Reads a single `JobType` that is related to this `JobFeed`. */
+  jobTypes?: Maybe<JobType>;
   /** Reads a single `PayPeriod` that is related to this `JobFeed`. */
   payPeriods?: Maybe<PayPeriod>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
@@ -18274,6 +18278,9 @@ export type JobFeed = Node & {
   jobApplicationsByJobFeedsId: JobApplicationsConnection;
   jobDescription?: Maybe<Scalars['String']['output']>;
   jobTitle?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `JobType` that is related to this `JobFeed`. */
+  jobTypes?: Maybe<JobType>;
+  jobTypesId?: Maybe<Scalars['BigInt']['output']>;
   location?: Maybe<Scalars['String']['output']>;
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
@@ -18336,6 +18343,8 @@ export type JobFeedCondition = {
   jobDescription?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `jobTitle` field. */
   jobTitle?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `jobTypesId` field. */
+  jobTypesId?: InputMaybe<Scalars['BigInt']['input']>;
   /** Checks for equality with the object’s `location` field. */
   location?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `payPeriodsId` field. */
@@ -18374,6 +18383,8 @@ export type JobFeedFilter = {
   jobDescription?: InputMaybe<StringFilter>;
   /** Filter by the object’s `jobTitle` field. */
   jobTitle?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `jobTypesId` field. */
+  jobTypesId?: InputMaybe<BigIntFilter>;
   /** Filter by the object’s `location` field. */
   location?: InputMaybe<StringFilter>;
   /** Negates the expression. */
@@ -18406,6 +18417,7 @@ export type JobFeedInput = {
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   jobDescription?: InputMaybe<Scalars['String']['input']>;
   jobTitle?: InputMaybe<Scalars['String']['input']>;
+  jobTypesId?: InputMaybe<Scalars['BigInt']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   payPeriodsId?: InputMaybe<Scalars['BigInt']['input']>;
   reqWorkersDate?: InputMaybe<Scalars['Datetime']['input']>;
@@ -18426,6 +18438,7 @@ export type JobFeedPatch = {
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
   jobDescription?: InputMaybe<Scalars['String']['input']>;
   jobTitle?: InputMaybe<Scalars['String']['input']>;
+  jobTypesId?: InputMaybe<Scalars['BigInt']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   payPeriodsId?: InputMaybe<Scalars['BigInt']['input']>;
   reqWorkersDate?: InputMaybe<Scalars['Datetime']['input']>;
@@ -18513,6 +18526,8 @@ export enum JobFeedsOrderBy {
   JobDescriptionDesc = 'JOB_DESCRIPTION_DESC',
   JobTitleAsc = 'JOB_TITLE_ASC',
   JobTitleDesc = 'JOB_TITLE_DESC',
+  JobTypesIdAsc = 'JOB_TYPES_ID_ASC',
+  JobTypesIdDesc = 'JOB_TYPES_ID_DESC',
   LocationAsc = 'LOCATION_ASC',
   LocationDesc = 'LOCATION_DESC',
   Natural = 'NATURAL',
@@ -19112,11 +19127,19 @@ export type JobType = Node & {
   deletedAt?: Maybe<Scalars['Datetime']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['BigInt']['output'];
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByJobTypesId: JobFeedsConnection;
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
+  /** Reads and enables pagination through a set of `PayPeriod`. */
+  payPeriodsByJobFeedJobTypesIdAndPayPeriodsId: JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdManyToManyConnection;
   updatedAt?: Maybe<Scalars['Datetime']['output']>;
   /** Reads and enables pagination through a set of `User`. */
   usersByAvailableJobTypeIdAndUserId: JobTypeUsersByAvailableJobTypeIdAndUserIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `User`. */
+  usersByJobFeedJobTypesIdAndUserId: JobTypeUsersByJobFeedJobTypesIdAndUserIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `WorkType`. */
+  workTypesByJobFeedJobTypesIdAndWorkTypesId: JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdManyToManyConnection;
 };
 
 
@@ -19132,6 +19155,30 @@ export type JobTypeAvailablesArgs = {
 };
 
 
+export type JobTypeJobFeedsByJobTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+
+export type JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<PayPeriodCondition>;
+  filter?: InputMaybe<PayPeriodFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<PayPeriodsOrderBy>>;
+};
+
+
 export type JobTypeUsersByAvailableJobTypeIdAndUserIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -19141,6 +19188,30 @@ export type JobTypeUsersByAvailableJobTypeIdAndUserIdArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+
+export type JobTypeUsersByJobFeedJobTypesIdAndUserIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+
+export type JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<WorkTypeCondition>;
+  filter?: InputMaybe<WorkTypeFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WorkTypesOrderBy>>;
 };
 
 /** A condition to be used against `JobType` object types. All fields are tested for equality and combined with a logical ‘and.’ */
@@ -19195,6 +19266,43 @@ export type JobTypePatch = {
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
 };
 
+/** A connection to a list of `PayPeriod` values, with data from `JobFeed`. */
+export type JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdManyToManyConnection = {
+  __typename?: 'JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdManyToManyConnection';
+  /** A list of edges which contains the `PayPeriod`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdManyToManyEdge>;
+  /** A list of `PayPeriod` objects. */
+  nodes: Array<PayPeriod>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `PayPeriod` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `PayPeriod` edge in the connection, with data from `JobFeed`. */
+export type JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdManyToManyEdge = {
+  __typename?: 'JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByPayPeriodsId: JobFeedsConnection;
+  /** The `PayPeriod` at the end of the edge. */
+  node: PayPeriod;
+};
+
+
+/** A `PayPeriod` edge in the connection, with data from `JobFeed`. */
+export type JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdManyToManyEdgeJobFeedsByPayPeriodsIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
 /** A connection to a list of `User` values, with data from `Available`. */
 export type JobTypeUsersByAvailableJobTypeIdAndUserIdManyToManyConnection = {
   __typename?: 'JobTypeUsersByAvailableJobTypeIdAndUserIdManyToManyConnection';
@@ -19230,6 +19338,80 @@ export type JobTypeUsersByAvailableJobTypeIdAndUserIdManyToManyEdgeAvailablesArg
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<AvailablesOrderBy>>;
+};
+
+/** A connection to a list of `User` values, with data from `JobFeed`. */
+export type JobTypeUsersByJobFeedJobTypesIdAndUserIdManyToManyConnection = {
+  __typename?: 'JobTypeUsersByJobFeedJobTypesIdAndUserIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<JobTypeUsersByJobFeedJobTypesIdAndUserIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `JobFeed`. */
+export type JobTypeUsersByJobFeedJobTypesIdAndUserIdManyToManyEdge = {
+  __typename?: 'JobTypeUsersByJobFeedJobTypesIdAndUserIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeeds: JobFeedsConnection;
+  /** The `User` at the end of the edge. */
+  node: User;
+};
+
+
+/** A `User` edge in the connection, with data from `JobFeed`. */
+export type JobTypeUsersByJobFeedJobTypesIdAndUserIdManyToManyEdgeJobFeedsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+/** A connection to a list of `WorkType` values, with data from `JobFeed`. */
+export type JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdManyToManyConnection = {
+  __typename?: 'JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdManyToManyConnection';
+  /** A list of edges which contains the `WorkType`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdManyToManyEdge>;
+  /** A list of `WorkType` objects. */
+  nodes: Array<WorkType>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `WorkType` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `WorkType` edge in the connection, with data from `JobFeed`. */
+export type JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdManyToManyEdge = {
+  __typename?: 'JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByWorkTypesId: JobFeedsConnection;
+  /** The `WorkType` at the end of the edge. */
+  node: WorkType;
+};
+
+
+/** A `WorkType` edge in the connection, with data from `JobFeed`. */
+export type JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdManyToManyEdgeJobFeedsByWorkTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
 };
 
 /** A connection to a list of `JobType` values. */
@@ -26300,6 +26482,8 @@ export type PayPeriod = Node & {
   id: Scalars['BigInt']['output'];
   /** Reads and enables pagination through a set of `JobFeed`. */
   jobFeedsByPayPeriodsId: JobFeedsConnection;
+  /** Reads and enables pagination through a set of `JobType`. */
+  jobTypesByJobFeedPayPeriodsIdAndJobTypesId: PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdManyToManyConnection;
   name?: Maybe<Scalars['String']['output']>;
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
@@ -26321,6 +26505,18 @@ export type PayPeriodJobFeedsByPayPeriodsIdArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+
+export type PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobTypeCondition>;
+  filter?: InputMaybe<JobTypeFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobTypesOrderBy>>;
 };
 
 
@@ -26396,6 +26592,43 @@ export type PayPeriodInput = {
   name?: InputMaybe<Scalars['String']['input']>;
   shortName?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A connection to a list of `JobType` values, with data from `JobFeed`. */
+export type PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdManyToManyConnection = {
+  __typename?: 'PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdManyToManyConnection';
+  /** A list of edges which contains the `JobType`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdManyToManyEdge>;
+  /** A list of `JobType` objects. */
+  nodes: Array<JobType>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `JobType` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `JobType` edge in the connection, with data from `JobFeed`. */
+export type PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdManyToManyEdge = {
+  __typename?: 'PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByJobTypesId: JobFeedsConnection;
+  /** The `JobType` at the end of the edge. */
+  node: JobType;
+};
+
+
+/** A `JobType` edge in the connection, with data from `JobFeed`. */
+export type PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdManyToManyEdgeJobFeedsByJobTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
 };
 
 /** Represents an update to a `PayPeriod`. Fields that are set will be updated. */
@@ -37236,6 +37469,8 @@ export type UpdateJobFeedPayload = {
   jobFeed?: Maybe<JobFeed>;
   /** An edge for our `JobFeed`. May be used by Relay 1. */
   jobFeedEdge?: Maybe<JobFeedsEdge>;
+  /** Reads a single `JobType` that is related to this `JobFeed`. */
+  jobTypes?: Maybe<JobType>;
   /** Reads a single `PayPeriod` that is related to this `JobFeed`. */
   payPeriods?: Maybe<PayPeriod>;
   /** Our root query field type. Allows us to run any query from our mutation payload. */
@@ -39775,6 +40010,8 @@ export type User = Node & {
   jobTitle?: Maybe<Scalars['String']['output']>;
   /** Reads and enables pagination through a set of `JobType`. */
   jobTypesByAvailableUserIdAndJobTypeId: UserJobTypesByAvailableUserIdAndJobTypeIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `JobType`. */
+  jobTypesByJobFeedUserIdAndJobTypesId: UserJobTypesByJobFeedUserIdAndJobTypesIdManyToManyConnection;
   /** Reads and enables pagination through a set of `JobUser`. */
   jobUsers: JobUsersConnection;
   /** Reads and enables pagination through a set of `Job`. */
@@ -40295,6 +40532,18 @@ export type UserJobSendingEmailsBySentToArgs = {
 
 
 export type UserJobTypesByAvailableUserIdAndJobTypeIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobTypeCondition>;
+  filter?: InputMaybe<JobTypeFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobTypesOrderBy>>;
+};
+
+
+export type UserJobTypesByJobFeedUserIdAndJobTypesIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<JobTypeCondition>;
@@ -41834,6 +42083,43 @@ export type UserJobTypesByAvailableUserIdAndJobTypeIdManyToManyEdgeAvailablesArg
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<AvailablesOrderBy>>;
+};
+
+/** A connection to a list of `JobType` values, with data from `JobFeed`. */
+export type UserJobTypesByJobFeedUserIdAndJobTypesIdManyToManyConnection = {
+  __typename?: 'UserJobTypesByJobFeedUserIdAndJobTypesIdManyToManyConnection';
+  /** A list of edges which contains the `JobType`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<UserJobTypesByJobFeedUserIdAndJobTypesIdManyToManyEdge>;
+  /** A list of `JobType` objects. */
+  nodes: Array<JobType>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `JobType` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `JobType` edge in the connection, with data from `JobFeed`. */
+export type UserJobTypesByJobFeedUserIdAndJobTypesIdManyToManyEdge = {
+  __typename?: 'UserJobTypesByJobFeedUserIdAndJobTypesIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByJobTypesId: JobFeedsConnection;
+  /** The `JobType` at the end of the edge. */
+  node: JobType;
+};
+
+
+/** A `JobType` edge in the connection, with data from `JobFeed`. */
+export type UserJobTypesByJobFeedUserIdAndJobTypesIdManyToManyEdgeJobFeedsByJobTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
 };
 
 /** A connection to a list of `Job` values, with data from `JobUser`. */
@@ -44006,6 +44292,8 @@ export type WorkType = Node & {
   id: Scalars['BigInt']['output'];
   /** Reads and enables pagination through a set of `JobFeed`. */
   jobFeedsByWorkTypesId: JobFeedsConnection;
+  /** Reads and enables pagination through a set of `JobType`. */
+  jobTypesByJobFeedWorkTypesIdAndJobTypesId: WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdManyToManyConnection;
   name: Scalars['String']['output'];
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
@@ -44031,6 +44319,18 @@ export type WorkTypeJobFeedsByWorkTypesIdArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+
+export type WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobTypeCondition>;
+  filter?: InputMaybe<JobTypeFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobTypesOrderBy>>;
 };
 
 
@@ -44121,6 +44421,43 @@ export type WorkTypeInput = {
   qrValue?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
   uuid?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+/** A connection to a list of `JobType` values, with data from `JobFeed`. */
+export type WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdManyToManyConnection = {
+  __typename?: 'WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdManyToManyConnection';
+  /** A list of edges which contains the `JobType`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdManyToManyEdge>;
+  /** A list of `JobType` objects. */
+  nodes: Array<JobType>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `JobType` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `JobType` edge in the connection, with data from `JobFeed`. */
+export type WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdManyToManyEdge = {
+  __typename?: 'WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByJobTypesId: JobFeedsConnection;
+  /** The `JobType` at the end of the edge. */
+  node: JobType;
+};
+
+
+/** A `JobType` edge in the connection, with data from `JobFeed`. */
+export type WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdManyToManyEdgeJobFeedsByJobTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
 };
 
 /** Represents an update to a `WorkType`. Fields that are set will be updated. */
@@ -44278,6 +44615,16 @@ export type UpdateSummaryMutationVariables = Exact<{
 
 export type UpdateSummaryMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'UpdateUserPayload', user?: { __typename?: 'User', id: any, name: string, phoneNumber?: string | null, jobTitle?: string | null, summaryBio?: string | null } | null } | null };
 
+export type GetJobFeedsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetJobFeedsQuery = { __typename?: 'Query', jobFeeds?: { __typename?: 'JobFeedsConnection', nodes: Array<{ __typename?: 'JobFeed', id: any, userId: any, jobTitle?: string | null, jobDescription?: string | null, location?: string | null, requirement?: string | null, reqWorkersDate?: any | null, createdAt?: any | null, updatedAt?: any | null, expRange?: string | null, amount?: any | null, isActive: boolean, reqWorkersEndDate?: any | null, user?: { __typename?: 'User', id: any, parentId?: any | null, name: string, jobTitle?: string | null, organizationUsers: { __typename?: 'OrganizationUsersConnection', nodes: Array<{ __typename?: 'OrganizationUser', organization?: { __typename?: 'Organization', id: any, name: string, adminId: any } | null }> } } | null, workTypes?: { __typename?: 'WorkType', id: any, name: string, organization?: { __typename?: 'Organization', id: any, name: string, admin?: { __typename?: 'Admin', id: any } | null } | null } | null, payPeriods?: { __typename?: 'PayPeriod', id: any, name?: string | null, shortName?: string | null } | null }> } | null };
+
+export type GetUserListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserListQuery = { __typename?: 'Query', users?: { __typename?: 'UsersConnection', nodes: Array<{ __typename?: 'User', id: any, name: string, email: string, phoneNumber?: string | null, jobTitle?: string | null, summaryBio?: string | null, profile?: { __typename?: 'Profile', photo?: string | null, firstName?: string | null, lastName?: string | null, address?: string | null, city?: string | null, stateProvince?: string | null, country?: string | null } | null, availables: { __typename?: 'AvailablesConnection', nodes: Array<{ __typename?: 'Available', id: any, availableToWork: boolean, preferredLocation?: string | null, jobType?: { __typename?: 'JobType', id: any, description?: string | null } | null }> }, reviews: { __typename?: 'ReviewsConnection', totalCount: number, nodes: Array<{ __typename?: 'Review', id: any, userId: any, recValue?: any | null }> }, fillupForms: { __typename?: 'FillupFormsConnection', totalCount: number, nodes: Array<{ __typename?: 'FillupForm', id: any, userId: any, isDraft?: number | null, form?: { __typename?: 'Form', id: any, name: string, isSpecial?: number | null } | null }> } }> } | null };
+
 export type GetCompletedFormTrainingQueryVariables = Exact<{
   userID: Scalars['BigInt']['input'];
 }>;
@@ -44408,6 +44755,179 @@ export const useUpdateSummaryMutation = <
     return useMutation<UpdateSummaryMutation, TError, UpdateSummaryMutationVariables, TContext>(
       ['updateSummary'],
       (variables?: UpdateSummaryMutationVariables) => fetcher<UpdateSummaryMutation, UpdateSummaryMutationVariables>(client, UpdateSummaryDocument, variables, headers)(),
+      options
+    )};
+
+export const GetJobFeedsDocument = `
+    query GetJobFeeds {
+  jobFeeds {
+    nodes {
+      id
+      userId
+      jobTitle
+      jobDescription
+      location
+      requirement
+      reqWorkersDate
+      createdAt
+      updatedAt
+      expRange
+      amount
+      isActive
+      reqWorkersEndDate
+      user {
+        id
+        parentId
+        name
+        jobTitle
+        organizationUsers {
+          nodes {
+            organization {
+              id
+              name
+              adminId
+            }
+          }
+        }
+      }
+      workTypes {
+        id
+        name
+        organization {
+          id
+          name
+          admin {
+            id
+          }
+        }
+      }
+      payPeriods {
+        id
+        name
+        shortName
+      }
+    }
+  }
+}
+    `;
+
+export const useGetJobFeedsQuery = <
+      TData = GetJobFeedsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetJobFeedsQueryVariables,
+      options?: UseQueryOptions<GetJobFeedsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useQuery<GetJobFeedsQuery, TError, TData>(
+      variables === undefined ? ['GetJobFeeds'] : ['GetJobFeeds', variables],
+      fetcher<GetJobFeedsQuery, GetJobFeedsQueryVariables>(client, GetJobFeedsDocument, variables, headers),
+      options
+    )};
+
+export const useInfiniteGetJobFeedsQuery = <
+      TData = GetJobFeedsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetJobFeedsQueryVariables,
+      options?: UseInfiniteQueryOptions<GetJobFeedsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useInfiniteQuery<GetJobFeedsQuery, TError, TData>(
+      variables === undefined ? ['GetJobFeeds.infinite'] : ['GetJobFeeds.infinite', variables],
+      (metaData) => fetcher<GetJobFeedsQuery, GetJobFeedsQueryVariables>(client, GetJobFeedsDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      options
+    )};
+
+export const GetUserListDocument = `
+    query GetUserList {
+  users {
+    nodes {
+      id
+      name
+      email
+      phoneNumber
+      jobTitle
+      summaryBio
+      profile {
+        photo
+        firstName
+        lastName
+        address
+        city
+        stateProvince
+        country
+      }
+      availables {
+        nodes {
+          id
+          availableToWork
+          preferredLocation
+          jobType {
+            id
+            description
+          }
+        }
+      }
+      reviews {
+        nodes {
+          id
+          userId
+          recValue
+        }
+        totalCount
+      }
+      fillupForms(condition: {isDraft: 0}) {
+        nodes {
+          id
+          userId
+          isDraft
+          form {
+            id
+            name
+            isSpecial
+          }
+        }
+        totalCount
+      }
+    }
+  }
+}
+    `;
+
+export const useGetUserListQuery = <
+      TData = GetUserListQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetUserListQueryVariables,
+      options?: UseQueryOptions<GetUserListQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useQuery<GetUserListQuery, TError, TData>(
+      variables === undefined ? ['GetUserList'] : ['GetUserList', variables],
+      fetcher<GetUserListQuery, GetUserListQueryVariables>(client, GetUserListDocument, variables, headers),
+      options
+    )};
+
+export const useInfiniteGetUserListQuery = <
+      TData = GetUserListQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetUserListQueryVariables,
+      options?: UseInfiniteQueryOptions<GetUserListQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useInfiniteQuery<GetUserListQuery, TError, TData>(
+      variables === undefined ? ['GetUserList.infinite'] : ['GetUserList.infinite', variables],
+      (metaData) => fetcher<GetUserListQuery, GetUserListQueryVariables>(client, GetUserListDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     )};
 

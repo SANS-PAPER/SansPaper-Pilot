@@ -1,0 +1,51 @@
+query GetJobFeeds {
+  jobFeeds {
+    nodes {
+      id
+      userId
+      jobTitle
+      jobDescription
+      location
+      requirement
+      reqWorkersDate
+      createdAt
+      updatedAt
+      expRange
+      amount
+      isActive
+      reqWorkersEndDate
+      user {
+        id
+        parentId
+        name
+        jobTitle
+        organizationUsers {
+          nodes {
+            organization {
+              id
+              name
+              adminId
+            }
+          }
+        }
+      }
+      workTypes {
+        id
+        name
+        organization {
+          id
+          name
+          admin {
+            id
+          }
+        }
+      }
+
+      payPeriods {
+        id
+        name
+        shortName
+      }
+    }
+  }
+}

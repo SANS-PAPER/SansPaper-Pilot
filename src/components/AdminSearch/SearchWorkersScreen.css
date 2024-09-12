@@ -1,0 +1,377 @@
+/* SearchWorkersScreen.css */
+
+.counter2Layout {
+  height: 16px;
+  width: 16px;
+}
+
+.avatarandsubjectcontainerSpaceBlock {
+  padding-top: 0;
+  padding-bottom: 0;
+  align-items: center;
+}
+
+.iconLayout {
+  height: 32px;
+  width: 32px;
+}
+
+.systemIconPosition {
+  border-radius: 12px; /* Example border radius */
+  margin-left: -16px;
+  left: 50%;
+  top: 0;
+  height: 32px;
+  width: 32px;
+  position: absolute;
+  overflow: hidden;
+}
+
+.text7FlexBox {
+  display: flex;
+  justify-content: center;
+  color: #007bff; /* Example color */
+  text-align: center;
+  align-items: center;
+}
+
+.blockquotecontainerSpaceBlock {
+  padding-right: 16px; /* Example padding */
+  margin-top: 8px;
+  padding-left: 72px; /* Example padding */
+  width: 400px;
+  align-items: center;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.actioncontainerSpaceBlock1 {
+  padding-left: 72px; /* Example padding */
+  margin-top: 8px;
+}
+
+.filetypeBorder {
+  border-color: #e0e0e0; /* Example border color */
+  border-width: 1px;
+  border-style: solid;
+  background-color: #f8f9fa; /* Example background color */
+}
+
+.xlsTypo {
+  font-family: 'Arial', sans-serif; /* Example font */
+  text-align: center;
+  font-weight: 700;
+}
+
+.filetypePosition {
+  border-radius: 2px; /* Example border radius */
+  left: 0%;
+  bottom: 0%;
+  right: 0%;
+  top: 0%;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+}
+
+.buttonTypo {
+  font-family: 'Arial', sans-serif; /* Example font */
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.textTypo {
+  color: #6c757d; /* Example color */
+  font-family: 'Arial', sans-serif; /* Example font */
+  font-weight: 500;
+  line-height: 20px;
+  font-size: 14px; /* Example font size */
+}
+
+.iconPosition {
+  left: 50%;
+  position: absolute;
+}
+
+.buttoniconLayout {
+  width: 22px;
+  max-height: 100%;
+}
+
+.parentPosition {
+  z-index: 0;
+  margin-top: -21.5px;
+  top: 50%;
+  align-items: center;
+  position: absolute;
+}
+
+.filetypefileiconLayout {
+  height: 24px;
+  width: 24px;
+}
+
+.text4FlexBox {
+  letter-spacing: 0;
+  text-align: left;
+}
+
+.starParentLayout {
+  width: 111px;
+  height: 20px;
+}
+
+.groupChildLayout {
+  height: 17px;
+  width: 17px;
+  top: 1px;
+  position: absolute;
+}
+
+.counterSpaceBlock {
+  padding-left: 2px; /* Example padding */
+  display: none;
+}
+
+.actioncontainerSpaceBlock {
+  padding-bottom: 2px; /* Example padding */
+  padding-top: 2px; /* Example padding */
+  flex-direction: row;
+}
+
+.buttonbaseFlexBox1 {
+  padding-top: 4px; /* Example padding */
+  padding-bottom: 4px; /* Example padding */
+  border-radius: 4px; /* Example border radius */
+  height: 40px;
+  justify-content: center;
+  padding-left: 16px; /* Example padding */
+  padding-right: 16px; /* Example padding */
+  align-items: center;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.buttontext2FlexBox {
+  margin-left: 6px;
+  align-items: center;
+  flex-direction: row;
+}
+
+.xlsPosition {
+  top: 50%;
+  left: 50%;
+  position: absolute;
+}
+
+.buttonbaseSpaceBlock {
+  padding-left: 4px; /* Example padding */
+  padding-right: 4px; /* Example padding */
+  padding-top: 4px; /* Example padding */
+  padding-bottom: 4px; /* Example padding */
+  border-radius: 4px; /* Example border radius */
+  height: 24px;
+  overflow: hidden;
+}
+
+.vectorIcon {
+  opacity: 0;
+  display: none;
+}
+
+.icon {
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+
+.initials1 {
+  line-height: 24px;
+  font-family: 'Arial', sans-serif; /* Example font */
+  font-weight: 600;
+  font-size: 16px; /* Example font size */
+  left: 0;
+  position: absolute;
+  top: 0;
+  height: 32px;
+  width: 32px;
+}
+
+.initials {
+  background-color: #007bff; /* Example color */
+  display: none;
+}
+
+.avatarIcon {
+  border-radius: 50%; /* Example border radius */
+}
+
+.subjectlinecontainer {
+  margin-left: 16px;
+  align-items: center;
+  flex-direction: row;
+  flex: 1;
+}
+
+.archiveaffordancecontainerIcon {
+  height: 29px;
+  margin-left: 16px;
+  width: 20px;
+  display: none;
+  overflow: hidden;
+}
+
+.systemandsubjectcontainer {
+  padding-left: 16px; /* Example padding */
+  padding-right: 16px; /* Example padding */
+  padding-top: 0;
+  padding-bottom: 0;
+  flex-direction: row;
+  align-self: stretch;
+  display: none;
+}
+
+.frameChild {
+  background-color: #e0e0e0; /* Example color */
+  width: 4px;
+  border-radius: 2px; /* Example border radius */
+  align-self: stretch;
+}
+
+.ohIFinished {
+  margin-left: 8px;
+  height: 40px;
+  font-family: 'Arial', sans-serif; /* Example font */
+  font-weight: 500;
+  text-align: left;
+  color: #343a40; /* Example color */
+  line-height: 20px;
+  font-size: 14px; /* Example font size */
+  overflow: hidden;
+  flex: 1;
+}
+
+.rectangleParent {
+  flex-direction: row;
+  flex: 1;
+}
+
+.blockquotecontainer {
+  margin-top: 8px;
+  display: none;
+}
+
+.xls {
+  margin-top: -9px;
+  margin-left: -8px;
+  font-size: 10px; /* Example font size */
+  line-height: 18px;
+  color: #3cb371; /* Example color */
+  top: 50%;
+  left: 50%;
+  position: absolute;
+}
+
+.filetype {
+  border-width: 1px;
+  border-radius: 2px; /* Example border radius */
+  left: 0%;
+  bottom: 0%;
+  right: 0%;
+  top: 0%;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+}
+
+.filetypeIcon {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.landingPaageVer2fig {
+  margin-left: 8px;
+  text-align: left;
+  color: #343a40; /* Example color */
+  font-size: 14px; /* Example font size */
+}
+
+.mb {
+  margin-left: 8px;
+  text-align: left;
+}
+
+.attachment {
+  align-items: center;
+  flex-direction: row;
+}
+
+.attachmentcontainer {
+  margin-top: 8px;
+  justify-content: center;
+  width: 440px;
+  display: none;
+}
+
+.text {
+  color: #003366; /* Example color */
+  text-align: left;
+  line-height: 20px;
+  font-size: 14px; /* Example font size */
+  align-self: stretch;
+  font-family: 'Arial', sans-serif; /* Example font */
+}
+
+.timestampcontainer {
+  margin-top: 8px;
+  justify-content: center;
+  align-self: stretch;
+}
+
+.timestampcontainer1 {
+  height: 21px;
+  margin-top: 8px;
+  width: 440px;
+  align-items: center;
+}
+
+.text1 {
+  width: 60px;
+  text-align: center;
+}
+
+.textWrapper {
+  background-color: #f0f0f0; /* Example color */
+  width: 78px;
+}
+
+.contentInner {
+  width: 78px;
+  margin-top: 8px;
+  height: 20px;
+}
+
+.text2 {
+  width: 107px;
+  text-align: left;
+}
+
+.content {
+  height: 20px;
+  width: 100px;
+}
+
+.blockquotecontainer1 {
+  margin-top: 8px;
+}
+
+.text3 {
+  margin-left: 8px;
+  font-size: 12px; /* Example font size */
+}
+
+.white {
+  color: #fff; /* Example color */
+}

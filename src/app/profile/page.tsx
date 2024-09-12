@@ -64,7 +64,7 @@ const Profile: FC = () => {
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isEditingGallery, setIsEditingGallery] = useState(false);
   const [isEditingPreferences, setIsEditingPreferences] = useState(false);
-  const [bio, setBio] = useState(dataUser?.[0]?.summaryBio);
+  const [bio, setBio] = useState('');
   const [isAvailableToWork, setIsAvailableToWork] = useState(false);
   const [preferredLocation, setPreferredLocation] = useState('');
   const [form] = Form.useForm();
@@ -171,33 +171,33 @@ const Profile: FC = () => {
   }
 };
 
-    useEffect(() => {
-      if (dataPhoto?.[0]?.fillupForms?.nodes) {
-        const filteredAnswers = dataPhoto?.[0]?.fillupForms?.nodes
-          .flatMap(form => form.fillupFormFields || []) // Directly access `fillupFormFields` as an array of `PhotoField`
-          .filter(field => {
-            const answer = field.answer || '';
-            const componentId = field.field?.component?.id || '';
-    
-            const cleanAnswer = answer.replace(/^"|"$/g, '');
-    
-            const isValidAnswer =
-              cleanAnswer.trim().length > 0 &&
-              cleanAnswer !== '""' &&
-              cleanAnswer !== 'null';
-    
-            return componentId === '125' && isValidAnswer;
-          })
-          .map(field => ({
-            answer: field.answer || '', 
-            fieldId: field.field?.id || '',
-            componentId: field.field?.component?.id || '',
-            fillupFormFields: field.id,
-          }));
-    
-        setGalleryData(filteredAnswers);
-      }
-    }, [dataPhoto]);
+useEffect(() => {
+  if (dataPhoto?.[0]?.fillupForms?.nodes) {
+    const filteredAnswers = dataPhoto[0].fillupForms.nodes
+      .flatMap(form => form.fillupFormFields || [])
+      .filter(field => {
+        const answer = field.answer || '';
+        const componentId = field.field?.component?.id || '';
+
+        const cleanAnswer = answer.replace(/^"|"$/g, '');
+
+        const isValidAnswer =
+          cleanAnswer.trim().length > 0 &&
+          cleanAnswer !== '""' &&
+          cleanAnswer !== 'null';
+
+        return componentId === '125' && isValidAnswer;
+      })
+      .map(field => ({
+        answer: field.answer || '',
+        fieldId: field.field?.id || '',
+        componentId: field.field?.component?.id || '',
+        fillupFormFields: field.id,
+      }));
+
+    setGalleryData(filteredAnswers);
+  }
+}, [dataPhoto]);
 
     const handleSkillChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
       const updatedSkills = [...newSkills];
@@ -260,14 +260,21 @@ const Profile: FC = () => {
       }
     };
   
-  
+    useEffect(() => {
+      if (dataUser) {
+        setBio(dataUser[0]?.summaryBio || '');
+      }
+      if (dataSkill) {
+        setNewSkills(dataSkill);
+      }
+    }, [dataUser, dataSkill]);
   
     const uploadPhoto = async (file: File) => {
   
       const spaceName = 'sanspaperform-images';
       const region = 'us-east-1';
-      const accessKeyId = 'DO002ZJA2DJ47XK9CRWM';
-      const secretAccessKey = 'YVcyXLV/azI27bKDA81Ywu9FmB8r5UYHuw6VHkUgM1s';
+      const accessKeyId = `${process.env.AWS_ACCESS_KEY_ID}`;
+      const secretAccessKey = `${process.env.AWS_SECRET_ACCESS}`;
       const fileNameForDB = file.name;
   
       // Configure AWS SDK
@@ -291,7 +298,7 @@ const Profile: FC = () => {
         handleUpdateProfilePic(`https://sanspaperform-images.nyc3.cdn.digitaloceanspaces.com/staging/photo-uploads/${fileNameForDB}`)
         setUploadResponse(data as UploadResponseType);
       } catch (error) {
-        console.error('Error uploading image: ', error);
+        showErrorNotification('Error uploading image: ');
       }
     };
   
@@ -358,8 +365,7 @@ const Profile: FC = () => {
     
     useEffect(() => {
       if (dataCompleted) {
-        // const trainingFormName =dataCompleted.filter(node => node.form.isSpecial !== null)?.map(node => node.form.name);
-  
+       
         const trainingFormCount = dataCompleted.filter(
           node => node.form.isSpecial !== null,
         ).length;
