@@ -6,7 +6,7 @@ dotenv.config();
 
 export default {
   images: {
-    domains: ['lh3.googleusercontent.com', 's.gravatar.com', 'cdn.auth0.com', 'static.vecteezy.com', 'icons.iconarchive.com'],
+    domains: ['lh3.googleusercontent.com', 's.gravatar.com', 'cdn.auth0.com', 'static.vecteezy.com', 'icons.iconarchive.com', 'media.licdn.com'],
     remotePatterns: [
       {
         protocol: 'https',
