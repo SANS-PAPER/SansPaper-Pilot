@@ -308,8 +308,6 @@ export enum AbilityRolesOrderBy {
 
 export type Admin = Node & {
   __typename?: 'Admin';
-  /** Reads and enables pagination through a set of `Company`. */
-  companies: CompaniesConnection;
   createdAt?: Maybe<Scalars['Datetime']['output']>;
   deletedAt?: Maybe<Scalars['Datetime']['output']>;
   /** Reads and enables pagination through a set of `FillupForm`. */
@@ -342,19 +340,13 @@ export type Admin = Node & {
   /** Reads and enables pagination through a set of `Organization`. */
   organizations: OrganizationsConnection;
   /** Reads and enables pagination through a set of `Organization`. */
-  organizationsByCompanyAdminIdAndOrganizationId: AdminOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyConnection;
-  /** Reads and enables pagination through a set of `Organization`. */
   organizationsByGroupAdminIdAndOrganizationId: AdminOrganizationsByGroupAdminIdAndOrganizationIdManyToManyConnection;
-  /** Reads and enables pagination through a set of `Organization`. */
-  organizationsByProjectAdminIdAndOrganizationId: AdminOrganizationsByProjectAdminIdAndOrganizationIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
   organizationsBySchedulerAdminIdAndOrgId: AdminOrganizationsBySchedulerAdminIdAndOrgIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
   organizationsByTeamAdminIdAndOrganizationId: AdminOrganizationsByTeamAdminIdAndOrganizationIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
   organizationsByToolAdminIdAndOrganizationId: AdminOrganizationsByToolAdminIdAndOrganizationIdManyToManyConnection;
-  /** Reads and enables pagination through a set of `Project`. */
-  projects: ProjectsConnection;
   /** Reads and enables pagination through a set of `SchedulerField`. */
   schedulerFieldsBySchedulerAdminIdAndSchedulerFieldsId: AdminSchedulerFieldsBySchedulerAdminIdAndSchedulerFieldsIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Scheduler`. */
@@ -378,18 +370,6 @@ export type Admin = Node & {
   usersByFillupFormAdminIdAndUserId: AdminUsersByFillupFormAdminIdAndUserIdManyToManyConnection;
   /** Reads and enables pagination through a set of `User`. */
   usersBySchedulerAdminIdAndUserId: AdminUsersBySchedulerAdminIdAndUserIdManyToManyConnection;
-};
-
-
-export type AdminCompaniesArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<CompanyCondition>;
-  filter?: InputMaybe<CompanyFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<CompaniesOrderBy>>;
 };
 
 
@@ -549,31 +529,7 @@ export type AdminOrganizationsArgs = {
 };
 
 
-export type AdminOrganizationsByCompanyAdminIdAndOrganizationIdArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<OrganizationCondition>;
-  filter?: InputMaybe<OrganizationFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
-};
-
-
 export type AdminOrganizationsByGroupAdminIdAndOrganizationIdArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<OrganizationCondition>;
-  filter?: InputMaybe<OrganizationFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
-};
-
-
-export type AdminOrganizationsByProjectAdminIdAndOrganizationIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<OrganizationCondition>;
@@ -618,18 +574,6 @@ export type AdminOrganizationsByToolAdminIdAndOrganizationIdArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
-};
-
-
-export type AdminProjectsArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<ProjectCondition>;
-  filter?: InputMaybe<ProjectFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
 };
 
 
@@ -1123,43 +1067,6 @@ export type AdminMetricsByToolAdminIdAndMetricIdManyToManyEdgeToolsArgs = {
   orderBy?: InputMaybe<Array<ToolsOrderBy>>;
 };
 
-/** A connection to a list of `Organization` values, with data from `Company`. */
-export type AdminOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyConnection = {
-  __typename?: 'AdminOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyConnection';
-  /** A list of edges which contains the `Organization`, info from the `Company`, and the cursor to aid in pagination. */
-  edges: Array<AdminOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdge>;
-  /** A list of `Organization` objects. */
-  nodes: Array<Organization>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `Organization` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-};
-
-/** A `Organization` edge in the connection, with data from `Company`. */
-export type AdminOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdge = {
-  __typename?: 'AdminOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdge';
-  /** Reads and enables pagination through a set of `Company`. */
-  companies: CompaniesConnection;
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `Organization` at the end of the edge. */
-  node: Organization;
-};
-
-
-/** A `Organization` edge in the connection, with data from `Company`. */
-export type AdminOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdgeCompaniesArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<CompanyCondition>;
-  filter?: InputMaybe<CompanyFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<CompaniesOrderBy>>;
-};
-
 /** A connection to a list of `Organization` values, with data from `Group`. */
 export type AdminOrganizationsByGroupAdminIdAndOrganizationIdManyToManyConnection = {
   __typename?: 'AdminOrganizationsByGroupAdminIdAndOrganizationIdManyToManyConnection';
@@ -1195,43 +1102,6 @@ export type AdminOrganizationsByGroupAdminIdAndOrganizationIdManyToManyEdgeGroup
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<GroupsOrderBy>>;
-};
-
-/** A connection to a list of `Organization` values, with data from `Project`. */
-export type AdminOrganizationsByProjectAdminIdAndOrganizationIdManyToManyConnection = {
-  __typename?: 'AdminOrganizationsByProjectAdminIdAndOrganizationIdManyToManyConnection';
-  /** A list of edges which contains the `Organization`, info from the `Project`, and the cursor to aid in pagination. */
-  edges: Array<AdminOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdge>;
-  /** A list of `Organization` objects. */
-  nodes: Array<Organization>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `Organization` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-};
-
-/** A `Organization` edge in the connection, with data from `Project`. */
-export type AdminOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdge = {
-  __typename?: 'AdminOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdge';
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `Organization` at the end of the edge. */
-  node: Organization;
-  /** Reads and enables pagination through a set of `Project`. */
-  projects: ProjectsConnection;
-};
-
-
-/** A `Organization` edge in the connection, with data from `Project`. */
-export type AdminOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdgeProjectsArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<ProjectCondition>;
-  filter?: InputMaybe<ProjectFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
 };
 
 /** A connection to a list of `Organization` values, with data from `Scheduler`. */
@@ -2292,6 +2162,142 @@ export enum CertificationsOrderBy {
   UpdatedAtDesc = 'UPDATED_AT_DESC'
 }
 
+export type ChatNotification = Node & {
+  __typename?: 'ChatNotification';
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  id: Scalars['BigInt']['output'];
+  isDelivered: Scalars['Boolean']['output'];
+  /** Reads a single `Message` that is related to this `ChatNotification`. */
+  message?: Maybe<Message>;
+  messageId?: Maybe<Scalars['BigInt']['output']>;
+  messageText?: Maybe<Scalars['String']['output']>;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  readAt?: Maybe<Scalars['Datetime']['output']>;
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `ChatNotification`. */
+  user?: Maybe<User>;
+  userId?: Maybe<Scalars['BigInt']['output']>;
+};
+
+/**
+ * A condition to be used against `ChatNotification` object types. All fields are
+ * tested for equality and combined with a logical ‘and.’
+ */
+export type ChatNotificationCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `isDelivered` field. */
+  isDelivered?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `messageId` field. */
+  messageId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `messageText` field. */
+  messageText?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `readAt` field. */
+  readAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A filter to be used against `ChatNotification` object types. All fields are combined with a logical ‘and.’ */
+export type ChatNotificationFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<ChatNotificationFilter>>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `isDelivered` field. */
+  isDelivered?: InputMaybe<BooleanFilter>;
+  /** Filter by the object’s `messageId` field. */
+  messageId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `messageText` field. */
+  messageText?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<ChatNotificationFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<ChatNotificationFilter>>;
+  /** Filter by the object’s `readAt` field. */
+  readAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<BigIntFilter>;
+};
+
+/** An input for mutations affecting `ChatNotification` */
+export type ChatNotificationInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  isDelivered?: InputMaybe<Scalars['Boolean']['input']>;
+  messageId?: InputMaybe<Scalars['BigInt']['input']>;
+  messageText?: InputMaybe<Scalars['String']['input']>;
+  readAt?: InputMaybe<Scalars['Datetime']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** Represents an update to a `ChatNotification`. Fields that are set will be updated. */
+export type ChatNotificationPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  isDelivered?: InputMaybe<Scalars['Boolean']['input']>;
+  messageId?: InputMaybe<Scalars['BigInt']['input']>;
+  messageText?: InputMaybe<Scalars['String']['input']>;
+  readAt?: InputMaybe<Scalars['Datetime']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A connection to a list of `ChatNotification` values. */
+export type ChatNotificationsConnection = {
+  __typename?: 'ChatNotificationsConnection';
+  /** A list of edges which contains the `ChatNotification` and cursor to aid in pagination. */
+  edges: Array<ChatNotificationsEdge>;
+  /** A list of `ChatNotification` objects. */
+  nodes: Array<ChatNotification>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `ChatNotification` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `ChatNotification` edge in the connection. */
+export type ChatNotificationsEdge = {
+  __typename?: 'ChatNotificationsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `ChatNotification` at the end of the edge. */
+  node: ChatNotification;
+};
+
+/** Methods to use when ordering `ChatNotification`. */
+export enum ChatNotificationsOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  IsDeliveredAsc = 'IS_DELIVERED_ASC',
+  IsDeliveredDesc = 'IS_DELIVERED_DESC',
+  MessageIdAsc = 'MESSAGE_ID_ASC',
+  MessageIdDesc = 'MESSAGE_ID_DESC',
+  MessageTextAsc = 'MESSAGE_TEXT_ASC',
+  MessageTextDesc = 'MESSAGE_TEXT_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  ReadAtAsc = 'READ_AT_ASC',
+  ReadAtDesc = 'READ_AT_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC'
+}
+
 /** A connection to a list of `Company` values. */
 export type CompaniesConnection = {
   __typename?: 'CompaniesConnection';
@@ -2343,8 +2349,8 @@ export enum CompaniesOrderBy {
 
 export type Company = Node & {
   __typename?: 'Company';
-  /** Reads a single `Admin` that is related to this `Company`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Company`. */
+  admin?: Maybe<User>;
   adminId: Scalars['BigInt']['output'];
   /** Reads and enables pagination through a set of `CompanyUser`. */
   companyUsers: CompanyUsersConnection;
@@ -3184,6 +3190,343 @@ export enum ComponentsOrderBy {
   UpdatedAtDesc = 'UPDATED_AT_DESC'
 }
 
+export type Conversation = Node & {
+  __typename?: 'Conversation';
+  /** Reads and enables pagination through a set of `ConversationUser`. */
+  conversationUsers: ConversationUsersConnection;
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  createdBy?: Maybe<Scalars['BigInt']['output']>;
+  id: Scalars['BigInt']['output'];
+  /** Reads and enables pagination through a set of `Message`. */
+  messages: MessagesConnection;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `Conversation`. */
+  userByCreatedBy?: Maybe<User>;
+  /** Reads and enables pagination through a set of `User`. */
+  usersByConversationUserConversationIdAndUserId: ConversationUsersByConversationUserConversationIdAndUserIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `User`. */
+  usersByMessageConversationIdAndSenderId: ConversationUsersByMessageConversationIdAndSenderIdManyToManyConnection;
+};
+
+
+export type ConversationConversationUsersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationUserCondition>;
+  filter?: InputMaybe<ConversationUserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
+};
+
+
+export type ConversationMessagesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<MessageCondition>;
+  filter?: InputMaybe<MessageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
+
+export type ConversationUsersByConversationUserConversationIdAndUserIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+
+export type ConversationUsersByMessageConversationIdAndSenderIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+/**
+ * A condition to be used against `Conversation` object types. All fields are
+ * tested for equality and combined with a logical ‘and.’
+ */
+export type ConversationCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `createdBy` field. */
+  createdBy?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A filter to be used against `Conversation` object types. All fields are combined with a logical ‘and.’ */
+export type ConversationFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<ConversationFilter>>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `createdBy` field. */
+  createdBy?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<ConversationFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<ConversationFilter>>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+};
+
+/** An input for mutations affecting `Conversation` */
+export type ConversationInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  createdBy?: InputMaybe<Scalars['BigInt']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** Represents an update to a `Conversation`. Fields that are set will be updated. */
+export type ConversationPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  createdBy?: InputMaybe<Scalars['BigInt']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+export type ConversationUser = Node & {
+  __typename?: 'ConversationUser';
+  /** Reads a single `Conversation` that is related to this `ConversationUser`. */
+  conversation?: Maybe<Conversation>;
+  conversationId: Scalars['BigInt']['output'];
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  id: Scalars['BigInt']['output'];
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `ConversationUser`. */
+  user?: Maybe<User>;
+  userId: Scalars['BigInt']['output'];
+};
+
+/**
+ * A condition to be used against `ConversationUser` object types. All fields are
+ * tested for equality and combined with a logical ‘and.’
+ */
+export type ConversationUserCondition = {
+  /** Checks for equality with the object’s `conversationId` field. */
+  conversationId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A filter to be used against `ConversationUser` object types. All fields are combined with a logical ‘and.’ */
+export type ConversationUserFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<ConversationUserFilter>>;
+  /** Filter by the object’s `conversationId` field. */
+  conversationId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<ConversationUserFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<ConversationUserFilter>>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<BigIntFilter>;
+};
+
+/** An input for mutations affecting `ConversationUser` */
+export type ConversationUserInput = {
+  conversationId: Scalars['BigInt']['input'];
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId: Scalars['BigInt']['input'];
+};
+
+/** Represents an update to a `ConversationUser`. Fields that are set will be updated. */
+export type ConversationUserPatch = {
+  conversationId?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A connection to a list of `User` values, with data from `ConversationUser`. */
+export type ConversationUsersByConversationUserConversationIdAndUserIdManyToManyConnection = {
+  __typename?: 'ConversationUsersByConversationUserConversationIdAndUserIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `ConversationUser`, and the cursor to aid in pagination. */
+  edges: Array<ConversationUsersByConversationUserConversationIdAndUserIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `ConversationUser`. */
+export type ConversationUsersByConversationUserConversationIdAndUserIdManyToManyEdge = {
+  __typename?: 'ConversationUsersByConversationUserConversationIdAndUserIdManyToManyEdge';
+  /** Reads and enables pagination through a set of `ConversationUser`. */
+  conversationUsers: ConversationUsersConnection;
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `User` at the end of the edge. */
+  node: User;
+};
+
+
+/** A `User` edge in the connection, with data from `ConversationUser`. */
+export type ConversationUsersByConversationUserConversationIdAndUserIdManyToManyEdgeConversationUsersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationUserCondition>;
+  filter?: InputMaybe<ConversationUserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
+};
+
+/** A connection to a list of `User` values, with data from `Message`. */
+export type ConversationUsersByMessageConversationIdAndSenderIdManyToManyConnection = {
+  __typename?: 'ConversationUsersByMessageConversationIdAndSenderIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `Message`, and the cursor to aid in pagination. */
+  edges: Array<ConversationUsersByMessageConversationIdAndSenderIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `Message`. */
+export type ConversationUsersByMessageConversationIdAndSenderIdManyToManyEdge = {
+  __typename?: 'ConversationUsersByMessageConversationIdAndSenderIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `Message`. */
+  messagesBySenderId: MessagesConnection;
+  /** The `User` at the end of the edge. */
+  node: User;
+};
+
+
+/** A `User` edge in the connection, with data from `Message`. */
+export type ConversationUsersByMessageConversationIdAndSenderIdManyToManyEdgeMessagesBySenderIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<MessageCondition>;
+  filter?: InputMaybe<MessageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
+/** A connection to a list of `ConversationUser` values. */
+export type ConversationUsersConnection = {
+  __typename?: 'ConversationUsersConnection';
+  /** A list of edges which contains the `ConversationUser` and cursor to aid in pagination. */
+  edges: Array<ConversationUsersEdge>;
+  /** A list of `ConversationUser` objects. */
+  nodes: Array<ConversationUser>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `ConversationUser` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `ConversationUser` edge in the connection. */
+export type ConversationUsersEdge = {
+  __typename?: 'ConversationUsersEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `ConversationUser` at the end of the edge. */
+  node: ConversationUser;
+};
+
+/** Methods to use when ordering `ConversationUser`. */
+export enum ConversationUsersOrderBy {
+  ConversationIdAsc = 'CONVERSATION_ID_ASC',
+  ConversationIdDesc = 'CONVERSATION_ID_DESC',
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC'
+}
+
+/** A connection to a list of `Conversation` values. */
+export type ConversationsConnection = {
+  __typename?: 'ConversationsConnection';
+  /** A list of edges which contains the `Conversation` and cursor to aid in pagination. */
+  edges: Array<ConversationsEdge>;
+  /** A list of `Conversation` objects. */
+  nodes: Array<Conversation>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Conversation` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Conversation` edge in the connection. */
+export type ConversationsEdge = {
+  __typename?: 'ConversationsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Conversation` at the end of the edge. */
+  node: Conversation;
+};
+
+/** Methods to use when ordering `Conversation`. */
+export enum ConversationsOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  CreatedByAsc = 'CREATED_BY_ASC',
+  CreatedByDesc = 'CREATED_BY_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC'
+}
+
 export type Course = Node & {
   __typename?: 'Course';
   /** Reads a single `User` that is related to this `Course`. */
@@ -3575,6 +3918,43 @@ export type CreateCertificationPayloadCertificationEdgeArgs = {
   orderBy?: InputMaybe<Array<CertificationsOrderBy>>;
 };
 
+/** All input for the create `ChatNotification` mutation. */
+export type CreateChatNotificationInput = {
+  /** The `ChatNotification` to be created by this mutation. */
+  chatNotification: ChatNotificationInput;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our create `ChatNotification` mutation. */
+export type CreateChatNotificationPayload = {
+  __typename?: 'CreateChatNotificationPayload';
+  /** The `ChatNotification` that was created by this mutation. */
+  chatNotification?: Maybe<ChatNotification>;
+  /** An edge for our `ChatNotification`. May be used by Relay 1. */
+  chatNotificationEdge?: Maybe<ChatNotificationsEdge>;
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Message` that is related to this `ChatNotification`. */
+  message?: Maybe<Message>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `ChatNotification`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our create `ChatNotification` mutation. */
+export type CreateChatNotificationPayloadChatNotificationEdgeArgs = {
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
+};
+
 /** All input for the create `Company` mutation. */
 export type CreateCompanyInput = {
   /**
@@ -3589,8 +3969,8 @@ export type CreateCompanyInput = {
 /** The output of our create `Company` mutation. */
 export type CreateCompanyPayload = {
   __typename?: 'CreateCompanyPayload';
-  /** Reads a single `Admin` that is related to this `Company`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Company`. */
+  admin?: Maybe<User>;
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
@@ -3756,6 +4136,78 @@ export type CreateComponentPropertyPayload = {
 /** The output of our create `ComponentProperty` mutation. */
 export type CreateComponentPropertyPayloadComponentPropertyEdgeArgs = {
   orderBy?: InputMaybe<Array<ComponentPropertiesOrderBy>>;
+};
+
+/** All input for the create `Conversation` mutation. */
+export type CreateConversationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `Conversation` to be created by this mutation. */
+  conversation: ConversationInput;
+};
+
+/** The output of our create `Conversation` mutation. */
+export type CreateConversationPayload = {
+  __typename?: 'CreateConversationPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `Conversation` that was created by this mutation. */
+  conversation?: Maybe<Conversation>;
+  /** An edge for our `Conversation`. May be used by Relay 1. */
+  conversationEdge?: Maybe<ConversationsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Conversation`. */
+  userByCreatedBy?: Maybe<User>;
+};
+
+
+/** The output of our create `Conversation` mutation. */
+export type CreateConversationPayloadConversationEdgeArgs = {
+  orderBy?: InputMaybe<Array<ConversationsOrderBy>>;
+};
+
+/** All input for the create `ConversationUser` mutation. */
+export type CreateConversationUserInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `ConversationUser` to be created by this mutation. */
+  conversationUser: ConversationUserInput;
+};
+
+/** The output of our create `ConversationUser` mutation. */
+export type CreateConversationUserPayload = {
+  __typename?: 'CreateConversationUserPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Conversation` that is related to this `ConversationUser`. */
+  conversation?: Maybe<Conversation>;
+  /** The `ConversationUser` that was created by this mutation. */
+  conversationUser?: Maybe<ConversationUser>;
+  /** An edge for our `ConversationUser`. May be used by Relay 1. */
+  conversationUserEdge?: Maybe<ConversationUsersEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `ConversationUser`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our create `ConversationUser` mutation. */
+export type CreateConversationUserPayloadConversationUserEdgeArgs = {
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
 };
 
 /** All input for the create `Course` mutation. */
@@ -5070,6 +5522,43 @@ export type CreateLoginTransactionPayloadLoginTransactionEdgeArgs = {
   orderBy?: InputMaybe<Array<LoginTransactionsOrderBy>>;
 };
 
+/** All input for the create `Message` mutation. */
+export type CreateMessageInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `Message` to be created by this mutation. */
+  message: MessageInput;
+};
+
+/** The output of our create `Message` mutation. */
+export type CreateMessagePayload = {
+  __typename?: 'CreateMessagePayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Conversation` that is related to this `Message`. */
+  conversation?: Maybe<Conversation>;
+  /** The `Message` that was created by this mutation. */
+  message?: Maybe<Message>;
+  /** An edge for our `Message`. May be used by Relay 1. */
+  messageEdge?: Maybe<MessagesEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Message`. */
+  sender?: Maybe<User>;
+};
+
+
+/** The output of our create `Message` mutation. */
+export type CreateMessagePayloadMessageEdgeArgs = {
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
 /** All input for the create `Metric` mutation. */
 export type CreateMetricInput = {
   /**
@@ -5426,8 +5915,8 @@ export type CreateProjectInput = {
 /** The output of our create `Project` mutation. */
 export type CreateProjectPayload = {
   __typename?: 'CreateProjectPayload';
-  /** Reads a single `Admin` that is related to this `Project`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Project`. */
+  admin?: Maybe<User>;
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
@@ -7113,6 +7602,54 @@ export type DeleteCertificationPayloadCertificationEdgeArgs = {
   orderBy?: InputMaybe<Array<CertificationsOrderBy>>;
 };
 
+/** All input for the `deleteChatNotificationByNodeId` mutation. */
+export type DeleteChatNotificationByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `ChatNotification` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteChatNotification` mutation. */
+export type DeleteChatNotificationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `ChatNotification` mutation. */
+export type DeleteChatNotificationPayload = {
+  __typename?: 'DeleteChatNotificationPayload';
+  /** The `ChatNotification` that was deleted by this mutation. */
+  chatNotification?: Maybe<ChatNotification>;
+  /** An edge for our `ChatNotification`. May be used by Relay 1. */
+  chatNotificationEdge?: Maybe<ChatNotificationsEdge>;
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedChatNotificationNodeId?: Maybe<Scalars['ID']['output']>;
+  /** Reads a single `Message` that is related to this `ChatNotification`. */
+  message?: Maybe<Message>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `ChatNotification`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our delete `ChatNotification` mutation. */
+export type DeleteChatNotificationPayloadChatNotificationEdgeArgs = {
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
+};
+
 /** All input for the `deleteCompanyByNodeId` mutation. */
 export type DeleteCompanyByNodeIdInput = {
   /**
@@ -7137,8 +7674,8 @@ export type DeleteCompanyInput = {
 /** The output of our delete `Company` mutation. */
 export type DeleteCompanyPayload = {
   __typename?: 'DeleteCompanyPayload';
-  /** Reads a single `Admin` that is related to this `Company`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Company`. */
+  admin?: Maybe<User>;
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
@@ -7321,6 +7858,100 @@ export type DeleteComponentPropertyPayload = {
 /** The output of our delete `ComponentProperty` mutation. */
 export type DeleteComponentPropertyPayloadComponentPropertyEdgeArgs = {
   orderBy?: InputMaybe<Array<ComponentPropertiesOrderBy>>;
+};
+
+/** All input for the `deleteConversationByNodeId` mutation. */
+export type DeleteConversationByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Conversation` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteConversation` mutation. */
+export type DeleteConversationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `Conversation` mutation. */
+export type DeleteConversationPayload = {
+  __typename?: 'DeleteConversationPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `Conversation` that was deleted by this mutation. */
+  conversation?: Maybe<Conversation>;
+  /** An edge for our `Conversation`. May be used by Relay 1. */
+  conversationEdge?: Maybe<ConversationsEdge>;
+  deletedConversationNodeId?: Maybe<Scalars['ID']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Conversation`. */
+  userByCreatedBy?: Maybe<User>;
+};
+
+
+/** The output of our delete `Conversation` mutation. */
+export type DeleteConversationPayloadConversationEdgeArgs = {
+  orderBy?: InputMaybe<Array<ConversationsOrderBy>>;
+};
+
+/** All input for the `deleteConversationUserByNodeId` mutation. */
+export type DeleteConversationUserByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `ConversationUser` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteConversationUser` mutation. */
+export type DeleteConversationUserInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `ConversationUser` mutation. */
+export type DeleteConversationUserPayload = {
+  __typename?: 'DeleteConversationUserPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Conversation` that is related to this `ConversationUser`. */
+  conversation?: Maybe<Conversation>;
+  /** The `ConversationUser` that was deleted by this mutation. */
+  conversationUser?: Maybe<ConversationUser>;
+  /** An edge for our `ConversationUser`. May be used by Relay 1. */
+  conversationUserEdge?: Maybe<ConversationUsersEdge>;
+  deletedConversationUserNodeId?: Maybe<Scalars['ID']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `ConversationUser`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our delete `ConversationUser` mutation. */
+export type DeleteConversationUserPayloadConversationUserEdgeArgs = {
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
 };
 
 /** All input for the `deleteCourseByNodeId` mutation. */
@@ -9071,6 +9702,54 @@ export type DeleteLoginTransactionPayloadLoginTransactionEdgeArgs = {
   orderBy?: InputMaybe<Array<LoginTransactionsOrderBy>>;
 };
 
+/** All input for the `deleteMessageByNodeId` mutation. */
+export type DeleteMessageByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Message` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteMessage` mutation. */
+export type DeleteMessageInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `Message` mutation. */
+export type DeleteMessagePayload = {
+  __typename?: 'DeleteMessagePayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Conversation` that is related to this `Message`. */
+  conversation?: Maybe<Conversation>;
+  deletedMessageNodeId?: Maybe<Scalars['ID']['output']>;
+  /** The `Message` that was deleted by this mutation. */
+  message?: Maybe<Message>;
+  /** An edge for our `Message`. May be used by Relay 1. */
+  messageEdge?: Maybe<MessagesEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Message`. */
+  sender?: Maybe<User>;
+};
+
+
+/** The output of our delete `Message` mutation. */
+export type DeleteMessagePayloadMessageEdgeArgs = {
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
 /** All input for the `deleteMetricByNodeId` mutation. */
 export type DeleteMetricByNodeIdInput = {
   /**
@@ -9514,8 +10193,8 @@ export type DeleteProjectInput = {
 /** The output of our delete `Project` mutation. */
 export type DeleteProjectPayload = {
   __typename?: 'DeleteProjectPayload';
-  /** Reads a single `Admin` that is related to this `Project`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Project`. */
+  admin?: Maybe<User>;
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
@@ -20123,6 +20802,213 @@ export enum LoginTransactionsOrderBy {
   UserIdDesc = 'USER_ID_DESC'
 }
 
+export type Message = Node & {
+  __typename?: 'Message';
+  /** Reads and enables pagination through a set of `ChatNotification`. */
+  chatNotifications: ChatNotificationsConnection;
+  /** Reads a single `Conversation` that is related to this `Message`. */
+  conversation?: Maybe<Conversation>;
+  conversationId?: Maybe<Scalars['BigInt']['output']>;
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  id: Scalars['BigInt']['output'];
+  isRead: Scalars['Boolean']['output'];
+  mediaUrl?: Maybe<Scalars['String']['output']>;
+  messageText?: Maybe<Scalars['String']['output']>;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  readAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `Message`. */
+  sender?: Maybe<User>;
+  senderId?: Maybe<Scalars['BigInt']['output']>;
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads and enables pagination through a set of `User`. */
+  usersByChatNotificationMessageIdAndUserId: MessageUsersByChatNotificationMessageIdAndUserIdManyToManyConnection;
+};
+
+
+export type MessageChatNotificationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ChatNotificationCondition>;
+  filter?: InputMaybe<ChatNotificationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
+};
+
+
+export type MessageUsersByChatNotificationMessageIdAndUserIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+/** A condition to be used against `Message` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type MessageCondition = {
+  /** Checks for equality with the object’s `conversationId` field. */
+  conversationId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `isRead` field. */
+  isRead?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `mediaUrl` field. */
+  mediaUrl?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `messageText` field. */
+  messageText?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `readAt` field. */
+  readAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `senderId` field. */
+  senderId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A filter to be used against `Message` object types. All fields are combined with a logical ‘and.’ */
+export type MessageFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<MessageFilter>>;
+  /** Filter by the object’s `conversationId` field. */
+  conversationId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `isRead` field. */
+  isRead?: InputMaybe<BooleanFilter>;
+  /** Filter by the object’s `mediaUrl` field. */
+  mediaUrl?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `messageText` field. */
+  messageText?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<MessageFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<MessageFilter>>;
+  /** Filter by the object’s `readAt` field. */
+  readAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `senderId` field. */
+  senderId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+};
+
+/** An input for mutations affecting `Message` */
+export type MessageInput = {
+  conversationId?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  isRead?: InputMaybe<Scalars['Boolean']['input']>;
+  mediaUrl?: InputMaybe<Scalars['String']['input']>;
+  messageText?: InputMaybe<Scalars['String']['input']>;
+  readAt?: InputMaybe<Scalars['Datetime']['input']>;
+  senderId?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** Represents an update to a `Message`. Fields that are set will be updated. */
+export type MessagePatch = {
+  conversationId?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  isRead?: InputMaybe<Scalars['Boolean']['input']>;
+  mediaUrl?: InputMaybe<Scalars['String']['input']>;
+  messageText?: InputMaybe<Scalars['String']['input']>;
+  readAt?: InputMaybe<Scalars['Datetime']['input']>;
+  senderId?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A connection to a list of `User` values, with data from `ChatNotification`. */
+export type MessageUsersByChatNotificationMessageIdAndUserIdManyToManyConnection = {
+  __typename?: 'MessageUsersByChatNotificationMessageIdAndUserIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `ChatNotification`, and the cursor to aid in pagination. */
+  edges: Array<MessageUsersByChatNotificationMessageIdAndUserIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `ChatNotification`. */
+export type MessageUsersByChatNotificationMessageIdAndUserIdManyToManyEdge = {
+  __typename?: 'MessageUsersByChatNotificationMessageIdAndUserIdManyToManyEdge';
+  /** Reads and enables pagination through a set of `ChatNotification`. */
+  chatNotifications: ChatNotificationsConnection;
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `User` at the end of the edge. */
+  node: User;
+};
+
+
+/** A `User` edge in the connection, with data from `ChatNotification`. */
+export type MessageUsersByChatNotificationMessageIdAndUserIdManyToManyEdgeChatNotificationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ChatNotificationCondition>;
+  filter?: InputMaybe<ChatNotificationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
+};
+
+/** A connection to a list of `Message` values. */
+export type MessagesConnection = {
+  __typename?: 'MessagesConnection';
+  /** A list of edges which contains the `Message` and cursor to aid in pagination. */
+  edges: Array<MessagesEdge>;
+  /** A list of `Message` objects. */
+  nodes: Array<Message>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Message` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Message` edge in the connection. */
+export type MessagesEdge = {
+  __typename?: 'MessagesEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Message` at the end of the edge. */
+  node: Message;
+};
+
+/** Methods to use when ordering `Message`. */
+export enum MessagesOrderBy {
+  ConversationIdAsc = 'CONVERSATION_ID_ASC',
+  ConversationIdDesc = 'CONVERSATION_ID_DESC',
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  IsReadAsc = 'IS_READ_ASC',
+  IsReadDesc = 'IS_READ_DESC',
+  MediaUrlAsc = 'MEDIA_URL_ASC',
+  MediaUrlDesc = 'MEDIA_URL_DESC',
+  MessageTextAsc = 'MESSAGE_TEXT_ASC',
+  MessageTextDesc = 'MESSAGE_TEXT_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  ReadAtAsc = 'READ_AT_ASC',
+  ReadAtDesc = 'READ_AT_DESC',
+  SenderIdAsc = 'SENDER_ID_ASC',
+  SenderIdDesc = 'SENDER_ID_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC'
+}
+
 export type Metric = Node & {
   __typename?: 'Metric';
   /** Reads and enables pagination through a set of `Admin`. */
@@ -20514,6 +21400,8 @@ export type Mutation = {
   createAvailable?: Maybe<CreateAvailablePayload>;
   /** Creates a single `Certification`. */
   createCertification?: Maybe<CreateCertificationPayload>;
+  /** Creates a single `ChatNotification`. */
+  createChatNotification?: Maybe<CreateChatNotificationPayload>;
   /** Creates a single `Company`. */
   createCompany?: Maybe<CreateCompanyPayload>;
   /** Creates a single `CompanyUser`. */
@@ -20524,6 +21412,10 @@ export type Mutation = {
   createComponentEvent?: Maybe<CreateComponentEventPayload>;
   /** Creates a single `ComponentProperty`. */
   createComponentProperty?: Maybe<CreateComponentPropertyPayload>;
+  /** Creates a single `Conversation`. */
+  createConversation?: Maybe<CreateConversationPayload>;
+  /** Creates a single `ConversationUser`. */
+  createConversationUser?: Maybe<CreateConversationUserPayload>;
   /** Creates a single `Course`. */
   createCourse?: Maybe<CreateCoursePayload>;
   /** Creates a single `Datatype`. */
@@ -20596,6 +21488,8 @@ export type Mutation = {
   createLanguage?: Maybe<CreateLanguagePayload>;
   /** Creates a single `LoginTransaction`. */
   createLoginTransaction?: Maybe<CreateLoginTransactionPayload>;
+  /** Creates a single `Message`. */
+  createMessage?: Maybe<CreateMessagePayload>;
   /** Creates a single `Metric`. */
   createMetric?: Maybe<CreateMetricPayload>;
   /** Creates a single `Migration`. */
@@ -20708,6 +21602,10 @@ export type Mutation = {
   deleteCertification?: Maybe<DeleteCertificationPayload>;
   /** Deletes a single `Certification` using its globally unique id. */
   deleteCertificationByNodeId?: Maybe<DeleteCertificationPayload>;
+  /** Deletes a single `ChatNotification` using a unique key. */
+  deleteChatNotification?: Maybe<DeleteChatNotificationPayload>;
+  /** Deletes a single `ChatNotification` using its globally unique id. */
+  deleteChatNotificationByNodeId?: Maybe<DeleteChatNotificationPayload>;
   /** Deletes a single `Company` using a unique key. */
   deleteCompany?: Maybe<DeleteCompanyPayload>;
   /** Deletes a single `Company` using its globally unique id. */
@@ -20728,6 +21626,14 @@ export type Mutation = {
   deleteComponentProperty?: Maybe<DeleteComponentPropertyPayload>;
   /** Deletes a single `ComponentProperty` using its globally unique id. */
   deleteComponentPropertyByNodeId?: Maybe<DeleteComponentPropertyPayload>;
+  /** Deletes a single `Conversation` using a unique key. */
+  deleteConversation?: Maybe<DeleteConversationPayload>;
+  /** Deletes a single `Conversation` using its globally unique id. */
+  deleteConversationByNodeId?: Maybe<DeleteConversationPayload>;
+  /** Deletes a single `ConversationUser` using a unique key. */
+  deleteConversationUser?: Maybe<DeleteConversationUserPayload>;
+  /** Deletes a single `ConversationUser` using its globally unique id. */
+  deleteConversationUserByNodeId?: Maybe<DeleteConversationUserPayload>;
   /** Deletes a single `Course` using a unique key. */
   deleteCourse?: Maybe<DeleteCoursePayload>;
   /** Deletes a single `Course` using its globally unique id. */
@@ -20884,6 +21790,10 @@ export type Mutation = {
   deleteLoginTransaction?: Maybe<DeleteLoginTransactionPayload>;
   /** Deletes a single `LoginTransaction` using its globally unique id. */
   deleteLoginTransactionByNodeId?: Maybe<DeleteLoginTransactionPayload>;
+  /** Deletes a single `Message` using a unique key. */
+  deleteMessage?: Maybe<DeleteMessagePayload>;
+  /** Deletes a single `Message` using its globally unique id. */
+  deleteMessageByNodeId?: Maybe<DeleteMessagePayload>;
   /** Deletes a single `Metric` using a unique key. */
   deleteMetric?: Maybe<DeleteMetricPayload>;
   /** Deletes a single `Metric` using its globally unique id. */
@@ -21084,6 +21994,10 @@ export type Mutation = {
   updateCertification?: Maybe<UpdateCertificationPayload>;
   /** Updates a single `Certification` using its globally unique id and a patch. */
   updateCertificationByNodeId?: Maybe<UpdateCertificationPayload>;
+  /** Updates a single `ChatNotification` using a unique key and a patch. */
+  updateChatNotification?: Maybe<UpdateChatNotificationPayload>;
+  /** Updates a single `ChatNotification` using its globally unique id and a patch. */
+  updateChatNotificationByNodeId?: Maybe<UpdateChatNotificationPayload>;
   /** Updates a single `Company` using a unique key and a patch. */
   updateCompany?: Maybe<UpdateCompanyPayload>;
   /** Updates a single `Company` using its globally unique id and a patch. */
@@ -21104,6 +22018,14 @@ export type Mutation = {
   updateComponentProperty?: Maybe<UpdateComponentPropertyPayload>;
   /** Updates a single `ComponentProperty` using its globally unique id and a patch. */
   updateComponentPropertyByNodeId?: Maybe<UpdateComponentPropertyPayload>;
+  /** Updates a single `Conversation` using a unique key and a patch. */
+  updateConversation?: Maybe<UpdateConversationPayload>;
+  /** Updates a single `Conversation` using its globally unique id and a patch. */
+  updateConversationByNodeId?: Maybe<UpdateConversationPayload>;
+  /** Updates a single `ConversationUser` using a unique key and a patch. */
+  updateConversationUser?: Maybe<UpdateConversationUserPayload>;
+  /** Updates a single `ConversationUser` using its globally unique id and a patch. */
+  updateConversationUserByNodeId?: Maybe<UpdateConversationUserPayload>;
   /** Updates a single `Course` using a unique key and a patch. */
   updateCourse?: Maybe<UpdateCoursePayload>;
   /** Updates a single `Course` using its globally unique id and a patch. */
@@ -21260,6 +22182,10 @@ export type Mutation = {
   updateLoginTransaction?: Maybe<UpdateLoginTransactionPayload>;
   /** Updates a single `LoginTransaction` using its globally unique id and a patch. */
   updateLoginTransactionByNodeId?: Maybe<UpdateLoginTransactionPayload>;
+  /** Updates a single `Message` using a unique key and a patch. */
+  updateMessage?: Maybe<UpdateMessagePayload>;
+  /** Updates a single `Message` using its globally unique id and a patch. */
+  updateMessageByNodeId?: Maybe<UpdateMessagePayload>;
   /** Updates a single `Metric` using a unique key and a patch. */
   updateMetric?: Maybe<UpdateMetricPayload>;
   /** Updates a single `Metric` using its globally unique id and a patch. */
@@ -21478,6 +22404,12 @@ export type MutationCreateCertificationArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateChatNotificationArgs = {
+  input: CreateChatNotificationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateCompanyArgs = {
   input: CreateCompanyInput;
 };
@@ -21504,6 +22436,18 @@ export type MutationCreateComponentEventArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateComponentPropertyArgs = {
   input: CreateComponentPropertyInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateConversationArgs = {
+  input: CreateConversationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateConversationUserArgs = {
+  input: CreateConversationUserInput;
 };
 
 
@@ -21720,6 +22664,12 @@ export type MutationCreateLanguageArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateLoginTransactionArgs = {
   input: CreateLoginTransactionInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateMessageArgs = {
+  input: CreateMessageInput;
 };
 
 
@@ -22060,6 +23010,18 @@ export type MutationDeleteCertificationByNodeIdArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteChatNotificationArgs = {
+  input: DeleteChatNotificationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteChatNotificationByNodeIdArgs = {
+  input: DeleteChatNotificationByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteCompanyArgs = {
   input: DeleteCompanyInput;
 };
@@ -22116,6 +23078,30 @@ export type MutationDeleteComponentPropertyArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteComponentPropertyByNodeIdArgs = {
   input: DeleteComponentPropertyByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteConversationArgs = {
+  input: DeleteConversationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteConversationByNodeIdArgs = {
+  input: DeleteConversationByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteConversationUserArgs = {
+  input: DeleteConversationUserInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteConversationUserByNodeIdArgs = {
+  input: DeleteConversationUserByNodeIdInput;
 };
 
 
@@ -22584,6 +23570,18 @@ export type MutationDeleteLoginTransactionArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteLoginTransactionByNodeIdArgs = {
   input: DeleteLoginTransactionByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteMessageArgs = {
+  input: DeleteMessageInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteMessageByNodeIdArgs = {
+  input: DeleteMessageByNodeIdInput;
 };
 
 
@@ -23188,6 +24186,18 @@ export type MutationUpdateCertificationByNodeIdArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateChatNotificationArgs = {
+  input: UpdateChatNotificationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateChatNotificationByNodeIdArgs = {
+  input: UpdateChatNotificationByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateCompanyArgs = {
   input: UpdateCompanyInput;
 };
@@ -23244,6 +24254,30 @@ export type MutationUpdateComponentPropertyArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateComponentPropertyByNodeIdArgs = {
   input: UpdateComponentPropertyByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateConversationArgs = {
+  input: UpdateConversationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateConversationByNodeIdArgs = {
+  input: UpdateConversationByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateConversationUserArgs = {
+  input: UpdateConversationUserInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateConversationUserByNodeIdArgs = {
+  input: UpdateConversationUserByNodeIdInput;
 };
 
 
@@ -23712,6 +24746,18 @@ export type MutationUpdateLoginTransactionArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateLoginTransactionByNodeIdArgs = {
   input: UpdateLoginTransactionByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateMessageArgs = {
+  input: UpdateMessageInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateMessageByNodeIdArgs = {
+  input: UpdateMessageByNodeIdInput;
 };
 
 
@@ -24487,11 +25533,7 @@ export type Organization = Node & {
   admin?: Maybe<Admin>;
   adminId: Scalars['BigInt']['output'];
   /** Reads and enables pagination through a set of `Admin`. */
-  adminsByCompanyOrganizationIdAndAdminId: OrganizationAdminsByCompanyOrganizationIdAndAdminIdManyToManyConnection;
-  /** Reads and enables pagination through a set of `Admin`. */
   adminsByGroupOrganizationIdAndAdminId: OrganizationAdminsByGroupOrganizationIdAndAdminIdManyToManyConnection;
-  /** Reads and enables pagination through a set of `Admin`. */
-  adminsByProjectOrganizationIdAndAdminId: OrganizationAdminsByProjectOrganizationIdAndAdminIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Admin`. */
   adminsBySchedulerOrgIdAndAdminId: OrganizationAdminsBySchedulerOrgIdAndAdminIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Admin`. */
@@ -24570,6 +25612,8 @@ export type Organization = Node & {
   /** Reads and enables pagination through a set of `User`. */
   usersByCertificationOrganizationIdAndAdminId: OrganizationUsersByCertificationOrganizationIdAndAdminIdManyToManyConnection;
   /** Reads and enables pagination through a set of `User`. */
+  usersByCompanyOrganizationIdAndAdminId: OrganizationUsersByCompanyOrganizationIdAndAdminIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `User`. */
   usersByCourseOrganizationIdAndAdminId: OrganizationUsersByCourseOrganizationIdAndAdminIdManyToManyConnection;
   /** Reads and enables pagination through a set of `User`. */
   usersByEquipmentOrganizationIdAndPreparedBy: OrganizationUsersByEquipmentOrganizationIdAndPreparedByManyToManyConnection;
@@ -24577,6 +25621,8 @@ export type Organization = Node & {
   usersByJobOrganizationIdAndAdminId: OrganizationUsersByJobOrganizationIdAndAdminIdManyToManyConnection;
   /** Reads and enables pagination through a set of `User`. */
   usersByOrganizationUserOrganizationIdAndUserId: OrganizationUsersByOrganizationUserOrganizationIdAndUserIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `User`. */
+  usersByProjectOrganizationIdAndAdminId: OrganizationUsersByProjectOrganizationIdAndAdminIdManyToManyConnection;
   /** Reads and enables pagination through a set of `User`. */
   usersByRoleUserOrganizationOrgIdAndUserId: OrganizationUsersByRoleUserOrganizationOrgIdAndUserIdManyToManyConnection;
   /** Reads and enables pagination through a set of `User`. */
@@ -24589,31 +25635,7 @@ export type Organization = Node & {
 };
 
 
-export type OrganizationAdminsByCompanyOrganizationIdAndAdminIdArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<AdminCondition>;
-  filter?: InputMaybe<AdminFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<AdminsOrderBy>>;
-};
-
-
 export type OrganizationAdminsByGroupOrganizationIdAndAdminIdArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<AdminCondition>;
-  filter?: InputMaybe<AdminFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<AdminsOrderBy>>;
-};
-
-
-export type OrganizationAdminsByProjectOrganizationIdAndAdminIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<AdminCondition>;
@@ -25045,6 +26067,18 @@ export type OrganizationUsersByCertificationOrganizationIdAndAdminIdArgs = {
 };
 
 
+export type OrganizationUsersByCompanyOrganizationIdAndAdminIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+
 export type OrganizationUsersByCourseOrganizationIdAndAdminIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -25082,6 +26116,18 @@ export type OrganizationUsersByJobOrganizationIdAndAdminIdArgs = {
 
 
 export type OrganizationUsersByOrganizationUserOrganizationIdAndUserIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+
+export type OrganizationUsersByProjectOrganizationIdAndAdminIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<UserCondition>;
@@ -25140,43 +26186,6 @@ export type OrganizationWorkTypesArgs = {
   orderBy?: InputMaybe<Array<WorkTypesOrderBy>>;
 };
 
-/** A connection to a list of `Admin` values, with data from `Company`. */
-export type OrganizationAdminsByCompanyOrganizationIdAndAdminIdManyToManyConnection = {
-  __typename?: 'OrganizationAdminsByCompanyOrganizationIdAndAdminIdManyToManyConnection';
-  /** A list of edges which contains the `Admin`, info from the `Company`, and the cursor to aid in pagination. */
-  edges: Array<OrganizationAdminsByCompanyOrganizationIdAndAdminIdManyToManyEdge>;
-  /** A list of `Admin` objects. */
-  nodes: Array<Admin>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `Admin` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-};
-
-/** A `Admin` edge in the connection, with data from `Company`. */
-export type OrganizationAdminsByCompanyOrganizationIdAndAdminIdManyToManyEdge = {
-  __typename?: 'OrganizationAdminsByCompanyOrganizationIdAndAdminIdManyToManyEdge';
-  /** Reads and enables pagination through a set of `Company`. */
-  companies: CompaniesConnection;
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `Admin` at the end of the edge. */
-  node: Admin;
-};
-
-
-/** A `Admin` edge in the connection, with data from `Company`. */
-export type OrganizationAdminsByCompanyOrganizationIdAndAdminIdManyToManyEdgeCompaniesArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<CompanyCondition>;
-  filter?: InputMaybe<CompanyFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<CompaniesOrderBy>>;
-};
-
 /** A connection to a list of `Admin` values, with data from `Group`. */
 export type OrganizationAdminsByGroupOrganizationIdAndAdminIdManyToManyConnection = {
   __typename?: 'OrganizationAdminsByGroupOrganizationIdAndAdminIdManyToManyConnection';
@@ -25212,43 +26221,6 @@ export type OrganizationAdminsByGroupOrganizationIdAndAdminIdManyToManyEdgeGroup
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<GroupsOrderBy>>;
-};
-
-/** A connection to a list of `Admin` values, with data from `Project`. */
-export type OrganizationAdminsByProjectOrganizationIdAndAdminIdManyToManyConnection = {
-  __typename?: 'OrganizationAdminsByProjectOrganizationIdAndAdminIdManyToManyConnection';
-  /** A list of edges which contains the `Admin`, info from the `Project`, and the cursor to aid in pagination. */
-  edges: Array<OrganizationAdminsByProjectOrganizationIdAndAdminIdManyToManyEdge>;
-  /** A list of `Admin` objects. */
-  nodes: Array<Admin>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `Admin` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-};
-
-/** A `Admin` edge in the connection, with data from `Project`. */
-export type OrganizationAdminsByProjectOrganizationIdAndAdminIdManyToManyEdge = {
-  __typename?: 'OrganizationAdminsByProjectOrganizationIdAndAdminIdManyToManyEdge';
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `Admin` at the end of the edge. */
-  node: Admin;
-  /** Reads and enables pagination through a set of `Project`. */
-  projects: ProjectsConnection;
-};
-
-
-/** A `Admin` edge in the connection, with data from `Project`. */
-export type OrganizationAdminsByProjectOrganizationIdAndAdminIdManyToManyEdgeProjectsArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<ProjectCondition>;
-  filter?: InputMaybe<ProjectFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
 };
 
 /** A connection to a list of `Admin` values, with data from `Scheduler`. */
@@ -26060,6 +27032,43 @@ export type OrganizationUsersByCertificationOrganizationIdAndAdminIdManyToManyEd
   orderBy?: InputMaybe<Array<CertificationsOrderBy>>;
 };
 
+/** A connection to a list of `User` values, with data from `Company`. */
+export type OrganizationUsersByCompanyOrganizationIdAndAdminIdManyToManyConnection = {
+  __typename?: 'OrganizationUsersByCompanyOrganizationIdAndAdminIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `Company`, and the cursor to aid in pagination. */
+  edges: Array<OrganizationUsersByCompanyOrganizationIdAndAdminIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `Company`. */
+export type OrganizationUsersByCompanyOrganizationIdAndAdminIdManyToManyEdge = {
+  __typename?: 'OrganizationUsersByCompanyOrganizationIdAndAdminIdManyToManyEdge';
+  /** Reads and enables pagination through a set of `Company`. */
+  companiesByAdminId: CompaniesConnection;
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `User` at the end of the edge. */
+  node: User;
+};
+
+
+/** A `User` edge in the connection, with data from `Company`. */
+export type OrganizationUsersByCompanyOrganizationIdAndAdminIdManyToManyEdgeCompaniesByAdminIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<CompanyCondition>;
+  filter?: InputMaybe<CompanyFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<CompaniesOrderBy>>;
+};
+
 /** A connection to a list of `User` values, with data from `Course`. */
 export type OrganizationUsersByCourseOrganizationIdAndAdminIdManyToManyConnection = {
   __typename?: 'OrganizationUsersByCourseOrganizationIdAndAdminIdManyToManyConnection';
@@ -26193,6 +27202,43 @@ export type OrganizationUsersByOrganizationUserOrganizationIdAndUserIdManyToMany
   /** The `User` at the end of the edge. */
   node: User;
   updatedAt?: Maybe<Scalars['Datetime']['output']>;
+};
+
+/** A connection to a list of `User` values, with data from `Project`. */
+export type OrganizationUsersByProjectOrganizationIdAndAdminIdManyToManyConnection = {
+  __typename?: 'OrganizationUsersByProjectOrganizationIdAndAdminIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `Project`, and the cursor to aid in pagination. */
+  edges: Array<OrganizationUsersByProjectOrganizationIdAndAdminIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `Project`. */
+export type OrganizationUsersByProjectOrganizationIdAndAdminIdManyToManyEdge = {
+  __typename?: 'OrganizationUsersByProjectOrganizationIdAndAdminIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `User` at the end of the edge. */
+  node: User;
+  /** Reads and enables pagination through a set of `Project`. */
+  projectsByAdminId: ProjectsConnection;
+};
+
+
+/** A `User` edge in the connection, with data from `Project`. */
+export type OrganizationUsersByProjectOrganizationIdAndAdminIdManyToManyEdgeProjectsByAdminIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ProjectCondition>;
+  filter?: InputMaybe<ProjectFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
 };
 
 /** A connection to a list of `User` values, with data from `RoleUserOrganization`. */
@@ -27113,8 +28159,8 @@ export enum ProfilesOrderBy {
 
 export type Project = Node & {
   __typename?: 'Project';
-  /** Reads a single `Admin` that is related to this `Project`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Project`. */
+  admin?: Maybe<User>;
   adminId?: Maybe<Scalars['BigInt']['output']>;
   createdAt?: Maybe<Scalars['Datetime']['output']>;
   deletedAt?: Maybe<Scalars['Datetime']['output']>;
@@ -27927,6 +28973,11 @@ export type Query = Node & {
   certificationByNodeId?: Maybe<Certification>;
   /** Reads and enables pagination through a set of `Certification`. */
   certifications?: Maybe<CertificationsConnection>;
+  chatNotification?: Maybe<ChatNotification>;
+  /** Reads a single `ChatNotification` using its globally unique `ID`. */
+  chatNotificationByNodeId?: Maybe<ChatNotification>;
+  /** Reads and enables pagination through a set of `ChatNotification`. */
+  chatNotifications?: Maybe<ChatNotificationsConnection>;
   /** Reads and enables pagination through a set of `Company`. */
   companies?: Maybe<CompaniesConnection>;
   company?: Maybe<Company>;
@@ -27951,6 +29002,16 @@ export type Query = Node & {
   componentPropertyByNodeId?: Maybe<ComponentProperty>;
   /** Reads and enables pagination through a set of `Component`. */
   components?: Maybe<ComponentsConnection>;
+  conversation?: Maybe<Conversation>;
+  /** Reads a single `Conversation` using its globally unique `ID`. */
+  conversationByNodeId?: Maybe<Conversation>;
+  conversationUser?: Maybe<ConversationUser>;
+  /** Reads a single `ConversationUser` using its globally unique `ID`. */
+  conversationUserByNodeId?: Maybe<ConversationUser>;
+  /** Reads and enables pagination through a set of `ConversationUser`. */
+  conversationUsers?: Maybe<ConversationUsersConnection>;
+  /** Reads and enables pagination through a set of `Conversation`. */
+  conversations?: Maybe<ConversationsConnection>;
   course?: Maybe<Course>;
   /** Reads a single `Course` using its globally unique `ID`. */
   courseByNodeId?: Maybe<Course>;
@@ -28138,6 +29199,11 @@ export type Query = Node & {
   loginTransactionByNodeId?: Maybe<LoginTransaction>;
   /** Reads and enables pagination through a set of `LoginTransaction`. */
   loginTransactions?: Maybe<LoginTransactionsConnection>;
+  message?: Maybe<Message>;
+  /** Reads a single `Message` using its globally unique `ID`. */
+  messageByNodeId?: Maybe<Message>;
+  /** Reads and enables pagination through a set of `Message`. */
+  messages?: Maybe<MessagesConnection>;
   metric?: Maybe<Metric>;
   /** Reads a single `Metric` using its globally unique `ID`. */
   metricByNodeId?: Maybe<Metric>;
@@ -28540,6 +29606,31 @@ export type QueryCertificationsArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
+export type QueryChatNotificationArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryChatNotificationByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryChatNotificationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ChatNotificationCondition>;
+  filter?: InputMaybe<ChatNotificationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
 export type QueryCompaniesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -28661,6 +29752,56 @@ export type QueryComponentsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<ComponentsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryConversationArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryConversationByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryConversationUserArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryConversationUserByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryConversationUsersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationUserCondition>;
+  filter?: InputMaybe<ConversationUserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryConversationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationCondition>;
+  filter?: InputMaybe<ConversationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationsOrderBy>>;
 };
 
 
@@ -29617,6 +30758,31 @@ export type QueryLoginTransactionsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<LoginTransactionsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryMessageArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryMessageByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryMessagesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<MessageCondition>;
+  filter?: InputMaybe<MessageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
 };
 
 
@@ -35844,6 +37010,57 @@ export type UpdateCertificationPayloadCertificationEdgeArgs = {
   orderBy?: InputMaybe<Array<CertificationsOrderBy>>;
 };
 
+/** All input for the `updateChatNotificationByNodeId` mutation. */
+export type UpdateChatNotificationByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `ChatNotification` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `ChatNotification` being updated. */
+  patch: ChatNotificationPatch;
+};
+
+/** All input for the `updateChatNotification` mutation. */
+export type UpdateChatNotificationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `ChatNotification` being updated. */
+  patch: ChatNotificationPatch;
+};
+
+/** The output of our update `ChatNotification` mutation. */
+export type UpdateChatNotificationPayload = {
+  __typename?: 'UpdateChatNotificationPayload';
+  /** The `ChatNotification` that was updated by this mutation. */
+  chatNotification?: Maybe<ChatNotification>;
+  /** An edge for our `ChatNotification`. May be used by Relay 1. */
+  chatNotificationEdge?: Maybe<ChatNotificationsEdge>;
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Message` that is related to this `ChatNotification`. */
+  message?: Maybe<Message>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `ChatNotification`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our update `ChatNotification` mutation. */
+export type UpdateChatNotificationPayloadChatNotificationEdgeArgs = {
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
+};
+
 /** All input for the `updateCompanyByNodeId` mutation. */
 export type UpdateCompanyByNodeIdInput = {
   /**
@@ -35872,8 +37089,8 @@ export type UpdateCompanyInput = {
 /** The output of our update `Company` mutation. */
 export type UpdateCompanyPayload = {
   __typename?: 'UpdateCompanyPayload';
-  /** Reads a single `Admin` that is related to this `Company`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Company`. */
+  admin?: Maybe<User>;
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
@@ -36068,6 +37285,106 @@ export type UpdateComponentPropertyPayload = {
 /** The output of our update `ComponentProperty` mutation. */
 export type UpdateComponentPropertyPayloadComponentPropertyEdgeArgs = {
   orderBy?: InputMaybe<Array<ComponentPropertiesOrderBy>>;
+};
+
+/** All input for the `updateConversationByNodeId` mutation. */
+export type UpdateConversationByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Conversation` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `Conversation` being updated. */
+  patch: ConversationPatch;
+};
+
+/** All input for the `updateConversation` mutation. */
+export type UpdateConversationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `Conversation` being updated. */
+  patch: ConversationPatch;
+};
+
+/** The output of our update `Conversation` mutation. */
+export type UpdateConversationPayload = {
+  __typename?: 'UpdateConversationPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `Conversation` that was updated by this mutation. */
+  conversation?: Maybe<Conversation>;
+  /** An edge for our `Conversation`. May be used by Relay 1. */
+  conversationEdge?: Maybe<ConversationsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Conversation`. */
+  userByCreatedBy?: Maybe<User>;
+};
+
+
+/** The output of our update `Conversation` mutation. */
+export type UpdateConversationPayloadConversationEdgeArgs = {
+  orderBy?: InputMaybe<Array<ConversationsOrderBy>>;
+};
+
+/** All input for the `updateConversationUserByNodeId` mutation. */
+export type UpdateConversationUserByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `ConversationUser` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `ConversationUser` being updated. */
+  patch: ConversationUserPatch;
+};
+
+/** All input for the `updateConversationUser` mutation. */
+export type UpdateConversationUserInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `ConversationUser` being updated. */
+  patch: ConversationUserPatch;
+};
+
+/** The output of our update `ConversationUser` mutation. */
+export type UpdateConversationUserPayload = {
+  __typename?: 'UpdateConversationUserPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Conversation` that is related to this `ConversationUser`. */
+  conversation?: Maybe<Conversation>;
+  /** The `ConversationUser` that was updated by this mutation. */
+  conversationUser?: Maybe<ConversationUser>;
+  /** An edge for our `ConversationUser`. May be used by Relay 1. */
+  conversationUserEdge?: Maybe<ConversationUsersEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `ConversationUser`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our update `ConversationUser` mutation. */
+export type UpdateConversationUserPayloadConversationUserEdgeArgs = {
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
 };
 
 /** All input for the `updateCourseByNodeId` mutation. */
@@ -37939,6 +39256,57 @@ export type UpdateLoginTransactionPayloadLoginTransactionEdgeArgs = {
   orderBy?: InputMaybe<Array<LoginTransactionsOrderBy>>;
 };
 
+/** All input for the `updateMessageByNodeId` mutation. */
+export type UpdateMessageByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Message` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `Message` being updated. */
+  patch: MessagePatch;
+};
+
+/** All input for the `updateMessage` mutation. */
+export type UpdateMessageInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `Message` being updated. */
+  patch: MessagePatch;
+};
+
+/** The output of our update `Message` mutation. */
+export type UpdateMessagePayload = {
+  __typename?: 'UpdateMessagePayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Conversation` that is related to this `Message`. */
+  conversation?: Maybe<Conversation>;
+  /** The `Message` that was updated by this mutation. */
+  message?: Maybe<Message>;
+  /** An edge for our `Message`. May be used by Relay 1. */
+  messageEdge?: Maybe<MessagesEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Message`. */
+  sender?: Maybe<User>;
+};
+
+
+/** The output of our update `Message` mutation. */
+export type UpdateMessagePayloadMessageEdgeArgs = {
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
 /** All input for the `updateMetricByNodeId` mutation. */
 export type UpdateMetricByNodeIdInput = {
   /**
@@ -38415,8 +39783,8 @@ export type UpdateProjectInput = {
 /** The output of our update `Project` mutation. */
 export type UpdateProjectPayload = {
   __typename?: 'UpdateProjectPayload';
-  /** Reads a single `Admin` that is related to this `Project`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Project`. */
+  admin?: Maybe<User>;
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
@@ -39939,12 +41307,24 @@ export type User = Node & {
   cardLastFour?: Maybe<Scalars['String']['output']>;
   /** Reads and enables pagination through a set of `Certification`. */
   certificationsByAdminId: CertificationsConnection;
+  /** Reads and enables pagination through a set of `ChatNotification`. */
+  chatNotifications: ChatNotificationsConnection;
   /** Reads and enables pagination through a set of `User`. */
   childUsers: UsersConnection;
+  /** Reads and enables pagination through a set of `Company`. */
+  companiesByAdminId: CompaniesConnection;
   /** Reads and enables pagination through a set of `Company`. */
   companiesByCompanyUserUserIdAndCompanyId: UserCompaniesByCompanyUserUserIdAndCompanyIdManyToManyConnection;
   /** Reads and enables pagination through a set of `CompanyUser`. */
   companyUsers: CompanyUsersConnection;
+  /** Reads and enables pagination through a set of `ConversationUser`. */
+  conversationUsers: ConversationUsersConnection;
+  /** Reads and enables pagination through a set of `Conversation`. */
+  conversationsByConversationUserUserIdAndConversationId: UserConversationsByConversationUserUserIdAndConversationIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `Conversation`. */
+  conversationsByCreatedBy: ConversationsConnection;
+  /** Reads and enables pagination through a set of `Conversation`. */
+  conversationsByMessageSenderIdAndConversationId: UserConversationsByMessageSenderIdAndConversationIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Course`. */
   coursesByAdminId: CoursesConnection;
   createdAt?: Maybe<Scalars['Datetime']['output']>;
@@ -40020,6 +41400,10 @@ export type User = Node & {
   jobsByJobUserUserIdAndJobId: UserJobsByJobUserUserIdAndJobIdManyToManyConnection;
   /** Reads and enables pagination through a set of `LoginTransaction`. */
   loginTransactions: LoginTransactionsConnection;
+  /** Reads and enables pagination through a set of `Message`. */
+  messagesByChatNotificationUserIdAndMessageId: UserMessagesByChatNotificationUserIdAndMessageIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `Message`. */
+  messagesBySenderId: MessagesConnection;
   /** The user_name on register form. */
   name: Scalars['String']['output'];
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
@@ -40031,6 +41415,8 @@ export type User = Node & {
   /** Reads and enables pagination through a set of `Organization`. */
   organizationsByCertificationAdminIdAndOrganizationId: UserOrganizationsByCertificationAdminIdAndOrganizationIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
+  organizationsByCompanyAdminIdAndOrganizationId: UserOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `Organization`. */
   organizationsByCourseAdminIdAndOrganizationId: UserOrganizationsByCourseAdminIdAndOrganizationIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
   organizationsByEquipmentPreparedByAndOrganizationId: UserOrganizationsByEquipmentPreparedByAndOrganizationIdManyToManyConnection;
@@ -40038,6 +41424,8 @@ export type User = Node & {
   organizationsByJobAdminIdAndOrganizationId: UserOrganizationsByJobAdminIdAndOrganizationIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
   organizationsByOrganizationUserUserIdAndOrganizationId: UserOrganizationsByOrganizationUserUserIdAndOrganizationIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `Organization`. */
+  organizationsByProjectAdminIdAndOrganizationId: UserOrganizationsByProjectAdminIdAndOrganizationIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
   organizationsByRoleUserOrganizationUserIdAndOrgId: UserOrganizationsByRoleUserOrganizationUserIdAndOrgIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
@@ -40061,6 +41449,8 @@ export type User = Node & {
   profiles: ProfilesConnection;
   /** Reads and enables pagination through a set of `ProjectUser`. */
   projectUsers: ProjectUsersConnection;
+  /** Reads and enables pagination through a set of `Project`. */
+  projectsByAdminId: ProjectsConnection;
   /** Reads and enables pagination through a set of `Project`. */
   projectsByProjectUserUserIdAndProjectId: UserProjectsByProjectUserUserIdAndProjectIdManyToManyConnection;
   qrValue?: Maybe<Scalars['String']['output']>;
@@ -40183,6 +41573,18 @@ export type UserCertificationsByAdminIdArgs = {
 };
 
 
+export type UserChatNotificationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ChatNotificationCondition>;
+  filter?: InputMaybe<ChatNotificationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
+};
+
+
 export type UserChildUsersArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -40192,6 +41594,18 @@ export type UserChildUsersArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+
+export type UserCompaniesByAdminIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<CompanyCondition>;
+  filter?: InputMaybe<CompanyFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<CompaniesOrderBy>>;
 };
 
 
@@ -40216,6 +41630,54 @@ export type UserCompanyUsersArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<CompanyUsersOrderBy>>;
+};
+
+
+export type UserConversationUsersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationUserCondition>;
+  filter?: InputMaybe<ConversationUserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
+};
+
+
+export type UserConversationsByConversationUserUserIdAndConversationIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationCondition>;
+  filter?: InputMaybe<ConversationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationsOrderBy>>;
+};
+
+
+export type UserConversationsByCreatedByArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationCondition>;
+  filter?: InputMaybe<ConversationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationsOrderBy>>;
+};
+
+
+export type UserConversationsByMessageSenderIdAndConversationIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationCondition>;
+  filter?: InputMaybe<ConversationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationsOrderBy>>;
 };
 
 
@@ -40603,6 +42065,30 @@ export type UserLoginTransactionsArgs = {
 };
 
 
+export type UserMessagesByChatNotificationUserIdAndMessageIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<MessageCondition>;
+  filter?: InputMaybe<MessageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
+
+export type UserMessagesBySenderIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<MessageCondition>;
+  filter?: InputMaybe<MessageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
+
 export type UserNotificationsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -40628,6 +42114,18 @@ export type UserOrganizationUsersArgs = {
 
 
 export type UserOrganizationsByCertificationAdminIdAndOrganizationIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<OrganizationCondition>;
+  filter?: InputMaybe<OrganizationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
+};
+
+
+export type UserOrganizationsByCompanyAdminIdAndOrganizationIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<OrganizationCondition>;
@@ -40676,6 +42174,18 @@ export type UserOrganizationsByJobAdminIdAndOrganizationIdArgs = {
 
 
 export type UserOrganizationsByOrganizationUserUserIdAndOrganizationIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<OrganizationCondition>;
+  filter?: InputMaybe<OrganizationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
+};
+
+
+export type UserOrganizationsByProjectAdminIdAndOrganizationIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<OrganizationCondition>;
@@ -40756,6 +42266,18 @@ export type UserProjectUsersArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<ProjectUsersOrderBy>>;
+};
+
+
+export type UserProjectsByAdminIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ProjectCondition>;
+  filter?: InputMaybe<ProjectFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
 };
 
 
@@ -41272,6 +42794,80 @@ export type UserCondition = {
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
   /** Checks for equality with the object’s `uuid` field. */
   uuid?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+/** A connection to a list of `Conversation` values, with data from `ConversationUser`. */
+export type UserConversationsByConversationUserUserIdAndConversationIdManyToManyConnection = {
+  __typename?: 'UserConversationsByConversationUserUserIdAndConversationIdManyToManyConnection';
+  /** A list of edges which contains the `Conversation`, info from the `ConversationUser`, and the cursor to aid in pagination. */
+  edges: Array<UserConversationsByConversationUserUserIdAndConversationIdManyToManyEdge>;
+  /** A list of `Conversation` objects. */
+  nodes: Array<Conversation>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Conversation` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Conversation` edge in the connection, with data from `ConversationUser`. */
+export type UserConversationsByConversationUserUserIdAndConversationIdManyToManyEdge = {
+  __typename?: 'UserConversationsByConversationUserUserIdAndConversationIdManyToManyEdge';
+  /** Reads and enables pagination through a set of `ConversationUser`. */
+  conversationUsers: ConversationUsersConnection;
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Conversation` at the end of the edge. */
+  node: Conversation;
+};
+
+
+/** A `Conversation` edge in the connection, with data from `ConversationUser`. */
+export type UserConversationsByConversationUserUserIdAndConversationIdManyToManyEdgeConversationUsersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationUserCondition>;
+  filter?: InputMaybe<ConversationUserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
+};
+
+/** A connection to a list of `Conversation` values, with data from `Message`. */
+export type UserConversationsByMessageSenderIdAndConversationIdManyToManyConnection = {
+  __typename?: 'UserConversationsByMessageSenderIdAndConversationIdManyToManyConnection';
+  /** A list of edges which contains the `Conversation`, info from the `Message`, and the cursor to aid in pagination. */
+  edges: Array<UserConversationsByMessageSenderIdAndConversationIdManyToManyEdge>;
+  /** A list of `Conversation` objects. */
+  nodes: Array<Conversation>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Conversation` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Conversation` edge in the connection, with data from `Message`. */
+export type UserConversationsByMessageSenderIdAndConversationIdManyToManyEdge = {
+  __typename?: 'UserConversationsByMessageSenderIdAndConversationIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `Message`. */
+  messages: MessagesConnection;
+  /** The `Conversation` at the end of the edge. */
+  node: Conversation;
+};
+
+
+/** A `Conversation` edge in the connection, with data from `Message`. */
+export type UserConversationsByMessageSenderIdAndConversationIdManyToManyEdgeMessagesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<MessageCondition>;
+  filter?: InputMaybe<MessageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
 };
 
 /** A connection to a list of `Equipment` values, with data from `Issuance`. */
@@ -42159,6 +43755,43 @@ export type UserJobsByJobUserUserIdAndJobIdManyToManyEdgeJobUsersArgs = {
   orderBy?: InputMaybe<Array<JobUsersOrderBy>>;
 };
 
+/** A connection to a list of `Message` values, with data from `ChatNotification`. */
+export type UserMessagesByChatNotificationUserIdAndMessageIdManyToManyConnection = {
+  __typename?: 'UserMessagesByChatNotificationUserIdAndMessageIdManyToManyConnection';
+  /** A list of edges which contains the `Message`, info from the `ChatNotification`, and the cursor to aid in pagination. */
+  edges: Array<UserMessagesByChatNotificationUserIdAndMessageIdManyToManyEdge>;
+  /** A list of `Message` objects. */
+  nodes: Array<Message>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Message` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Message` edge in the connection, with data from `ChatNotification`. */
+export type UserMessagesByChatNotificationUserIdAndMessageIdManyToManyEdge = {
+  __typename?: 'UserMessagesByChatNotificationUserIdAndMessageIdManyToManyEdge';
+  /** Reads and enables pagination through a set of `ChatNotification`. */
+  chatNotifications: ChatNotificationsConnection;
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Message` at the end of the edge. */
+  node: Message;
+};
+
+
+/** A `Message` edge in the connection, with data from `ChatNotification`. */
+export type UserMessagesByChatNotificationUserIdAndMessageIdManyToManyEdgeChatNotificationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ChatNotificationCondition>;
+  filter?: InputMaybe<ChatNotificationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
+};
+
 /** A connection to a list of `Organization` values, with data from `Certification`. */
 export type UserOrganizationsByCertificationAdminIdAndOrganizationIdManyToManyConnection = {
   __typename?: 'UserOrganizationsByCertificationAdminIdAndOrganizationIdManyToManyConnection';
@@ -42194,6 +43827,43 @@ export type UserOrganizationsByCertificationAdminIdAndOrganizationIdManyToManyEd
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<CertificationsOrderBy>>;
+};
+
+/** A connection to a list of `Organization` values, with data from `Company`. */
+export type UserOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyConnection = {
+  __typename?: 'UserOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyConnection';
+  /** A list of edges which contains the `Organization`, info from the `Company`, and the cursor to aid in pagination. */
+  edges: Array<UserOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdge>;
+  /** A list of `Organization` objects. */
+  nodes: Array<Organization>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Organization` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Organization` edge in the connection, with data from `Company`. */
+export type UserOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdge = {
+  __typename?: 'UserOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdge';
+  /** Reads and enables pagination through a set of `Company`. */
+  companies: CompaniesConnection;
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Organization` at the end of the edge. */
+  node: Organization;
+};
+
+
+/** A `Organization` edge in the connection, with data from `Company`. */
+export type UserOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdgeCompaniesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<CompanyCondition>;
+  filter?: InputMaybe<CompanyFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<CompaniesOrderBy>>;
 };
 
 /** A connection to a list of `Organization` values, with data from `Course`. */
@@ -42329,6 +43999,43 @@ export type UserOrganizationsByOrganizationUserUserIdAndOrganizationIdManyToMany
   /** The `Organization` at the end of the edge. */
   node: Organization;
   updatedAt?: Maybe<Scalars['Datetime']['output']>;
+};
+
+/** A connection to a list of `Organization` values, with data from `Project`. */
+export type UserOrganizationsByProjectAdminIdAndOrganizationIdManyToManyConnection = {
+  __typename?: 'UserOrganizationsByProjectAdminIdAndOrganizationIdManyToManyConnection';
+  /** A list of edges which contains the `Organization`, info from the `Project`, and the cursor to aid in pagination. */
+  edges: Array<UserOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdge>;
+  /** A list of `Organization` objects. */
+  nodes: Array<Organization>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Organization` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Organization` edge in the connection, with data from `Project`. */
+export type UserOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdge = {
+  __typename?: 'UserOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Organization` at the end of the edge. */
+  node: Organization;
+  /** Reads and enables pagination through a set of `Project`. */
+  projects: ProjectsConnection;
+};
+
+
+/** A `Organization` edge in the connection, with data from `Project`. */
+export type UserOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdgeProjectsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ProjectCondition>;
+  filter?: InputMaybe<ProjectFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
 };
 
 /** A connection to a list of `Organization` values, with data from `RoleUserOrganization`. */
@@ -44594,6 +46301,34 @@ export enum WorkTypesOrderBy {
   UuidDesc = 'UUID_DESC'
 }
 
+export type CreateNewConversationMutationVariables = Exact<{
+  input: CreateConversationInput;
+}>;
+
+
+export type CreateNewConversationMutation = { __typename?: 'Mutation', createConversation?: { __typename?: 'CreateConversationPayload', conversation?: { __typename?: 'Conversation', id: any, createdBy?: any | null, updatedAt?: any | null } | null } | null };
+
+export type AddUsersToConversationMutationVariables = Exact<{
+  input: CreateConversationUserInput;
+}>;
+
+
+export type AddUsersToConversationMutation = { __typename?: 'Mutation', createConversationUser?: { __typename?: 'CreateConversationUserPayload', conversationUser?: { __typename?: 'ConversationUser', id: any, createdAt?: any | null, updatedAt?: any | null, conversationId: any } | null } | null };
+
+export type CreateNewMessageMutationVariables = Exact<{
+  input: CreateMessageInput;
+}>;
+
+
+export type CreateNewMessageMutation = { __typename?: 'Mutation', createMessage?: { __typename?: 'CreateMessagePayload', message?: { __typename?: 'Message', id: any, conversationId?: any | null, senderId?: any | null, messageText?: string | null, mediaUrl?: string | null, isRead: boolean, readAt?: any | null, createdAt?: any | null, conversation?: { __typename?: 'Conversation', conversationUsers: { __typename?: 'ConversationUsersConnection', nodes: Array<{ __typename?: 'ConversationUser', id: any, updatedAt?: any | null }> } } | null } | null } | null };
+
+export type UpdateConversationDateMutationVariables = Exact<{
+  patch: UpdateConversationInput;
+}>;
+
+
+export type UpdateConversationDateMutation = { __typename?: 'Mutation', updateConversation?: { __typename?: 'UpdateConversationPayload', conversation?: { __typename?: 'Conversation', id: any, updatedAt?: any | null } | null } | null };
+
 export type UpdatePreferencesMutationVariables = Exact<{
   patch: UpdateAvailableInput;
 }>;
@@ -44614,6 +46349,20 @@ export type UpdateSummaryMutationVariables = Exact<{
 
 
 export type UpdateSummaryMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'UpdateUserPayload', user?: { __typename?: 'User', id: any, name: string, phoneNumber?: string | null, jobTitle?: string | null, summaryBio?: string | null } | null } | null };
+
+export type GetConversationIdQueryVariables = Exact<{
+  userIds: Array<Scalars['BigInt']['input']> | Scalars['BigInt']['input'];
+}>;
+
+
+export type GetConversationIdQuery = { __typename?: 'Query', conversations?: { __typename?: 'ConversationUsersConnection', nodes: Array<{ __typename?: 'ConversationUser', id: any, userId: any, conversationId: any, conversation?: { __typename?: 'Conversation', messages: { __typename?: 'MessagesConnection', nodes: Array<{ __typename?: 'Message', id: any, conversationId?: any | null, senderId?: any | null, messageText?: string | null, mediaUrl?: string | null, isRead: boolean, readAt?: any | null, createdAt?: any | null, updatedAt?: any | null }> } } | null }> } | null };
+
+export type GetListOfConversationQueryVariables = Exact<{
+  userId: Scalars['BigInt']['input'];
+}>;
+
+
+export type GetListOfConversationQuery = { __typename?: 'Query', conversationUsers?: { __typename?: 'ConversationUsersConnection', nodes: Array<{ __typename?: 'ConversationUser', id: any, conversationId: any, conversation?: { __typename?: 'Conversation', updatedAt?: any | null, createdAt?: any | null, conversationUsers: { __typename?: 'ConversationUsersConnection', nodes: Array<{ __typename?: 'ConversationUser', userId: any, user?: { __typename?: 'User', name: string, profile?: { __typename?: 'Profile', photo?: string | null } | null } | null }> }, messages: { __typename?: 'MessagesConnection', nodes: Array<{ __typename?: 'Message', conversationId?: any | null, senderId?: any | null, createdAt?: any | null, messageText?: string | null }> } } | null }> } | null };
 
 export type GetJobFeedsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -44675,6 +46424,127 @@ export type LoginSpfQueryVariables = Exact<{
 export type LoginSpfQuery = { __typename?: 'Query', users?: { __typename?: 'UsersConnection', nodes: Array<{ __typename?: 'User', id: any, name: string, email: string, deviceName?: string | null }> } | null };
 
 
+
+export const CreateNewConversationDocument = `
+    mutation createNewConversation($input: CreateConversationInput!) {
+  createConversation(input: $input) {
+    conversation {
+      id
+      createdBy
+      updatedAt
+    }
+  }
+}
+    `;
+
+export const useCreateNewConversationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateNewConversationMutation, TError, CreateNewConversationMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useMutation<CreateNewConversationMutation, TError, CreateNewConversationMutationVariables, TContext>(
+      ['createNewConversation'],
+      (variables?: CreateNewConversationMutationVariables) => fetcher<CreateNewConversationMutation, CreateNewConversationMutationVariables>(client, CreateNewConversationDocument, variables, headers)(),
+      options
+    )};
+
+export const AddUsersToConversationDocument = `
+    mutation AddUsersToConversation($input: CreateConversationUserInput!) {
+  createConversationUser(input: $input) {
+    conversationUser {
+      id
+      createdAt
+      updatedAt
+      conversationId
+    }
+  }
+}
+    `;
+
+export const useAddUsersToConversationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<AddUsersToConversationMutation, TError, AddUsersToConversationMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useMutation<AddUsersToConversationMutation, TError, AddUsersToConversationMutationVariables, TContext>(
+      ['AddUsersToConversation'],
+      (variables?: AddUsersToConversationMutationVariables) => fetcher<AddUsersToConversationMutation, AddUsersToConversationMutationVariables>(client, AddUsersToConversationDocument, variables, headers)(),
+      options
+    )};
+
+export const CreateNewMessageDocument = `
+    mutation createNewMessage($input: CreateMessageInput!) {
+  createMessage(input: $input) {
+    message {
+      id
+      conversationId
+      senderId
+      messageText
+      mediaUrl
+      isRead
+      readAt
+      createdAt
+      conversation {
+        conversationUsers {
+          nodes {
+            id
+            updatedAt
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+export const useCreateNewMessageMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateNewMessageMutation, TError, CreateNewMessageMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useMutation<CreateNewMessageMutation, TError, CreateNewMessageMutationVariables, TContext>(
+      ['createNewMessage'],
+      (variables?: CreateNewMessageMutationVariables) => fetcher<CreateNewMessageMutation, CreateNewMessageMutationVariables>(client, CreateNewMessageDocument, variables, headers)(),
+      options
+    )};
+
+export const UpdateConversationDateDocument = `
+    mutation updateConversationDate($patch: UpdateConversationInput!) {
+  updateConversation(input: $patch) {
+    conversation {
+      id
+      updatedAt
+    }
+  }
+}
+    `;
+
+export const useUpdateConversationDateMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateConversationDateMutation, TError, UpdateConversationDateMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useMutation<UpdateConversationDateMutation, TError, UpdateConversationDateMutationVariables, TContext>(
+      ['updateConversationDate'],
+      (variables?: UpdateConversationDateMutationVariables) => fetcher<UpdateConversationDateMutation, UpdateConversationDateMutationVariables>(client, UpdateConversationDateDocument, variables, headers)(),
+      options
+    )};
 
 export const UpdatePreferencesDocument = `
     mutation updatePreferences($patch: UpdateAvailableInput!) {
@@ -44755,6 +46625,131 @@ export const useUpdateSummaryMutation = <
     return useMutation<UpdateSummaryMutation, TError, UpdateSummaryMutationVariables, TContext>(
       ['updateSummary'],
       (variables?: UpdateSummaryMutationVariables) => fetcher<UpdateSummaryMutation, UpdateSummaryMutationVariables>(client, UpdateSummaryDocument, variables, headers)(),
+      options
+    )};
+
+export const GetConversationIdDocument = `
+    query GetConversationId($userIds: [BigInt!]!) {
+  conversations: conversationUsers(filter: {userId: {in: $userIds}}) {
+    nodes {
+      id
+      userId
+      conversationId
+      conversation {
+        messages {
+          nodes {
+            id
+            conversationId
+            senderId
+            messageText
+            mediaUrl
+            isRead
+            readAt
+            createdAt
+            updatedAt
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+export const useGetConversationIdQuery = <
+      TData = GetConversationIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetConversationIdQueryVariables,
+      options?: UseQueryOptions<GetConversationIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useQuery<GetConversationIdQuery, TError, TData>(
+      ['GetConversationId', variables],
+      fetcher<GetConversationIdQuery, GetConversationIdQueryVariables>(client, GetConversationIdDocument, variables, headers),
+      options
+    )};
+
+export const useInfiniteGetConversationIdQuery = <
+      TData = GetConversationIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetConversationIdQueryVariables,
+      options?: UseInfiniteQueryOptions<GetConversationIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useInfiniteQuery<GetConversationIdQuery, TError, TData>(
+      ['GetConversationId.infinite', variables],
+      (metaData) => fetcher<GetConversationIdQuery, GetConversationIdQueryVariables>(client, GetConversationIdDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      options
+    )};
+
+export const GetListOfConversationDocument = `
+    query GetListOfConversation($userId: BigInt!) {
+  conversationUsers(condition: {userId: $userId}) {
+    nodes {
+      id
+      conversationId
+      conversation {
+        updatedAt
+        createdAt
+        conversationUsers(filter: {userId: {notEqualTo: $userId}}) {
+          nodes {
+            userId
+            user {
+              name
+              profile {
+                photo
+              }
+            }
+          }
+        }
+        messages(last: 1) {
+          nodes {
+            conversationId
+            senderId
+            createdAt
+            messageText
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+export const useGetListOfConversationQuery = <
+      TData = GetListOfConversationQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetListOfConversationQueryVariables,
+      options?: UseQueryOptions<GetListOfConversationQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useQuery<GetListOfConversationQuery, TError, TData>(
+      ['GetListOfConversation', variables],
+      fetcher<GetListOfConversationQuery, GetListOfConversationQueryVariables>(client, GetListOfConversationDocument, variables, headers),
+      options
+    )};
+
+export const useInfiniteGetListOfConversationQuery = <
+      TData = GetListOfConversationQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetListOfConversationQueryVariables,
+      options?: UseInfiniteQueryOptions<GetListOfConversationQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useInfiniteQuery<GetListOfConversationQuery, TError, TData>(
+      ['GetListOfConversation.infinite', variables],
+      (metaData) => fetcher<GetListOfConversationQuery, GetListOfConversationQueryVariables>(client, GetListOfConversationDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     )};
 

@@ -1,0 +1,153 @@
+.open-chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .chat-window {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: #fff;
+  }
+  
+  .message-item {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+  }
+  
+  .sender {
+    justify-content: flex-end;
+  }
+  
+  .message-bubble {
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 12px;
+    background-color: #e0e0e0;
+  }
+  
+  .sender .message-bubble {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .message-text {
+    margin: 0;
+  }
+  
+  .message-time {
+    display: block;
+    font-size: 0.75rem;
+    color: #888;
+    text-align: right;
+  }
+  
+  .chat-input-container {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #e1e1e1;
+  }
+  
+  .chat-input {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+  
+  .send-button {
+    align-self: center;
+  }
+  
+
+  .chatItem {
+    padding: '10px';
+    cursor: 'pointer';
+    border-bottom: '1px solid #f0f0f0';
+    transition: 'background-color 0.3s';
+  }
+
+  .chatList{
+    margin-top: '20px';
+    background-color: '#fff';
+    padding: '20px';
+    border-radius: '8px';
+    box-shadow: '0 2px 8px rgba(0, 0, 0, 0.1)';
+  }
+
+  .avatar {
+    width: '50px';
+    height: '50px';
+    border-radius: '50%';
+    margin-right: '15px';
+  }
+
+  .time {
+    margin-left: 'auto';
+    font-size: '12px';
+    color: '#888';
+  }
+
+  .lastMessage {
+    display: 'block';
+    font-size: '14px';
+    margin-top: '4px';
+  }
+
+  .badge {
+    margin-left: '10px';
+    background-color: '#ff4d4f';
+  }
+
+  .refreshButton {
+    margin-top: '20px';
+    width: '100%';
+    color:#fff;
+    background-color:#462F8E;
+  }
+
+  .chat-bubble {
+    display: inline-block; /* Only take the width of the content */
+    border-radius: 20px;
+    background-color: 'gray';
+    padding: '5px 8px';
+    margin-top: '10px';
+    margin-left: '10px';
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    align-self: flex-start; /* Aligns the bubble to the left */
+  }
+
+  .sender-bubble {
+    border-radius: 20px;
+    background-color: #462F8E;
+    padding: '5px 8px';
+    margin-top: '10px';
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    align-self: flex-end;
+  }
+
+  .time-format {
+    align-self: flex-end;
+  }
+
+  .sendButton {
+    background-color: #462F8E;
+  }
+  
+  .searchInput {
+    color:#462F8E;
+  }
+
+  .downloadButton {
+    background-color: #462F8E;
+    color:#fff;
+    margin-top:10px;
+    width: 40%;
+  }

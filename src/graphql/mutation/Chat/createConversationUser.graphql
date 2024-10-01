@@ -1,0 +1,10 @@
+mutation AddUsersToConversation($input: CreateConversationUserInput!) {
+  createConversationUser(input: $input) {
+    conversationUser {
+      id
+      createdAt
+      updatedAt
+      conversationId
+    }
+  }
+}
