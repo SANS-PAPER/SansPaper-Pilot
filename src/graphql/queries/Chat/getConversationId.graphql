@@ -1,0 +1,24 @@
+query GetConversationId($userIds: [BigInt!]!) {
+  conversations: conversationUsers(filter: { userId: { in: $userIds } }) {
+    nodes {
+      id
+      userId
+      conversationId
+      conversation {
+        messages {
+          nodes {
+            id
+            conversationId
+            senderId
+            messageText
+            mediaUrl
+            isRead
+            readAt
+            createdAt
+            updatedAt
+          }
+        }
+      }
+    }
+  }
+}

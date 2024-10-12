@@ -1,0 +1,22 @@
+mutation createNewMessage($input: CreateMessageInput!) {
+  createMessage(input: $input) {
+    message {
+      id
+      conversationId
+      senderId
+      messageText
+      mediaUrl
+      isRead
+      readAt
+      createdAt
+      conversation {
+        conversationUsers {
+          nodes {
+            id
+            updatedAt
+          }
+        }
+      }
+    }
+  }
+}

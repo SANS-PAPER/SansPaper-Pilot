@@ -1,0 +1,8 @@
+mutation updateConversationDate($patch: UpdateConversationInput!) {
+  updateConversation(input: $patch) {
+    conversation {
+      id
+      updatedAt
+    }
+  }
+}

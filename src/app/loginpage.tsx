@@ -162,7 +162,7 @@ const SignIn: React.FC = () => {
               <Link className="mb-5.5 inline-block" href="/api/auth/login">
 
                   <Image
-                   // className="dark:hidden"
+                    className="animate-pulse duration 800"
                     src={"/images/logo/SansPaperID.svg"}
                     alt="Logo"
                     width={100}

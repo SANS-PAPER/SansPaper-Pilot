@@ -1,0 +1,31 @@
+query GetListOfConversation($userId: BigInt!) {
+  conversationUsers(condition: {userId: $userId}) {
+    nodes {
+      id
+      conversationId
+      conversation {
+        updatedAt
+        createdAt
+        conversationUsers(filter: {userId: {notEqualTo: $userId}}) {
+          nodes {
+            userId
+            user {
+              name
+              profile {
+                photo
+              }
+            }
+          }
+        }
+        messages(last: 1) {
+          nodes {
+            conversationId
+            senderId
+            createdAt
+            messageText
+          }
+        }
+      }
+    }
+  }
+}
