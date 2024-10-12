@@ -14,9 +14,6 @@ interface Conversation {
   receiverID: string;
   name: string;
   lastMessage: string;
-  time: string;
-  avatar: string;
-  conversationUpdatedDate: Date;
 }
 
 // ChatState interface to hold chats and messages

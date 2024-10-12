@@ -156,9 +156,7 @@ useEffect(() => {
           receiverID: receiverID,
           name: profileData.name,
           lastMessage: '',  // Start with no message
-          time: '',
-          avatar: '',
-          conversationUpdatedDate: new Date(),
+          //updatedAt: formattedDate,
         });
   
         setConversationID(newConversationID);
