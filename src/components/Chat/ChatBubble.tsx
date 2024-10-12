@@ -141,7 +141,7 @@ useEffect(() => {
           conversation: {
             createdBy: userId,
             createdAt: formattedDate,
-             updatedAt: formattedDate, // Removed as it does not exist in the Conversation type
+             //updatedAt: formattedDate, // Removed as it does not exist in the Conversation type
           },
         },
       });
@@ -156,7 +156,9 @@ useEffect(() => {
           receiverID: receiverID,
           name: profileData.name,
           lastMessage: '',  // Start with no message
-          updatedAt: formattedDate,
+          time: '',
+          avatar: '',
+          conversationUpdatedDate: new Date(),
         });
   
         setConversationID(newConversationID);
