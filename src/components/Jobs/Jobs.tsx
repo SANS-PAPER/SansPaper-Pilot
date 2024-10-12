@@ -7,18 +7,14 @@ import {  FaMapMarked } from 'react-icons/fa';
 import useGetUserList from '@/graphql/getUserList';
 import { UserOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
-import navigate from 'next/router';
 import { FillupFormNode, ReviewNode, UserNode } from './types/getUserList';
 import FormLoader from '../FormLoader';
 import StarIcon from '@mui/icons-material/Star';
 import Link from 'next/link';
-import { usePathname } from "next/navigation";
-import { useRouter } from 'next/navigation';
 
 const Jobs = () => {
-  const pathname = usePathname();
-  const router = useRouter();
   const {dataUserList, errorUserList, isLoadingUserList} = useGetUserList();
+  const [userID, setUserID] = useState<string | null>(null);
 
   const [structuredData, setStructuredData] = useState<UserNode[]>([]);
 
@@ -28,6 +24,17 @@ const Jobs = () => {
       reconstructDataForTrainingForm(dataUserList);
     }
   }, [dataUserList]);
+
+  useEffect(() => {
+    const fetchUserID = async () => {
+      const storedUserID = await localStorage.getItem('userID');
+      if (storedUserID) {
+        setUserID(storedUserID);
+      }
+    };
+
+    fetchUserID();
+  }, []);
 
   const reconstructDataForTrainingForm = (data: UserNode[] | undefined) => {
     if (!data) return;
@@ -74,8 +81,10 @@ const Jobs = () => {
     }
   };
 
-  const handleNavigation = (item: UserNode) => {
-    router.push(`/profile-admin-view/${item.id}?userID=${item.id}`);
+  const handleNavigation = () => {
+    <Link href="/profile-admin-view">
+    
+    </Link>
   };
 
 //   return (
@@ -114,9 +123,16 @@ const Jobs = () => {
 // };
 
 const renderItem = (item: UserNode) => (
-  <div
+  <Link
+  href={{
+    pathname: "/profile-admin-view",
+    query: {
+      userID: userID,
+      receiverID: item.id,
+      profileData: JSON.stringify(item), // profileData is passed as a JSON string
+    },
+  }}
   className="mobileswipeactions"
-  onClick={() => handleNavigation(item)} // Use the updated navigation handler
 >
     <div className="flex space-x-4 bg-white pl-10 pt-10 pb-10 " >
           <div className="flex">
@@ -162,7 +178,7 @@ const renderItem = (item: UserNode) => (
             <div className="divider" />
     
     </div>
-  </div>
+  </Link>
 );
 
 return (

@@ -43,17 +43,14 @@ const useGetConversationList = (userId:string) => {
 };
 
 export const fetchChatList = async (client: any,userId: string) => {
-  console.log('userId', userId);
   try {
     const response: GetListOfConversationResponse = await client.request(GetListOfConversationDocument, {
       userId,
     });
 
-    console.log('response chat list  >>>>>>>>>', response);
 
     return response?.conversationUsers?.nodes;
   } catch (error) {
-    console.log('error chat list  >>>>>>>>>', error);
     throw error;
   }
 };

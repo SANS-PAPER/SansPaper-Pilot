@@ -7,7 +7,7 @@ const app = express();
 
 // Enable CORS for specific origin (adjust to your frontend's URL)
 app.use(cors({
-  origin: 'http://localhost:3000', // Or your deployed frontend URL
+  origin: `${process.env.NEXTJS_HOST}`, // Or your deployed frontend URL
   methods: ['GET', 'POST'], // You can allow other methods if necessary
   credentials: true
 }));
@@ -15,7 +15,7 @@ app.use(cors({
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000', // Or your frontend's URL
+    origin: `${process.env.NEXTJS_HOST}`, // Or your frontend's URL
     methods: ['GET', 'POST'],
     credentials: true
   }

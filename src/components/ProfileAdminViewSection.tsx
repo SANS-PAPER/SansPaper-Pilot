@@ -6,23 +6,57 @@ import {
   Avatar,
   
 } from 'antd'; // Use web equivalents here
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 //import { ProfileIcon } from 'assets/svg/ProfileIcon'; 
 import useGetClient from '@/graphql/getClients';
 import { useUpdateProfileMutation } from '@/gql/_generated';
 import AWS from 'aws-sdk';
 //import Icon from 'react-icons/lib/md/star';
 import {Icon, Spinner} from '@chakra-ui/react'
+import { UserNode } from './AdminSearch/types/getUserList';
+import { useSearchParams } from 'next/navigation';
+import '@/css/ProfileAdminViewSection.css';
+import { UserOutlined } from '@ant-design/icons';
 
 const PROFILE_WIDTH = 53;
 const PROFILE_HEIGHT = 53;
 const PROFILE_RADIUS = 26.5;
 
-const ProfileAdminViewSection = ({ userID }: { userID: string }, profileData: any) => {
-  const navigate = useNavigate();
+interface ProfileAdminViewProps {
+  userID: string | '';
+  receiverID: string;
+  profileData: UserNode; 
+  dataUser : any;
+}
+
+const ProfileAdminViewSection = () => {
+  const searchParams = useSearchParams();  // Using next/navigation
+  const [userID, setUserID] = useState<string | null>(null);
+  const [receiverID, setReceiverID] = useState<string | null>(null);
+  const [profileData, setProfileData] = useState<UserNode | null>(null);
   const { client } = useGetClient();
   const [avatar, setAvatar] = useState<any>(null);
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+   
+  const userIDString = searchParams.get("userID") || '';
+  const receiverIDString = searchParams.get("receiverID");
+  const profileDataString = searchParams.get("profileData");
+
+    if (receiverIDString && profileDataString) {
+      setUserID(userIDString);
+      setReceiverID(receiverIDString);
+
+      try {
+        const parsedProfileData = JSON.parse(profileDataString);
+        console.log('parsedProfileData:', parsedProfileData);
+        setProfileData(parsedProfileData);
+      } catch (error) {
+        console.error("Error parsing profileData:", error);
+      }
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (profileData) {
@@ -30,11 +64,6 @@ const ProfileAdminViewSection = ({ userID }: { userID: string }, profileData: an
         setAvatar(
           <img
             src={profileData?.profile?.photo}
-            style={{
-              width: PROFILE_WIDTH,
-              height: PROFILE_HEIGHT,
-              borderRadius: PROFILE_RADIUS,
-            }}
             alt="Profile"
           />
         );
@@ -47,11 +76,40 @@ const ProfileAdminViewSection = ({ userID }: { userID: string }, profileData: an
       setAvatar(<Spinner animation="border" />);
     }
   }, [profileData]);
-
-  const handleOpenPicker = (type: any) => {
-    // Replace with web image picker logic
-    // Example: using file input or third-party library
-    // Use a file input to select and upload images
+  
+  const handleOpenPicker = async (type:any) => {
+    let input;
+    
+    if (type === 1) {
+      input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.capture = 'environment';
+    } else {
+      input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+    }
+  
+    input.onchange = (event) => {
+      if (event.target) {
+        const input = event.target as HTMLInputElement;
+        const file = input.files ? input.files[0] : null;
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            if (e.target) {
+              const imageUrl = e.target.result;
+              uploadPhoto(file); 
+            }
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    };
+  
+    input.click(); 
+  
     setShowModal(false);
   };
 
@@ -86,7 +144,11 @@ const ProfileAdminViewSection = ({ userID }: { userID: string }, profileData: an
     },
     onError: () => {
       setAvatar(
-        <Avatar/>
+        <Avatar
+          size={60}
+          style={{ backgroundColor: '#6733b9' }}
+          icon={<UserOutlined />}
+        />
       );
       alert('Error updating profile pic');
     },
@@ -111,11 +173,6 @@ const ProfileAdminViewSection = ({ userID }: { userID: string }, profileData: an
       setAvatar(
         <img
           src={filename}
-          style={{
-            width: PROFILE_WIDTH,
-            height: PROFILE_HEIGHT,
-            borderRadius: PROFILE_RADIUS,
-          }}
           alt="Updated Profile"
         />
       );
@@ -124,56 +181,60 @@ const ProfileAdminViewSection = ({ userID }: { userID: string }, profileData: an
     }
   };
 
-  return (
-    <div style={styles.ellipseParent}>
-      <button
-        onClick={() => setShowModal(true)}
-        style={styles.avatarButton}
-      >
-        {avatar}
-      </button>
+  const getPhotos = (photo: string | null | undefined) => {
+    if (!photo) {
+      return (
+        <Avatar
+          size={100}
+          style={{ backgroundColor: '#6733b9' }}
+          icon={<UserOutlined />}
+        />
+      );
+    } else {
+      return <Avatar size={100} src={photo} />;
+    }
+  };
 
-      <div style={styles.groupWrapper}>
-        <div style={styles.frameWrapperLayout}>
-          <div style={styles.brisbaneAustraliaParent}>
-            <p >
+  return (
+    <div className="centered-container">
+      <div>
+      <div className="flex">
+            {getPhotos(profileData?.profile?.photo)}
+          </div>
+      </div>
+
+      <div >
+        <div >
+          <div >
+            <p className=" font-medium">
               {profileData?.email}
             </p>
-            <p >
+            <div className="text-black font-bold text-xl">
               {profileData?.name}
-            </p>
+            </div>
           </div>
         </div>
       </div>
-      <div style={styles.rankingParent}>
+      <div >
         <p >RANKING</p>
         <div >
           <p>
-            {profileData?.reviews?.totalAverageCount > 0
-              ? profileData?.reviews?.totalAverageCount
+            {profileData?.reviews?.totalAverageCount && profileData.reviews.totalAverageCount > 0
+              ? profileData.reviews.totalAverageCount
               : null}
           </p>
-          {Array.from({ length: profileData?.reviews?.totalAverageCount }).map(
+          {profileData?.reviews?.totalAverageCount && Array.from({ length: profileData.reviews.totalAverageCount }).map(
             (_, index) => (
               <Icon key={index} color="#ffd700" />
             )
           )}
         </div>
-        <div style={styles.button}>
-          <div style={styles.buttonbase}>
-            <div style={styles.buttonFlexBox}>
-              <img
-                src="../assets/images/buttonicon.png"
-                style={styles.buttonicon}
-                alt="Button Icon"
-              />
-              <button
-                onClick={() => navigate('/message-screen')}
-              >
-                <p >Message</p>
-              </button>
-            </div>
-          </div>
+        <div className="button">
+         
+              <Button  className="messageButton bg-purple-900">
+              Message
+            </Button>
+             
         </div>
       </div>
 
@@ -190,103 +251,6 @@ const ProfileAdminViewSection = ({ userID }: { userID: string }, profileData: an
       </Modal>
     </div>
   );
-};
-
-const styles = {
-  // Define your styles here
-  ellipseParent: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  avatarButton: {
-    border: 'none',
-    background: 'transparent',
-  },
-  groupWrapper: {
-    height: 65,
-  },
-  frameWrapperLayout: {
-    width: 309,
-    height: 65,
-  },
-  brisbaneAustraliaParent: {
-    marginTop: -32.5,
-    marginLeft: -154.5,
-    top: '50%',
-    paddingHorizontal: 0,
-    paddingVertical: 3,
-    width: 309,
-    height: 65,
-    display: 'flex',
-    alignItems: 'center',
-  },
-  brisbaneAustralia: {
-    textAlign: 'center',
-    color: '#6C6C6C',
-    fontSize: 14,
-  },
-  constructionForeman: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#F8E',
-    marginTop: 2,
-    textAlign: 'center',
-  },
-  rankingParent: {
-    width: 160,
-    display: 'flex',
-    justifyContent: 'center',
-    marginBottom: 60,
-  },
-  ranking: {
-    textAlign: 'center',
-    color: '#6C6C6C',
-    fontSize: 14,
-  },
-  starsWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  button: {
-    display: 'flex',
-    alignItems: 'center',
-    marginLeft: -80,
-    marginTop: 56,
-  },
-  buttonbase: {
-    borderRadius: 9,
-    backgroundColor: '#F5F5F5',
-  },
-  buttonFlexBox: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 16,
-  },
-  buttonicon: {
-    marginRight: 8,
-  },
-  message: {
-    fontSize: 16,
-    color: '#4A90E2',
-  },
-  modal: {
-    overlay: {
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    content: {
-      maxWidth: '500px',
-      margin: 'auto',
-      padding: '20px',
-      borderRadius: '10px',
-    },
-  },
-  modalContent: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
 };
 
 export default ProfileAdminViewSection;

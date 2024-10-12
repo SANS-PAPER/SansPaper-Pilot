@@ -1,55 +1,49 @@
-import {useEffect, useState} from 'react';
-import {initializeGraphQLClient} from '@/app/api/client';
-import {GetConversationIdDocument} from '@/gql/_generated';
+import { useEffect, useRef, useState } from 'react';
+import { initializeGraphQLClient } from '@/app/api/client';
+import { GetConversationIdDocument } from '@/gql/_generated';
 import { GraphQLClient } from 'graphql-request';
 import { ConversationUserNode, GetConversationIdResponse } from '@/components/Chat/types/getConversationId';
 
-const useConversationData = (userIds: string)=> {
-  //const [dataConversation, setUserData] = useState<ConversationUserNode[] | null>(null);
-  const [dataConversation, setUserData] = useState<ConversationUserNode[]>([]);
-  const [errorConversation, setError] = useState(null);
-  const [isLoadingConversation, setIsLoading] = useState(true);
+const useConversationData = (userIds: string[]) => {
+  const [dataConversation, setDataConversation] = useState<ConversationUserNode[]>([]);
+  const [errorConversation, setErrorConversation] = useState<any>(null);
+  const [isLoadingConversation, setIsLoadingConversation] = useState(true);
 
-  const [client, setClient] = useState<GraphQLClient | null>(null);
+  const prevUserIds = useRef<string[]>([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Initialize GraphQL client if not already initialized
-        if (!client) {
-          const initializedClient = await initializeGraphQLClient();
-          setClient(initializedClient);
-        }
+useEffect(() => {
+  if (JSON.stringify(prevUserIds.current) === JSON.stringify(userIds)) {
+    // Skip fetching if the userIds are the same as the previous ones
+    return;
+  }
 
-        if (client) {
-          const response = await fetchUserData(client, userIds);
-          setUserData(response);
-        }
-      } catch (error) {
-        setError(errorConversation);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  prevUserIds.current = userIds;
 
-    fetchData();
+  const fetchData = async () => {
+    try {
+      const client = await initializeGraphQLClient();
+      const response = await fetchUserData(client, userIds);
+      setDataConversation(response);
+    } catch (error) {
+      setErrorConversation(error);
+    } finally {
+      setIsLoadingConversation(false);
+    }
+  };
+  
+  fetchData();
+}, [userIds]);
+// Dependency on userIds to refetch if userIds change
 
-    // Clean up function
-    return () => {
-      // Any cleanup code if necessary
-    };
-  }, [client]);
-
-  return {dataConversation, errorConversation, isLoadingConversation};
+  return { dataConversation, errorConversation, isLoadingConversation };
 };
 
-const fetchUserData = async (client: any, userIds: string) => {
+const fetchUserData = async (client: GraphQLClient, userIds: string[]) => {
   try {
-    const response = await client.request(GetConversationIdDocument, { userIds });
-    console.log("GraphQL Response:", response); // Log the full response
-    return response?.conversations?.nodes; // Return null if no nodes
+    const response: GetConversationIdResponse = await client.request(GetConversationIdDocument, { userIds});
+    return response?.conversations?.nodes || [];
   } catch (error) {
-    throw error;
+    throw new Error('Error fetching conversation data');
   }
 };
 
