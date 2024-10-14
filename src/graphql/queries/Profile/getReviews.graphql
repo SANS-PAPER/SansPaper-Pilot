@@ -1,0 +1,13 @@
+query GetReviews($userID: BigInt) {
+  reviews(condition: { userId: $userID }) {
+    nodes {
+      id
+      userId
+      recValue
+      recText
+      recommenderUserId
+      recommenderProfilePic
+      createdAt
+    }
+  }
+}

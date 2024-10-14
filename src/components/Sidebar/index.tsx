@@ -5,6 +5,9 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import SidebarLinkGroup from "./SidebarLinkGroup";
+import { FaBriefcase, FaSearch } from "react-icons/fa";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeadset, fas } from "@fortawesome/free-solid-svg-icons";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -113,7 +116,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
             <ul className="mb-6 flex flex-col gap-1.5">
               {/* <!-- Menu Item Dashboard --> */}
-              <SidebarLinkGroup
+              {/* <SidebarLinkGroup
                 activeCondition={
                   pathname === "/" || pathname.includes("dashboard")
                 }
@@ -178,9 +181,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             fill=""
                           />
                         </svg>
-                      </Link>
+                      </Link> */}
                       {/* <!-- Dropdown Menu Start --> */}
-                      <div
+                      {/* <div
                         className={`translate transform overflow-hidden ${
                           !open && "hidden"
                         }`}
@@ -188,22 +191,91 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
                           <li>
                             <Link
-                              href="/"
+                              href="/ecommerce"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/" && "text-white"
+                                pathname === "/ecommerce" && "text-white"
                               }`}
                             >
                               eCommerce
                             </Link>
                           </li>
                         </ul>
-                      </div>
+                      </div> */}
                       {/* <!-- Dropdown Menu End --> */}
-                    </React.Fragment>
+                    {/* </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
               {/* <!-- Menu Item Dashboard --> */}
+
+              {/* <!-- Menu Item Profile --> */}
+              <li>
+                <Link
+                  href="/profile"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname === "/profile" && "text-white"
+                  }`}
+                >
+                  <svg
+                    className="fill-current"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 18 18"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M9.0002 7.79065C11.0814 7.79065 12.7689 6.1594 12.7689 4.1344C12.7689 2.1094 11.0814 0.478149 9.0002 0.478149C6.91895 0.478149 5.23145 2.1094 5.23145 4.1344C5.23145 6.1594 6.91895 7.79065 9.0002 7.79065ZM9.0002 1.7719C10.3783 1.7719 11.5033 2.84065 11.5033 4.16252C11.5033 5.4844 10.3783 6.55315 9.0002 6.55315C7.62207 6.55315 6.49707 5.4844 6.49707 4.16252C6.49707 2.84065 7.62207 1.7719 9.0002 1.7719Z"
+                      fill=""
+                    />
+                    <path
+                      d="M10.8283 9.05627H7.17207C4.16269 9.05627 1.71582 11.5313 1.71582 14.5406V16.875C1.71582 17.2125 1.99707 17.5219 2.3627 17.5219C2.72832 17.5219 3.00957 17.2407 3.00957 16.875V14.5406C3.00957 12.2344 4.89394 10.3219 7.22832 10.3219H10.8564C13.1627 10.3219 15.0752 12.2063 15.0752 14.5406V16.875C15.0752 17.2125 15.3564 17.5219 15.7221 17.5219C16.0877 17.5219 16.3689 17.2407 16.3689 16.875V14.5406C16.2846 11.5313 13.8377 9.05627 10.8283 9.05627Z"
+                      fill=""
+                    />
+                  </svg>
+                  Profile
+                </Link>
+              </li>
+              {/* <!-- Menu Item Profile --> */}
+
+              {/* <!-- Menu Item Jobs --> */}
+              <Link
+                  href="/jobs"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("jobs") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                 <FaBriefcase width={18} height={18}/>
+                  Jobs
+                </Link>
+              {/* <!-- Menu Item Jobs --> */}
+
+              {/* <!-- Menu Item Feeds --> */}
+              <Link
+                  href="/feeds"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("feeds") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                 <FaBriefcase width={18} height={18}/>
+                  Feeds
+                </Link>
+              {/* <!-- Menu Item Feeds --> */}
+
+              {/* <!-- Menu Item AdminSearch --> */}
+              <Link
+                  href="/search"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("search") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                 <FaSearch width={18} height={18}/>
+                  Search
+                </Link>
+              {/* <!-- Menu Item AdminSearch --> */}
 
               {/* <!-- Menu Item Calendar --> */}
               <li>
@@ -232,38 +304,47 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               {/* <!-- Menu Item Calendar --> */}
 
-              {/* <!-- Menu Item Profile --> */}
+              {/* <!-- Menu Item Chat --> */}
               <li>
                 <Link
-                  href="/profile"
+                  href="/chat"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("profile") && "bg-graydark dark:bg-meta-4"
+                    pathname.includes("chat") &&
+                    "bg-graydark dark:bg-meta-4"
                   }`}
                 >
                   <svg
-                    className="fill-current"
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9.0002 7.79065C11.0814 7.79065 12.7689 6.1594 12.7689 4.1344C12.7689 2.1094 11.0814 0.478149 9.0002 0.478149C6.91895 0.478149 5.23145 2.1094 5.23145 4.1344C5.23145 6.1594 6.91895 7.79065 9.0002 7.79065ZM9.0002 1.7719C10.3783 1.7719 11.5033 2.84065 11.5033 4.16252C11.5033 5.4844 10.3783 6.55315 9.0002 6.55315C7.62207 6.55315 6.49707 5.4844 6.49707 4.16252C6.49707 2.84065 7.62207 1.7719 9.0002 1.7719Z"
-                      fill=""
-                    />
-                    <path
-                      d="M10.8283 9.05627H7.17207C4.16269 9.05627 1.71582 11.5313 1.71582 14.5406V16.875C1.71582 17.2125 1.99707 17.5219 2.3627 17.5219C2.72832 17.5219 3.00957 17.2407 3.00957 16.875V14.5406C3.00957 12.2344 4.89394 10.3219 7.22832 10.3219H10.8564C13.1627 10.3219 15.0752 12.2063 15.0752 14.5406V16.875C15.0752 17.2125 15.3564 17.5219 15.7221 17.5219C16.0877 17.5219 16.3689 17.2407 16.3689 16.875V14.5406C16.2846 11.5313 13.8377 9.05627 10.8283 9.05627Z"
-                      fill=""
-                    />
-                  </svg>
-                  Profile
+          className="fill-current duration-300 ease-in-out"
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M10.9688 1.57495H7.03135C3.43135 1.57495 0.506348 4.41558 0.506348 7.90308C0.506348 11.3906 2.75635 13.8375 8.26885 16.3125C8.40947 16.3687 8.52197 16.3968 8.6626 16.3968C8.85947 16.3968 9.02822 16.3406 9.19697 16.2281C9.47822 16.0593 9.64697 15.75 9.64697 15.4125V14.2031H10.9688C14.5688 14.2031 17.522 11.3625 17.522 7.87495C17.522 4.38745 14.5688 1.57495 10.9688 1.57495ZM10.9688 12.9937H9.3376C8.80322 12.9937 8.35322 13.4437 8.35322 13.9781V15.0187C3.6001 12.825 1.74385 10.8 1.74385 7.9312C1.74385 5.14683 4.10635 2.8687 7.03135 2.8687H10.9688C13.8657 2.8687 16.2563 5.14683 16.2563 7.9312C16.2563 10.7156 13.8657 12.9937 10.9688 12.9937Z"
+            fill=""
+          />
+          <path
+            d="M5.42812 7.28442C5.0625 7.28442 4.78125 7.56567 4.78125 7.9313C4.78125 8.29692 5.0625 8.57817 5.42812 8.57817C5.79375 8.57817 6.075 8.29692 6.075 7.9313C6.075 7.56567 5.79375 7.28442 5.42812 7.28442Z"
+            fill=""
+          />
+          <path
+            d="M9.00015 7.28442C8.63452 7.28442 8.35327 7.56567 8.35327 7.9313C8.35327 8.29692 8.63452 8.57817 9.00015 8.57817C9.33765 8.57817 9.64702 8.29692 9.64702 7.9313C9.64702 7.56567 9.33765 7.28442 9.00015 7.28442Z"
+            fill=""
+          />
+          <path
+            d="M12.5719 7.28442C12.2063 7.28442 11.925 7.56567 11.925 7.9313C11.925 8.29692 12.2063 8.57817 12.5719 8.57817C12.9375 8.57817 13.2188 8.29692 13.2188 7.9313C13.2188 7.56567 12.9094 7.28442 12.5719 7.28442Z"
+            fill=""
+          />
+        </svg>
+                  Chat
                 </Link>
               </li>
-              {/* <!-- Menu Item Profile --> */}
+              {/* <!-- Menu Item Chat --> */}
 
               {/* <!-- Menu Item Forms --> */}
-              <SidebarLinkGroup
+              {/* <SidebarLinkGroup
                 activeCondition={
                   pathname === "/forms" || pathname.includes("forms")
                 }
@@ -332,9 +413,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             fill=""
                           />
                         </svg>
-                      </Link>
+                      </Link> */}
                       {/* <!-- Dropdown Menu Start --> */}
-                      <div
+                      {/* <div
                         className={`translate transform overflow-hidden ${
                           !open && "hidden"
                         }`}
@@ -363,16 +444,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             </Link>
                           </li>
                         </ul>
-                      </div>
+                      </div> */}
                       {/* <!-- Dropdown Menu End --> */}
-                    </React.Fragment>
+                    {/* </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
               {/* <!-- Menu Item Forms --> */}
 
               {/* <!-- Menu Item Tables --> */}
-              <li>
+              {/* <li>
                 <Link
                   href="/tables"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -406,11 +487,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   </svg>
                   Tables
                 </Link>
-              </li>
+              </li> */}
               {/* <!-- Menu Item Tables --> */}
 
               {/* <!-- Menu Item Settings --> */}
-              <li>
+              {/* <li>
                 <Link
                   href="/settings"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -449,7 +530,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   </svg>
                   Settings
                 </Link>
-              </li>
+              </li> */}
               {/* <!-- Menu Item Settings --> */}
             </ul>
           </div>
@@ -460,9 +541,23 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               OTHERS
             </h3>
 
+           {/* <!-- Menu Item Support --> */}
+           
+                <Link
+                  href="/support"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("support") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <FontAwesomeIcon icon={faHeadset} />
+                  Support
+                </Link>
+              {/* <!-- Menu Item Support --> */}
+
             <ul className="mb-6 flex flex-col gap-1.5">
               {/* <!-- Menu Item Chart --> */}
-              <li>
+              {/* <li>
                 <Link
                   href="/chart"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -500,11 +595,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   </svg>
                   Chart
                 </Link>
-              </li>
+              </li> */}
               {/* <!-- Menu Item Chart --> */}
 
               {/* <!-- Menu Item Ui Elements --> */}
-              <SidebarLinkGroup
+              {/* <SidebarLinkGroup
                 activeCondition={pathname === "/ui" || pathname.includes("ui")}
               >
                 {(handleClick, open) => {
@@ -574,9 +669,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             fill=""
                           />
                         </svg>
-                      </Link>
+                      </Link> */}
                       {/* <!-- Dropdown Menu Start --> */}
-                      <div
+                      {/* <div
                         className={`translate transform overflow-hidden ${
                           !open && "hidden"
                         }`}
@@ -603,12 +698,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             </Link>
                           </li>
                         </ul>
-                      </div>
+                      </div> */}
                       {/* <!-- Dropdown Menu End --> */}
-                    </React.Fragment>
+                    {/* </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
               {/* <!-- Menu Item Ui Elements --> */}
 
               {/* <!-- Menu Item Auth Pages --> */}

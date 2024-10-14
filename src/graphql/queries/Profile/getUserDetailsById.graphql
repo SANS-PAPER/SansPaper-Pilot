@@ -1,13 +1,32 @@
-query GetUserDetailsById($userID:BigInt){ 
-  users(condition: {id: $userID}){
-    nodes{
+query GetUserDetailsById($userID: BigInt!) {
+  users(condition: { id: $userID }) {
+    nodes {
       id
       name
       email
       phoneNumber
-      password
-      facebookId
-      
+      jobTitle
+      summaryBio
+      isActive
+      profile {
+        photo
+        firstName
+        lastName
+        address
+        city
+        stateProvince
+        country
+      }
+      availables {
+        nodes {
+          availableToWork
+          preferredLocation
+          jobType {
+            id
+            description
+          }
+        }
+      }
     }
   }
 }

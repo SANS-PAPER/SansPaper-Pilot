@@ -18,16 +18,14 @@ export default function AuthWrapper({ children }: { children: React.ReactNode })
   
     useEffect(() => {
       if (user) {
-        console.log('user,',user)
         const validateUserSpf = async () => {
           try {
             const isUserExistSpf = await LoginApi(user.email);
-  
+    
             if (isUserExistSpf.data?.data.loginSpf.status !== -6) {
               setIsDataAvailable(true);
-              setUserId(isUserExistSpf.data?.data.loginSpf.id); // Assuming user object has an `id` property
+              setUserId(isUserExistSpf.data?.data.loginSpf.id);
               setUserAuth(user);
-
             } else {
               setIsDataAvailable(false);
               setStopLoader(true);
@@ -37,10 +35,11 @@ export default function AuthWrapper({ children }: { children: React.ReactNode })
             console.error("Error fetching isUserExistSpf:", error);
           }
         };
-  
+    
         validateUserSpf();
       }
-    }, [user,setUserId]);
+    }, [user, setUserId, setUserAuth, setIsDataAvailable, setStopLoader]);  // Added dependencies
+    
     
     if (isLoading) return <div><Loader /></div>;
     if (error) return <div>{error.message}</div>;

@@ -1,0 +1,14 @@
+query GetCompletedFormTraining($userID: BigInt!) {
+  fillupForms(condition: { userId: $userID, isDraft: 0 }) {
+    nodes {
+      id
+      userId
+      isDraft
+      form {
+        id
+        name
+        isSpecial
+      }
+    }
+  }
+}

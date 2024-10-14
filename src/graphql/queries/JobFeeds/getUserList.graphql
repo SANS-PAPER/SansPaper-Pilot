@@ -1,0 +1,53 @@
+query GetUserList {
+  users {
+    nodes {
+      id
+      name
+      email
+      phoneNumber
+      jobTitle
+      summaryBio
+      profile {
+        photo
+        firstName
+        lastName
+        address
+        city
+        stateProvince
+        country
+      }
+      availables {
+        nodes {
+          id
+          availableToWork
+          preferredLocation
+          jobType {
+            id
+            description
+          }
+        }
+      }
+      reviews {
+        nodes {
+          id
+          userId
+          recValue
+        }
+        totalCount
+      }
+      fillupForms(condition: { isDraft: 0 }) {
+        nodes {
+          id
+          userId
+          isDraft
+          form {
+            id
+            name
+            isSpecial
+          }
+        }
+        totalCount
+      }
+    }
+  }
+}

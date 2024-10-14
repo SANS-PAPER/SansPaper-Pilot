@@ -1,0 +1,9 @@
+mutation updatePreferences($patch: UpdateAvailableInput!) {
+  updateAvailable(input: $patch) {
+    available {
+      availableToWork
+      jobTypeId
+      preferredLocation
+    }
+  }
+}

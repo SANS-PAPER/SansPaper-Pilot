@@ -1,0 +1,65 @@
+/* App.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+  }
+  
+  .chat-container {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+  }
+  
+  .message-container {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 80%;
+  }
+  
+  .user-container {
+    align-self: flex-end;
+    background-color: #eaeaea;
+  }
+  
+  .ai-container {
+    align-self: flex-start;
+    background-color: #0a88ff;
+  }
+  
+  .last-message {
+    margin-bottom: 30px;
+  }
+  
+  .message-text-ai {
+    font-size: 16px;
+    color: #fff;
+  }
+  
+  .message-text-user {
+    font-size: 16px;
+  }
+  
+  .input-container {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+  }
+  
+  .input {
+    flex: 1;
+    border: 1px solid gray;
+    padding: 8px;
+    border-radius: 25px;
+    margin-right: 10px;
+    resize: none;
+    overflow: hidden;
+  }
+  
+  .send-icon {
+    margin-top: 4px;
+    cursor: pointer;
+  }
+  

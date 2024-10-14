@@ -1,0 +1,25 @@
+query GetUploadedPhotos($userID: BigInt) {
+  fillupForms(condition: { userId: $userID }, orderBy: UPDATED_AT_DESC) {
+    nodes {
+      id
+      userId
+      formId
+      updatedAt
+      fillupFormFields(orderBy: UPDATED_AT_DESC) {
+        nodes {
+          id
+          fillupFormId
+          answer
+          updatedAt
+          field {
+            id
+            component {
+              id
+              description
+            }
+          }
+        }
+      }
+    }
+  }
+}

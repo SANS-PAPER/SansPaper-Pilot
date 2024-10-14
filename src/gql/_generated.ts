@@ -1,8 +1,6 @@
-
 import { GraphQLClient } from 'graphql-request';
-import { RequestInit } from 'next/dist/server/web/spec-extension/request';
-// import { RequestInit } from 'graphql-request/dist/types.dom';
-import { useQuery, useInfiniteQuery, UseQueryOptions, UseInfiniteQueryOptions } from '@tanstack/react-query';
+//import { RequestInit } from 'graphql-request/dist/types.dom';
+import { useMutation, useQuery, useInfiniteQuery, UseMutationOptions, UseQueryOptions, UseInfiniteQueryOptions } from '@tanstack/react-query';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -25,6 +23,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  BigFloat: { input: any; output: any; }
   BigInt: { input: any; output: any; }
   Cursor: { input: any; output: any; }
   Date: { input: any; output: any; }
@@ -309,8 +308,6 @@ export enum AbilityRolesOrderBy {
 
 export type Admin = Node & {
   __typename?: 'Admin';
-  /** Reads and enables pagination through a set of `Company`. */
-  companies: CompaniesConnection;
   createdAt?: Maybe<Scalars['Datetime']['output']>;
   deletedAt?: Maybe<Scalars['Datetime']['output']>;
   /** Reads and enables pagination through a set of `FillupForm`. */
@@ -343,19 +340,13 @@ export type Admin = Node & {
   /** Reads and enables pagination through a set of `Organization`. */
   organizations: OrganizationsConnection;
   /** Reads and enables pagination through a set of `Organization`. */
-  organizationsByCompanyAdminIdAndOrganizationId: AdminOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyConnection;
-  /** Reads and enables pagination through a set of `Organization`. */
   organizationsByGroupAdminIdAndOrganizationId: AdminOrganizationsByGroupAdminIdAndOrganizationIdManyToManyConnection;
-  /** Reads and enables pagination through a set of `Organization`. */
-  organizationsByProjectAdminIdAndOrganizationId: AdminOrganizationsByProjectAdminIdAndOrganizationIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
   organizationsBySchedulerAdminIdAndOrgId: AdminOrganizationsBySchedulerAdminIdAndOrgIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
   organizationsByTeamAdminIdAndOrganizationId: AdminOrganizationsByTeamAdminIdAndOrganizationIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
   organizationsByToolAdminIdAndOrganizationId: AdminOrganizationsByToolAdminIdAndOrganizationIdManyToManyConnection;
-  /** Reads and enables pagination through a set of `Project`. */
-  projects: ProjectsConnection;
   /** Reads and enables pagination through a set of `SchedulerField`. */
   schedulerFieldsBySchedulerAdminIdAndSchedulerFieldsId: AdminSchedulerFieldsBySchedulerAdminIdAndSchedulerFieldsIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Scheduler`. */
@@ -379,18 +370,6 @@ export type Admin = Node & {
   usersByFillupFormAdminIdAndUserId: AdminUsersByFillupFormAdminIdAndUserIdManyToManyConnection;
   /** Reads and enables pagination through a set of `User`. */
   usersBySchedulerAdminIdAndUserId: AdminUsersBySchedulerAdminIdAndUserIdManyToManyConnection;
-};
-
-
-export type AdminCompaniesArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<CompanyCondition>;
-  filter?: InputMaybe<CompanyFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<CompaniesOrderBy>>;
 };
 
 
@@ -550,31 +529,7 @@ export type AdminOrganizationsArgs = {
 };
 
 
-export type AdminOrganizationsByCompanyAdminIdAndOrganizationIdArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<OrganizationCondition>;
-  filter?: InputMaybe<OrganizationFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
-};
-
-
 export type AdminOrganizationsByGroupAdminIdAndOrganizationIdArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<OrganizationCondition>;
-  filter?: InputMaybe<OrganizationFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
-};
-
-
-export type AdminOrganizationsByProjectAdminIdAndOrganizationIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<OrganizationCondition>;
@@ -619,18 +574,6 @@ export type AdminOrganizationsByToolAdminIdAndOrganizationIdArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
-};
-
-
-export type AdminProjectsArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<ProjectCondition>;
-  filter?: InputMaybe<ProjectFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
 };
 
 
@@ -1124,43 +1067,6 @@ export type AdminMetricsByToolAdminIdAndMetricIdManyToManyEdgeToolsArgs = {
   orderBy?: InputMaybe<Array<ToolsOrderBy>>;
 };
 
-/** A connection to a list of `Organization` values, with data from `Company`. */
-export type AdminOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyConnection = {
-  __typename?: 'AdminOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyConnection';
-  /** A list of edges which contains the `Organization`, info from the `Company`, and the cursor to aid in pagination. */
-  edges: Array<AdminOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdge>;
-  /** A list of `Organization` objects. */
-  nodes: Array<Organization>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `Organization` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-};
-
-/** A `Organization` edge in the connection, with data from `Company`. */
-export type AdminOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdge = {
-  __typename?: 'AdminOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdge';
-  /** Reads and enables pagination through a set of `Company`. */
-  companies: CompaniesConnection;
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `Organization` at the end of the edge. */
-  node: Organization;
-};
-
-
-/** A `Organization` edge in the connection, with data from `Company`. */
-export type AdminOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdgeCompaniesArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<CompanyCondition>;
-  filter?: InputMaybe<CompanyFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<CompaniesOrderBy>>;
-};
-
 /** A connection to a list of `Organization` values, with data from `Group`. */
 export type AdminOrganizationsByGroupAdminIdAndOrganizationIdManyToManyConnection = {
   __typename?: 'AdminOrganizationsByGroupAdminIdAndOrganizationIdManyToManyConnection';
@@ -1196,43 +1102,6 @@ export type AdminOrganizationsByGroupAdminIdAndOrganizationIdManyToManyEdgeGroup
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<GroupsOrderBy>>;
-};
-
-/** A connection to a list of `Organization` values, with data from `Project`. */
-export type AdminOrganizationsByProjectAdminIdAndOrganizationIdManyToManyConnection = {
-  __typename?: 'AdminOrganizationsByProjectAdminIdAndOrganizationIdManyToManyConnection';
-  /** A list of edges which contains the `Organization`, info from the `Project`, and the cursor to aid in pagination. */
-  edges: Array<AdminOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdge>;
-  /** A list of `Organization` objects. */
-  nodes: Array<Organization>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `Organization` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-};
-
-/** A `Organization` edge in the connection, with data from `Project`. */
-export type AdminOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdge = {
-  __typename?: 'AdminOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdge';
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `Organization` at the end of the edge. */
-  node: Organization;
-  /** Reads and enables pagination through a set of `Project`. */
-  projects: ProjectsConnection;
-};
-
-
-/** A `Organization` edge in the connection, with data from `Project`. */
-export type AdminOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdgeProjectsArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<ProjectCondition>;
-  filter?: InputMaybe<ProjectFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
 };
 
 /** A connection to a list of `Organization` values, with data from `Scheduler`. */
@@ -1907,6 +1776,195 @@ export enum AttachmentsOrderBy {
   UpdatedAtDesc = 'UPDATED_AT_DESC'
 }
 
+export type Available = Node & {
+  __typename?: 'Available';
+  availableToWork: Scalars['Boolean']['output'];
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  deletedAt?: Maybe<Scalars['Datetime']['output']>;
+  id: Scalars['BigInt']['output'];
+  isOnline: Scalars['Boolean']['output'];
+  /** Reads a single `JobType` that is related to this `Available`. */
+  jobType?: Maybe<JobType>;
+  jobTypeId?: Maybe<Scalars['BigInt']['output']>;
+  latitude?: Maybe<Scalars['BigFloat']['output']>;
+  longitude?: Maybe<Scalars['BigFloat']['output']>;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  preferredLocation?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `Available`. */
+  user?: Maybe<User>;
+  userId: Scalars['BigInt']['output'];
+};
+
+/**
+ * A condition to be used against `Available` object types. All fields are tested
+ * for equality and combined with a logical ‘and.’
+ */
+export type AvailableCondition = {
+  /** Checks for equality with the object’s `availableToWork` field. */
+  availableToWork?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `isOnline` field. */
+  isOnline?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `jobTypeId` field. */
+  jobTypeId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `latitude` field. */
+  latitude?: InputMaybe<Scalars['BigFloat']['input']>;
+  /** Checks for equality with the object’s `longitude` field. */
+  longitude?: InputMaybe<Scalars['BigFloat']['input']>;
+  /** Checks for equality with the object’s `preferredLocation` field. */
+  preferredLocation?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A filter to be used against `Available` object types. All fields are combined with a logical ‘and.’ */
+export type AvailableFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<AvailableFilter>>;
+  /** Filter by the object’s `availableToWork` field. */
+  availableToWork?: InputMaybe<BooleanFilter>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `isOnline` field. */
+  isOnline?: InputMaybe<BooleanFilter>;
+  /** Filter by the object’s `jobTypeId` field. */
+  jobTypeId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `latitude` field. */
+  latitude?: InputMaybe<BigFloatFilter>;
+  /** Filter by the object’s `longitude` field. */
+  longitude?: InputMaybe<BigFloatFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<AvailableFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<AvailableFilter>>;
+  /** Filter by the object’s `preferredLocation` field. */
+  preferredLocation?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<BigIntFilter>;
+};
+
+/** An input for mutations affecting `Available` */
+export type AvailableInput = {
+  availableToWork?: InputMaybe<Scalars['Boolean']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  isOnline?: InputMaybe<Scalars['Boolean']['input']>;
+  jobTypeId?: InputMaybe<Scalars['BigInt']['input']>;
+  latitude?: InputMaybe<Scalars['BigFloat']['input']>;
+  longitude?: InputMaybe<Scalars['BigFloat']['input']>;
+  preferredLocation?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId: Scalars['BigInt']['input'];
+};
+
+/** Represents an update to a `Available`. Fields that are set will be updated. */
+export type AvailablePatch = {
+  availableToWork?: InputMaybe<Scalars['Boolean']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  isOnline?: InputMaybe<Scalars['Boolean']['input']>;
+  jobTypeId?: InputMaybe<Scalars['BigInt']['input']>;
+  latitude?: InputMaybe<Scalars['BigFloat']['input']>;
+  longitude?: InputMaybe<Scalars['BigFloat']['input']>;
+  preferredLocation?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A connection to a list of `Available` values. */
+export type AvailablesConnection = {
+  __typename?: 'AvailablesConnection';
+  /** A list of edges which contains the `Available` and cursor to aid in pagination. */
+  edges: Array<AvailablesEdge>;
+  /** A list of `Available` objects. */
+  nodes: Array<Available>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Available` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Available` edge in the connection. */
+export type AvailablesEdge = {
+  __typename?: 'AvailablesEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Available` at the end of the edge. */
+  node: Available;
+};
+
+/** Methods to use when ordering `Available`. */
+export enum AvailablesOrderBy {
+  AvailableToWorkAsc = 'AVAILABLE_TO_WORK_ASC',
+  AvailableToWorkDesc = 'AVAILABLE_TO_WORK_DESC',
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DeletedAtAsc = 'DELETED_AT_ASC',
+  DeletedAtDesc = 'DELETED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  IsOnlineAsc = 'IS_ONLINE_ASC',
+  IsOnlineDesc = 'IS_ONLINE_DESC',
+  JobTypeIdAsc = 'JOB_TYPE_ID_ASC',
+  JobTypeIdDesc = 'JOB_TYPE_ID_DESC',
+  LatitudeAsc = 'LATITUDE_ASC',
+  LatitudeDesc = 'LATITUDE_DESC',
+  LongitudeAsc = 'LONGITUDE_ASC',
+  LongitudeDesc = 'LONGITUDE_DESC',
+  Natural = 'NATURAL',
+  PreferredLocationAsc = 'PREFERRED_LOCATION_ASC',
+  PreferredLocationDesc = 'PREFERRED_LOCATION_DESC',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC'
+}
+
+/** A filter to be used against BigFloat fields. All fields are combined with a logical ‘and.’ */
+export type BigFloatFilter = {
+  /** Not equal to the specified value, treating null like an ordinary value. */
+  distinctFrom?: InputMaybe<Scalars['BigFloat']['input']>;
+  /** Equal to the specified value. */
+  equalTo?: InputMaybe<Scalars['BigFloat']['input']>;
+  /** Greater than the specified value. */
+  greaterThan?: InputMaybe<Scalars['BigFloat']['input']>;
+  /** Greater than or equal to the specified value. */
+  greaterThanOrEqualTo?: InputMaybe<Scalars['BigFloat']['input']>;
+  /** Included in the specified list. */
+  in?: InputMaybe<Array<Scalars['BigFloat']['input']>>;
+  /** Is null (if `true` is specified) or is not null (if `false` is specified). */
+  isNull?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Less than the specified value. */
+  lessThan?: InputMaybe<Scalars['BigFloat']['input']>;
+  /** Less than or equal to the specified value. */
+  lessThanOrEqualTo?: InputMaybe<Scalars['BigFloat']['input']>;
+  /** Equal to the specified value, treating null like an ordinary value. */
+  notDistinctFrom?: InputMaybe<Scalars['BigFloat']['input']>;
+  /** Not equal to the specified value. */
+  notEqualTo?: InputMaybe<Scalars['BigFloat']['input']>;
+  /** Not included in the specified list. */
+  notIn?: InputMaybe<Array<Scalars['BigFloat']['input']>>;
+};
+
 /** A filter to be used against BigInt fields. All fields are combined with a logical ‘and.’ */
 export type BigIntFilter = {
   /** Not equal to the specified value, treating null like an ordinary value. */
@@ -2104,6 +2162,142 @@ export enum CertificationsOrderBy {
   UpdatedAtDesc = 'UPDATED_AT_DESC'
 }
 
+export type ChatNotification = Node & {
+  __typename?: 'ChatNotification';
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  id: Scalars['BigInt']['output'];
+  isDelivered: Scalars['Boolean']['output'];
+  /** Reads a single `Message` that is related to this `ChatNotification`. */
+  message?: Maybe<Message>;
+  messageId?: Maybe<Scalars['BigInt']['output']>;
+  messageText?: Maybe<Scalars['String']['output']>;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  readAt?: Maybe<Scalars['Datetime']['output']>;
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `ChatNotification`. */
+  user?: Maybe<User>;
+  userId?: Maybe<Scalars['BigInt']['output']>;
+};
+
+/**
+ * A condition to be used against `ChatNotification` object types. All fields are
+ * tested for equality and combined with a logical ‘and.’
+ */
+export type ChatNotificationCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `isDelivered` field. */
+  isDelivered?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `messageId` field. */
+  messageId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `messageText` field. */
+  messageText?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `readAt` field. */
+  readAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A filter to be used against `ChatNotification` object types. All fields are combined with a logical ‘and.’ */
+export type ChatNotificationFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<ChatNotificationFilter>>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `isDelivered` field. */
+  isDelivered?: InputMaybe<BooleanFilter>;
+  /** Filter by the object’s `messageId` field. */
+  messageId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `messageText` field. */
+  messageText?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<ChatNotificationFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<ChatNotificationFilter>>;
+  /** Filter by the object’s `readAt` field. */
+  readAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<BigIntFilter>;
+};
+
+/** An input for mutations affecting `ChatNotification` */
+export type ChatNotificationInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  isDelivered?: InputMaybe<Scalars['Boolean']['input']>;
+  messageId?: InputMaybe<Scalars['BigInt']['input']>;
+  messageText?: InputMaybe<Scalars['String']['input']>;
+  readAt?: InputMaybe<Scalars['Datetime']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** Represents an update to a `ChatNotification`. Fields that are set will be updated. */
+export type ChatNotificationPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  isDelivered?: InputMaybe<Scalars['Boolean']['input']>;
+  messageId?: InputMaybe<Scalars['BigInt']['input']>;
+  messageText?: InputMaybe<Scalars['String']['input']>;
+  readAt?: InputMaybe<Scalars['Datetime']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A connection to a list of `ChatNotification` values. */
+export type ChatNotificationsConnection = {
+  __typename?: 'ChatNotificationsConnection';
+  /** A list of edges which contains the `ChatNotification` and cursor to aid in pagination. */
+  edges: Array<ChatNotificationsEdge>;
+  /** A list of `ChatNotification` objects. */
+  nodes: Array<ChatNotification>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `ChatNotification` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `ChatNotification` edge in the connection. */
+export type ChatNotificationsEdge = {
+  __typename?: 'ChatNotificationsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `ChatNotification` at the end of the edge. */
+  node: ChatNotification;
+};
+
+/** Methods to use when ordering `ChatNotification`. */
+export enum ChatNotificationsOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  IsDeliveredAsc = 'IS_DELIVERED_ASC',
+  IsDeliveredDesc = 'IS_DELIVERED_DESC',
+  MessageIdAsc = 'MESSAGE_ID_ASC',
+  MessageIdDesc = 'MESSAGE_ID_DESC',
+  MessageTextAsc = 'MESSAGE_TEXT_ASC',
+  MessageTextDesc = 'MESSAGE_TEXT_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  ReadAtAsc = 'READ_AT_ASC',
+  ReadAtDesc = 'READ_AT_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC'
+}
+
 /** A connection to a list of `Company` values. */
 export type CompaniesConnection = {
   __typename?: 'CompaniesConnection';
@@ -2155,8 +2349,8 @@ export enum CompaniesOrderBy {
 
 export type Company = Node & {
   __typename?: 'Company';
-  /** Reads a single `Admin` that is related to this `Company`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Company`. */
+  admin?: Maybe<User>;
   adminId: Scalars['BigInt']['output'];
   /** Reads and enables pagination through a set of `CompanyUser`. */
   companyUsers: CompanyUsersConnection;
@@ -2996,6 +3190,343 @@ export enum ComponentsOrderBy {
   UpdatedAtDesc = 'UPDATED_AT_DESC'
 }
 
+export type Conversation = Node & {
+  __typename?: 'Conversation';
+  /** Reads and enables pagination through a set of `ConversationUser`. */
+  conversationUsers: ConversationUsersConnection;
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  createdBy?: Maybe<Scalars['BigInt']['output']>;
+  id: Scalars['BigInt']['output'];
+  /** Reads and enables pagination through a set of `Message`. */
+  messages: MessagesConnection;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `Conversation`. */
+  userByCreatedBy?: Maybe<User>;
+  /** Reads and enables pagination through a set of `User`. */
+  usersByConversationUserConversationIdAndUserId: ConversationUsersByConversationUserConversationIdAndUserIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `User`. */
+  usersByMessageConversationIdAndSenderId: ConversationUsersByMessageConversationIdAndSenderIdManyToManyConnection;
+};
+
+
+export type ConversationConversationUsersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationUserCondition>;
+  filter?: InputMaybe<ConversationUserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
+};
+
+
+export type ConversationMessagesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<MessageCondition>;
+  filter?: InputMaybe<MessageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
+
+export type ConversationUsersByConversationUserConversationIdAndUserIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+
+export type ConversationUsersByMessageConversationIdAndSenderIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+/**
+ * A condition to be used against `Conversation` object types. All fields are
+ * tested for equality and combined with a logical ‘and.’
+ */
+export type ConversationCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `createdBy` field. */
+  createdBy?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A filter to be used against `Conversation` object types. All fields are combined with a logical ‘and.’ */
+export type ConversationFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<ConversationFilter>>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `createdBy` field. */
+  createdBy?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<ConversationFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<ConversationFilter>>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+};
+
+/** An input for mutations affecting `Conversation` */
+export type ConversationInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  createdBy?: InputMaybe<Scalars['BigInt']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** Represents an update to a `Conversation`. Fields that are set will be updated. */
+export type ConversationPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  createdBy?: InputMaybe<Scalars['BigInt']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+export type ConversationUser = Node & {
+  __typename?: 'ConversationUser';
+  /** Reads a single `Conversation` that is related to this `ConversationUser`. */
+  conversation?: Maybe<Conversation>;
+  conversationId: Scalars['BigInt']['output'];
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  id: Scalars['BigInt']['output'];
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `ConversationUser`. */
+  user?: Maybe<User>;
+  userId: Scalars['BigInt']['output'];
+};
+
+/**
+ * A condition to be used against `ConversationUser` object types. All fields are
+ * tested for equality and combined with a logical ‘and.’
+ */
+export type ConversationUserCondition = {
+  /** Checks for equality with the object’s `conversationId` field. */
+  conversationId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A filter to be used against `ConversationUser` object types. All fields are combined with a logical ‘and.’ */
+export type ConversationUserFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<ConversationUserFilter>>;
+  /** Filter by the object’s `conversationId` field. */
+  conversationId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<ConversationUserFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<ConversationUserFilter>>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<BigIntFilter>;
+};
+
+/** An input for mutations affecting `ConversationUser` */
+export type ConversationUserInput = {
+  conversationId: Scalars['BigInt']['input'];
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId: Scalars['BigInt']['input'];
+};
+
+/** Represents an update to a `ConversationUser`. Fields that are set will be updated. */
+export type ConversationUserPatch = {
+  conversationId?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A connection to a list of `User` values, with data from `ConversationUser`. */
+export type ConversationUsersByConversationUserConversationIdAndUserIdManyToManyConnection = {
+  __typename?: 'ConversationUsersByConversationUserConversationIdAndUserIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `ConversationUser`, and the cursor to aid in pagination. */
+  edges: Array<ConversationUsersByConversationUserConversationIdAndUserIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `ConversationUser`. */
+export type ConversationUsersByConversationUserConversationIdAndUserIdManyToManyEdge = {
+  __typename?: 'ConversationUsersByConversationUserConversationIdAndUserIdManyToManyEdge';
+  /** Reads and enables pagination through a set of `ConversationUser`. */
+  conversationUsers: ConversationUsersConnection;
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `User` at the end of the edge. */
+  node: User;
+};
+
+
+/** A `User` edge in the connection, with data from `ConversationUser`. */
+export type ConversationUsersByConversationUserConversationIdAndUserIdManyToManyEdgeConversationUsersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationUserCondition>;
+  filter?: InputMaybe<ConversationUserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
+};
+
+/** A connection to a list of `User` values, with data from `Message`. */
+export type ConversationUsersByMessageConversationIdAndSenderIdManyToManyConnection = {
+  __typename?: 'ConversationUsersByMessageConversationIdAndSenderIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `Message`, and the cursor to aid in pagination. */
+  edges: Array<ConversationUsersByMessageConversationIdAndSenderIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `Message`. */
+export type ConversationUsersByMessageConversationIdAndSenderIdManyToManyEdge = {
+  __typename?: 'ConversationUsersByMessageConversationIdAndSenderIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `Message`. */
+  messagesBySenderId: MessagesConnection;
+  /** The `User` at the end of the edge. */
+  node: User;
+};
+
+
+/** A `User` edge in the connection, with data from `Message`. */
+export type ConversationUsersByMessageConversationIdAndSenderIdManyToManyEdgeMessagesBySenderIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<MessageCondition>;
+  filter?: InputMaybe<MessageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
+/** A connection to a list of `ConversationUser` values. */
+export type ConversationUsersConnection = {
+  __typename?: 'ConversationUsersConnection';
+  /** A list of edges which contains the `ConversationUser` and cursor to aid in pagination. */
+  edges: Array<ConversationUsersEdge>;
+  /** A list of `ConversationUser` objects. */
+  nodes: Array<ConversationUser>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `ConversationUser` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `ConversationUser` edge in the connection. */
+export type ConversationUsersEdge = {
+  __typename?: 'ConversationUsersEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `ConversationUser` at the end of the edge. */
+  node: ConversationUser;
+};
+
+/** Methods to use when ordering `ConversationUser`. */
+export enum ConversationUsersOrderBy {
+  ConversationIdAsc = 'CONVERSATION_ID_ASC',
+  ConversationIdDesc = 'CONVERSATION_ID_DESC',
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC'
+}
+
+/** A connection to a list of `Conversation` values. */
+export type ConversationsConnection = {
+  __typename?: 'ConversationsConnection';
+  /** A list of edges which contains the `Conversation` and cursor to aid in pagination. */
+  edges: Array<ConversationsEdge>;
+  /** A list of `Conversation` objects. */
+  nodes: Array<Conversation>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Conversation` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Conversation` edge in the connection. */
+export type ConversationsEdge = {
+  __typename?: 'ConversationsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Conversation` at the end of the edge. */
+  node: Conversation;
+};
+
+/** Methods to use when ordering `Conversation`. */
+export enum ConversationsOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  CreatedByAsc = 'CREATED_BY_ASC',
+  CreatedByDesc = 'CREATED_BY_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC'
+}
+
 export type Course = Node & {
   __typename?: 'Course';
   /** Reads a single `User` that is related to this `Course`. */
@@ -3313,6 +3844,43 @@ export type CreateAttachmentPayloadAttachmentEdgeArgs = {
   orderBy?: InputMaybe<Array<AttachmentsOrderBy>>;
 };
 
+/** All input for the create `Available` mutation. */
+export type CreateAvailableInput = {
+  /** The `Available` to be created by this mutation. */
+  available: AvailableInput;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our create `Available` mutation. */
+export type CreateAvailablePayload = {
+  __typename?: 'CreateAvailablePayload';
+  /** The `Available` that was created by this mutation. */
+  available?: Maybe<Available>;
+  /** An edge for our `Available`. May be used by Relay 1. */
+  availableEdge?: Maybe<AvailablesEdge>;
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `JobType` that is related to this `Available`. */
+  jobType?: Maybe<JobType>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Available`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our create `Available` mutation. */
+export type CreateAvailablePayloadAvailableEdgeArgs = {
+  orderBy?: InputMaybe<Array<AvailablesOrderBy>>;
+};
+
 /** All input for the create `Certification` mutation. */
 export type CreateCertificationInput = {
   /** The `Certification` to be created by this mutation. */
@@ -3350,6 +3918,43 @@ export type CreateCertificationPayloadCertificationEdgeArgs = {
   orderBy?: InputMaybe<Array<CertificationsOrderBy>>;
 };
 
+/** All input for the create `ChatNotification` mutation. */
+export type CreateChatNotificationInput = {
+  /** The `ChatNotification` to be created by this mutation. */
+  chatNotification: ChatNotificationInput;
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** The output of our create `ChatNotification` mutation. */
+export type CreateChatNotificationPayload = {
+  __typename?: 'CreateChatNotificationPayload';
+  /** The `ChatNotification` that was created by this mutation. */
+  chatNotification?: Maybe<ChatNotification>;
+  /** An edge for our `ChatNotification`. May be used by Relay 1. */
+  chatNotificationEdge?: Maybe<ChatNotificationsEdge>;
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Message` that is related to this `ChatNotification`. */
+  message?: Maybe<Message>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `ChatNotification`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our create `ChatNotification` mutation. */
+export type CreateChatNotificationPayloadChatNotificationEdgeArgs = {
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
+};
+
 /** All input for the create `Company` mutation. */
 export type CreateCompanyInput = {
   /**
@@ -3364,8 +3969,8 @@ export type CreateCompanyInput = {
 /** The output of our create `Company` mutation. */
 export type CreateCompanyPayload = {
   __typename?: 'CreateCompanyPayload';
-  /** Reads a single `Admin` that is related to this `Company`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Company`. */
+  admin?: Maybe<User>;
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
@@ -3531,6 +4136,78 @@ export type CreateComponentPropertyPayload = {
 /** The output of our create `ComponentProperty` mutation. */
 export type CreateComponentPropertyPayloadComponentPropertyEdgeArgs = {
   orderBy?: InputMaybe<Array<ComponentPropertiesOrderBy>>;
+};
+
+/** All input for the create `Conversation` mutation. */
+export type CreateConversationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `Conversation` to be created by this mutation. */
+  conversation: ConversationInput;
+};
+
+/** The output of our create `Conversation` mutation. */
+export type CreateConversationPayload = {
+  __typename?: 'CreateConversationPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `Conversation` that was created by this mutation. */
+  conversation?: Maybe<Conversation>;
+  /** An edge for our `Conversation`. May be used by Relay 1. */
+  conversationEdge?: Maybe<ConversationsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Conversation`. */
+  userByCreatedBy?: Maybe<User>;
+};
+
+
+/** The output of our create `Conversation` mutation. */
+export type CreateConversationPayloadConversationEdgeArgs = {
+  orderBy?: InputMaybe<Array<ConversationsOrderBy>>;
+};
+
+/** All input for the create `ConversationUser` mutation. */
+export type CreateConversationUserInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `ConversationUser` to be created by this mutation. */
+  conversationUser: ConversationUserInput;
+};
+
+/** The output of our create `ConversationUser` mutation. */
+export type CreateConversationUserPayload = {
+  __typename?: 'CreateConversationUserPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Conversation` that is related to this `ConversationUser`. */
+  conversation?: Maybe<Conversation>;
+  /** The `ConversationUser` that was created by this mutation. */
+  conversationUser?: Maybe<ConversationUser>;
+  /** An edge for our `ConversationUser`. May be used by Relay 1. */
+  conversationUserEdge?: Maybe<ConversationUsersEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `ConversationUser`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our create `ConversationUser` mutation. */
+export type CreateConversationUserPayloadConversationUserEdgeArgs = {
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
 };
 
 /** All input for the create `Course` mutation. */
@@ -4452,6 +5129,84 @@ export type CreateIssuancePayloadIssuanceEdgeArgs = {
   orderBy?: InputMaybe<Array<IssuancesOrderBy>>;
 };
 
+/** All input for the create `JobApplication` mutation. */
+export type CreateJobApplicationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `JobApplication` to be created by this mutation. */
+  jobApplication: JobApplicationInput;
+};
+
+/** The output of our create `JobApplication` mutation. */
+export type CreateJobApplicationPayload = {
+  __typename?: 'CreateJobApplicationPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `JobApplication` that was created by this mutation. */
+  jobApplication?: Maybe<JobApplication>;
+  /** An edge for our `JobApplication`. May be used by Relay 1. */
+  jobApplicationEdge?: Maybe<JobApplicationsEdge>;
+  /** Reads a single `JobFeed` that is related to this `JobApplication`. */
+  jobFeeds?: Maybe<JobFeed>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `JobApplication`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our create `JobApplication` mutation. */
+export type CreateJobApplicationPayloadJobApplicationEdgeArgs = {
+  orderBy?: InputMaybe<Array<JobApplicationsOrderBy>>;
+};
+
+/** All input for the create `JobFeed` mutation. */
+export type CreateJobFeedInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `JobFeed` to be created by this mutation. */
+  jobFeed: JobFeedInput;
+};
+
+/** The output of our create `JobFeed` mutation. */
+export type CreateJobFeedPayload = {
+  __typename?: 'CreateJobFeedPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `JobFeed` that was created by this mutation. */
+  jobFeed?: Maybe<JobFeed>;
+  /** An edge for our `JobFeed`. May be used by Relay 1. */
+  jobFeedEdge?: Maybe<JobFeedsEdge>;
+  /** Reads a single `JobType` that is related to this `JobFeed`. */
+  jobTypes?: Maybe<JobType>;
+  /** Reads a single `PayPeriod` that is related to this `JobFeed`. */
+  payPeriods?: Maybe<PayPeriod>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `JobFeed`. */
+  user?: Maybe<User>;
+  /** Reads a single `WorkType` that is related to this `JobFeed`. */
+  workTypes?: Maybe<WorkType>;
+};
+
+
+/** The output of our create `JobFeed` mutation. */
+export type CreateJobFeedPayloadJobFeedEdgeArgs = {
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
 /** All input for the create `Job` mutation. */
 export type CreateJobInput = {
   /**
@@ -4596,6 +5351,76 @@ export type CreateJobSendingEmailPayloadJobSendingEmailEdgeArgs = {
   orderBy?: InputMaybe<Array<JobSendingEmailsOrderBy>>;
 };
 
+/** All input for the create `JobType` mutation. */
+export type CreateJobTypeInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `JobType` to be created by this mutation. */
+  jobType: JobTypeInput;
+};
+
+/** The output of our create `JobType` mutation. */
+export type CreateJobTypePayload = {
+  __typename?: 'CreateJobTypePayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `JobType` that was created by this mutation. */
+  jobType?: Maybe<JobType>;
+  /** An edge for our `JobType`. May be used by Relay 1. */
+  jobTypeEdge?: Maybe<JobTypesEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our create `JobType` mutation. */
+export type CreateJobTypePayloadJobTypeEdgeArgs = {
+  orderBy?: InputMaybe<Array<JobTypesOrderBy>>;
+};
+
+/** All input for the create `JobUser` mutation. */
+export type CreateJobUserInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `JobUser` to be created by this mutation. */
+  jobUser: JobUserInput;
+};
+
+/** The output of our create `JobUser` mutation. */
+export type CreateJobUserPayload = {
+  __typename?: 'CreateJobUserPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Job` that is related to this `JobUser`. */
+  job?: Maybe<Job>;
+  /** The `JobUser` that was created by this mutation. */
+  jobUser?: Maybe<JobUser>;
+  /** An edge for our `JobUser`. May be used by Relay 1. */
+  jobUserEdge?: Maybe<JobUsersEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `JobUser`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our create `JobUser` mutation. */
+export type CreateJobUserPayloadJobUserEdgeArgs = {
+  orderBy?: InputMaybe<Array<JobUsersOrderBy>>;
+};
+
 /** All input for the create `Kind` mutation. */
 export type CreateKindInput = {
   /**
@@ -4697,6 +5522,43 @@ export type CreateLoginTransactionPayloadLoginTransactionEdgeArgs = {
   orderBy?: InputMaybe<Array<LoginTransactionsOrderBy>>;
 };
 
+/** All input for the create `Message` mutation. */
+export type CreateMessageInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `Message` to be created by this mutation. */
+  message: MessageInput;
+};
+
+/** The output of our create `Message` mutation. */
+export type CreateMessagePayload = {
+  __typename?: 'CreateMessagePayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Conversation` that is related to this `Message`. */
+  conversation?: Maybe<Conversation>;
+  /** The `Message` that was created by this mutation. */
+  message?: Maybe<Message>;
+  /** An edge for our `Message`. May be used by Relay 1. */
+  messageEdge?: Maybe<MessagesEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Message`. */
+  sender?: Maybe<User>;
+};
+
+
+/** The output of our create `Message` mutation. */
+export type CreateMessagePayloadMessageEdgeArgs = {
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
 /** All input for the create `Metric` mutation. */
 export type CreateMetricInput = {
   /**
@@ -4794,6 +5656,41 @@ export type CreateNewsPayload = {
 /** The output of our create `News` mutation. */
 export type CreateNewsPayloadNewsEdgeArgs = {
   orderBy?: InputMaybe<Array<NewsOrderBy>>;
+};
+
+/** All input for the create `Notification` mutation. */
+export type CreateNotificationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `Notification` to be created by this mutation. */
+  notification: NotificationInput;
+};
+
+/** The output of our create `Notification` mutation. */
+export type CreateNotificationPayload = {
+  __typename?: 'CreateNotificationPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `Notification` that was created by this mutation. */
+  notification?: Maybe<Notification>;
+  /** An edge for our `Notification`. May be used by Relay 1. */
+  notificationEdge?: Maybe<NotificationsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Notification`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our create `Notification` mutation. */
+export type CreateNotificationPayloadNotificationEdgeArgs = {
+  orderBy?: InputMaybe<Array<NotificationsOrderBy>>;
 };
 
 /** All input for the create `Organization` mutation. */
@@ -4901,6 +5798,39 @@ export type CreatePasswordResetPayloadPasswordResetEdgeArgs = {
   orderBy?: InputMaybe<Array<PasswordResetsOrderBy>>;
 };
 
+/** All input for the create `PayPeriod` mutation. */
+export type CreatePayPeriodInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `PayPeriod` to be created by this mutation. */
+  payPeriod: PayPeriodInput;
+};
+
+/** The output of our create `PayPeriod` mutation. */
+export type CreatePayPeriodPayload = {
+  __typename?: 'CreatePayPeriodPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `PayPeriod` that was created by this mutation. */
+  payPeriod?: Maybe<PayPeriod>;
+  /** An edge for our `PayPeriod`. May be used by Relay 1. */
+  payPeriodEdge?: Maybe<PayPeriodsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our create `PayPeriod` mutation. */
+export type CreatePayPeriodPayloadPayPeriodEdgeArgs = {
+  orderBy?: InputMaybe<Array<PayPeriodsOrderBy>>;
+};
+
 /** All input for the create `PersonalAccessToken` mutation. */
 export type CreatePersonalAccessTokenInput = {
   /**
@@ -4985,8 +5915,8 @@ export type CreateProjectInput = {
 /** The output of our create `Project` mutation. */
 export type CreateProjectPayload = {
   __typename?: 'CreateProjectPayload';
-  /** Reads a single `Admin` that is related to this `Project`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Project`. */
+  admin?: Maybe<User>;
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
@@ -5080,6 +6010,41 @@ export type CreatePropertyPayload = {
 /** The output of our create `Property` mutation. */
 export type CreatePropertyPayloadPropertyEdgeArgs = {
   orderBy?: InputMaybe<Array<PropertiesOrderBy>>;
+};
+
+/** All input for the create `Review` mutation. */
+export type CreateReviewInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `Review` to be created by this mutation. */
+  review: ReviewInput;
+};
+
+/** The output of our create `Review` mutation. */
+export type CreateReviewPayload = {
+  __typename?: 'CreateReviewPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** The `Review` that was created by this mutation. */
+  review?: Maybe<Review>;
+  /** An edge for our `Review`. May be used by Relay 1. */
+  reviewEdge?: Maybe<ReviewsEdge>;
+  /** Reads a single `User` that is related to this `Review`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our create `Review` mutation. */
+export type CreateReviewPayloadReviewEdgeArgs = {
+  orderBy?: InputMaybe<Array<ReviewsOrderBy>>;
 };
 
 /** All input for the create `Role` mutation. */
@@ -6018,6 +6983,41 @@ export type CreateWebsocketsStatisticsEntryPayloadWebsocketsStatisticsEntryEdgeA
   orderBy?: InputMaybe<Array<WebsocketsStatisticsEntriesOrderBy>>;
 };
 
+/** All input for the create `WorkExperience` mutation. */
+export type CreateWorkExperienceInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `WorkExperience` to be created by this mutation. */
+  workExperience: WorkExperienceInput;
+};
+
+/** The output of our create `WorkExperience` mutation. */
+export type CreateWorkExperiencePayload = {
+  __typename?: 'CreateWorkExperiencePayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `WorkExperience`. */
+  user?: Maybe<User>;
+  /** The `WorkExperience` that was created by this mutation. */
+  workExperience?: Maybe<WorkExperience>;
+  /** An edge for our `WorkExperience`. May be used by Relay 1. */
+  workExperienceEdge?: Maybe<WorkExperiencesEdge>;
+};
+
+
+/** The output of our create `WorkExperience` mutation. */
+export type CreateWorkExperiencePayloadWorkExperienceEdgeArgs = {
+  orderBy?: InputMaybe<Array<WorkExperiencesOrderBy>>;
+};
+
 /** All input for the create `WorkType` mutation. */
 export type CreateWorkTypeInput = {
   /**
@@ -6506,6 +7506,54 @@ export type DeleteAttachmentPayloadAttachmentEdgeArgs = {
   orderBy?: InputMaybe<Array<AttachmentsOrderBy>>;
 };
 
+/** All input for the `deleteAvailableByNodeId` mutation. */
+export type DeleteAvailableByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Available` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteAvailable` mutation. */
+export type DeleteAvailableInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `Available` mutation. */
+export type DeleteAvailablePayload = {
+  __typename?: 'DeleteAvailablePayload';
+  /** The `Available` that was deleted by this mutation. */
+  available?: Maybe<Available>;
+  /** An edge for our `Available`. May be used by Relay 1. */
+  availableEdge?: Maybe<AvailablesEdge>;
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedAvailableNodeId?: Maybe<Scalars['ID']['output']>;
+  /** Reads a single `JobType` that is related to this `Available`. */
+  jobType?: Maybe<JobType>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Available`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our delete `Available` mutation. */
+export type DeleteAvailablePayloadAvailableEdgeArgs = {
+  orderBy?: InputMaybe<Array<AvailablesOrderBy>>;
+};
+
 /** All input for the `deleteCertificationByNodeId` mutation. */
 export type DeleteCertificationByNodeIdInput = {
   /**
@@ -6554,6 +7602,54 @@ export type DeleteCertificationPayloadCertificationEdgeArgs = {
   orderBy?: InputMaybe<Array<CertificationsOrderBy>>;
 };
 
+/** All input for the `deleteChatNotificationByNodeId` mutation. */
+export type DeleteChatNotificationByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `ChatNotification` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteChatNotification` mutation. */
+export type DeleteChatNotificationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `ChatNotification` mutation. */
+export type DeleteChatNotificationPayload = {
+  __typename?: 'DeleteChatNotificationPayload';
+  /** The `ChatNotification` that was deleted by this mutation. */
+  chatNotification?: Maybe<ChatNotification>;
+  /** An edge for our `ChatNotification`. May be used by Relay 1. */
+  chatNotificationEdge?: Maybe<ChatNotificationsEdge>;
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedChatNotificationNodeId?: Maybe<Scalars['ID']['output']>;
+  /** Reads a single `Message` that is related to this `ChatNotification`. */
+  message?: Maybe<Message>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `ChatNotification`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our delete `ChatNotification` mutation. */
+export type DeleteChatNotificationPayloadChatNotificationEdgeArgs = {
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
+};
+
 /** All input for the `deleteCompanyByNodeId` mutation. */
 export type DeleteCompanyByNodeIdInput = {
   /**
@@ -6578,8 +7674,8 @@ export type DeleteCompanyInput = {
 /** The output of our delete `Company` mutation. */
 export type DeleteCompanyPayload = {
   __typename?: 'DeleteCompanyPayload';
-  /** Reads a single `Admin` that is related to this `Company`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Company`. */
+  admin?: Maybe<User>;
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
@@ -6762,6 +7858,100 @@ export type DeleteComponentPropertyPayload = {
 /** The output of our delete `ComponentProperty` mutation. */
 export type DeleteComponentPropertyPayloadComponentPropertyEdgeArgs = {
   orderBy?: InputMaybe<Array<ComponentPropertiesOrderBy>>;
+};
+
+/** All input for the `deleteConversationByNodeId` mutation. */
+export type DeleteConversationByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Conversation` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteConversation` mutation. */
+export type DeleteConversationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `Conversation` mutation. */
+export type DeleteConversationPayload = {
+  __typename?: 'DeleteConversationPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `Conversation` that was deleted by this mutation. */
+  conversation?: Maybe<Conversation>;
+  /** An edge for our `Conversation`. May be used by Relay 1. */
+  conversationEdge?: Maybe<ConversationsEdge>;
+  deletedConversationNodeId?: Maybe<Scalars['ID']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Conversation`. */
+  userByCreatedBy?: Maybe<User>;
+};
+
+
+/** The output of our delete `Conversation` mutation. */
+export type DeleteConversationPayloadConversationEdgeArgs = {
+  orderBy?: InputMaybe<Array<ConversationsOrderBy>>;
+};
+
+/** All input for the `deleteConversationUserByNodeId` mutation. */
+export type DeleteConversationUserByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `ConversationUser` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteConversationUser` mutation. */
+export type DeleteConversationUserInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `ConversationUser` mutation. */
+export type DeleteConversationUserPayload = {
+  __typename?: 'DeleteConversationUserPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Conversation` that is related to this `ConversationUser`. */
+  conversation?: Maybe<Conversation>;
+  /** The `ConversationUser` that was deleted by this mutation. */
+  conversationUser?: Maybe<ConversationUser>;
+  /** An edge for our `ConversationUser`. May be used by Relay 1. */
+  conversationUserEdge?: Maybe<ConversationUsersEdge>;
+  deletedConversationUserNodeId?: Maybe<Scalars['ID']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `ConversationUser`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our delete `ConversationUser` mutation. */
+export type DeleteConversationUserPayloadConversationUserEdgeArgs = {
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
 };
 
 /** All input for the `deleteCourseByNodeId` mutation. */
@@ -7978,6 +9168,54 @@ export type DeleteIssuancePayloadIssuanceEdgeArgs = {
   orderBy?: InputMaybe<Array<IssuancesOrderBy>>;
 };
 
+/** All input for the `deleteJobApplicationByNodeId` mutation. */
+export type DeleteJobApplicationByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `JobApplication` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteJobApplication` mutation. */
+export type DeleteJobApplicationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `JobApplication` mutation. */
+export type DeleteJobApplicationPayload = {
+  __typename?: 'DeleteJobApplicationPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedJobApplicationNodeId?: Maybe<Scalars['ID']['output']>;
+  /** The `JobApplication` that was deleted by this mutation. */
+  jobApplication?: Maybe<JobApplication>;
+  /** An edge for our `JobApplication`. May be used by Relay 1. */
+  jobApplicationEdge?: Maybe<JobApplicationsEdge>;
+  /** Reads a single `JobFeed` that is related to this `JobApplication`. */
+  jobFeeds?: Maybe<JobFeed>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `JobApplication`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our delete `JobApplication` mutation. */
+export type DeleteJobApplicationPayloadJobApplicationEdgeArgs = {
+  orderBy?: InputMaybe<Array<JobApplicationsOrderBy>>;
+};
+
 /** All input for the `deleteJobByNodeId` mutation. */
 export type DeleteJobByNodeIdInput = {
   /**
@@ -7987,6 +9225,58 @@ export type DeleteJobByNodeIdInput = {
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The globally unique `ID` which will identify a single `Job` to be deleted. */
   nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteJobFeedByNodeId` mutation. */
+export type DeleteJobFeedByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `JobFeed` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteJobFeed` mutation. */
+export type DeleteJobFeedInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `JobFeed` mutation. */
+export type DeleteJobFeedPayload = {
+  __typename?: 'DeleteJobFeedPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedJobFeedNodeId?: Maybe<Scalars['ID']['output']>;
+  /** The `JobFeed` that was deleted by this mutation. */
+  jobFeed?: Maybe<JobFeed>;
+  /** An edge for our `JobFeed`. May be used by Relay 1. */
+  jobFeedEdge?: Maybe<JobFeedsEdge>;
+  /** Reads a single `JobType` that is related to this `JobFeed`. */
+  jobTypes?: Maybe<JobType>;
+  /** Reads a single `PayPeriod` that is related to this `JobFeed`. */
+  payPeriods?: Maybe<PayPeriod>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `JobFeed`. */
+  user?: Maybe<User>;
+  /** Reads a single `WorkType` that is related to this `JobFeed`. */
+  workTypes?: Maybe<WorkType>;
+};
+
+
+/** The output of our delete `JobFeed` mutation. */
+export type DeleteJobFeedPayloadJobFeedEdgeArgs = {
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
 };
 
 /** All input for the `deleteJob` mutation. */
@@ -8166,6 +9456,98 @@ export type DeleteJobSendingEmailPayloadJobSendingEmailEdgeArgs = {
   orderBy?: InputMaybe<Array<JobSendingEmailsOrderBy>>;
 };
 
+/** All input for the `deleteJobTypeByNodeId` mutation. */
+export type DeleteJobTypeByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `JobType` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteJobType` mutation. */
+export type DeleteJobTypeInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `JobType` mutation. */
+export type DeleteJobTypePayload = {
+  __typename?: 'DeleteJobTypePayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedJobTypeNodeId?: Maybe<Scalars['ID']['output']>;
+  /** The `JobType` that was deleted by this mutation. */
+  jobType?: Maybe<JobType>;
+  /** An edge for our `JobType`. May be used by Relay 1. */
+  jobTypeEdge?: Maybe<JobTypesEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our delete `JobType` mutation. */
+export type DeleteJobTypePayloadJobTypeEdgeArgs = {
+  orderBy?: InputMaybe<Array<JobTypesOrderBy>>;
+};
+
+/** All input for the `deleteJobUserByNodeId` mutation. */
+export type DeleteJobUserByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `JobUser` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteJobUser` mutation. */
+export type DeleteJobUserInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `JobUser` mutation. */
+export type DeleteJobUserPayload = {
+  __typename?: 'DeleteJobUserPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedJobUserNodeId?: Maybe<Scalars['ID']['output']>;
+  /** Reads a single `Job` that is related to this `JobUser`. */
+  job?: Maybe<Job>;
+  /** The `JobUser` that was deleted by this mutation. */
+  jobUser?: Maybe<JobUser>;
+  /** An edge for our `JobUser`. May be used by Relay 1. */
+  jobUserEdge?: Maybe<JobUsersEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `JobUser`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our delete `JobUser` mutation. */
+export type DeleteJobUserPayloadJobUserEdgeArgs = {
+  orderBy?: InputMaybe<Array<JobUsersOrderBy>>;
+};
+
 /** All input for the `deleteKindByDescription` mutation. */
 export type DeleteKindByDescriptionInput = {
   /**
@@ -8320,6 +9702,54 @@ export type DeleteLoginTransactionPayloadLoginTransactionEdgeArgs = {
   orderBy?: InputMaybe<Array<LoginTransactionsOrderBy>>;
 };
 
+/** All input for the `deleteMessageByNodeId` mutation. */
+export type DeleteMessageByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Message` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteMessage` mutation. */
+export type DeleteMessageInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `Message` mutation. */
+export type DeleteMessagePayload = {
+  __typename?: 'DeleteMessagePayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Conversation` that is related to this `Message`. */
+  conversation?: Maybe<Conversation>;
+  deletedMessageNodeId?: Maybe<Scalars['ID']['output']>;
+  /** The `Message` that was deleted by this mutation. */
+  message?: Maybe<Message>;
+  /** An edge for our `Message`. May be used by Relay 1. */
+  messageEdge?: Maybe<MessagesEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Message`. */
+  sender?: Maybe<User>;
+};
+
+
+/** The output of our delete `Message` mutation. */
+export type DeleteMessagePayloadMessageEdgeArgs = {
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
 /** All input for the `deleteMetricByNodeId` mutation. */
 export type DeleteMetricByNodeIdInput = {
   /**
@@ -8452,6 +9882,52 @@ export type DeleteNewsPayloadNewsEdgeArgs = {
   orderBy?: InputMaybe<Array<NewsOrderBy>>;
 };
 
+/** All input for the `deleteNotificationByNodeId` mutation. */
+export type DeleteNotificationByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Notification` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteNotification` mutation. */
+export type DeleteNotificationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `Notification` mutation. */
+export type DeleteNotificationPayload = {
+  __typename?: 'DeleteNotificationPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedNotificationNodeId?: Maybe<Scalars['ID']['output']>;
+  /** The `Notification` that was deleted by this mutation. */
+  notification?: Maybe<Notification>;
+  /** An edge for our `Notification`. May be used by Relay 1. */
+  notificationEdge?: Maybe<NotificationsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Notification`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our delete `Notification` mutation. */
+export type DeleteNotificationPayloadNotificationEdgeArgs = {
+  orderBy?: InputMaybe<Array<NotificationsOrderBy>>;
+};
+
 /** All input for the `deleteOrganizationByNodeId` mutation. */
 export type DeleteOrganizationByNodeIdInput = {
   /**
@@ -8545,6 +10021,50 @@ export type DeleteOrganizationUserPayload = {
 /** The output of our delete `OrganizationUser` mutation. */
 export type DeleteOrganizationUserPayloadOrganizationUserEdgeArgs = {
   orderBy?: InputMaybe<Array<OrganizationUsersOrderBy>>;
+};
+
+/** All input for the `deletePayPeriodByNodeId` mutation. */
+export type DeletePayPeriodByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `PayPeriod` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deletePayPeriod` mutation. */
+export type DeletePayPeriodInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `PayPeriod` mutation. */
+export type DeletePayPeriodPayload = {
+  __typename?: 'DeletePayPeriodPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedPayPeriodNodeId?: Maybe<Scalars['ID']['output']>;
+  /** The `PayPeriod` that was deleted by this mutation. */
+  payPeriod?: Maybe<PayPeriod>;
+  /** An edge for our `PayPeriod`. May be used by Relay 1. */
+  payPeriodEdge?: Maybe<PayPeriodsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our delete `PayPeriod` mutation. */
+export type DeletePayPeriodPayloadPayPeriodEdgeArgs = {
+  orderBy?: InputMaybe<Array<PayPeriodsOrderBy>>;
 };
 
 /** All input for the `deletePersonalAccessTokenByNodeId` mutation. */
@@ -8673,8 +10193,8 @@ export type DeleteProjectInput = {
 /** The output of our delete `Project` mutation. */
 export type DeleteProjectPayload = {
   __typename?: 'DeleteProjectPayload';
-  /** Reads a single `Admin` that is related to this `Project`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Project`. */
+  admin?: Maybe<User>;
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
@@ -8821,6 +10341,52 @@ export type DeletePropertyPayload = {
 /** The output of our delete `Property` mutation. */
 export type DeletePropertyPayloadPropertyEdgeArgs = {
   orderBy?: InputMaybe<Array<PropertiesOrderBy>>;
+};
+
+/** All input for the `deleteReviewByNodeId` mutation. */
+export type DeleteReviewByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Review` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteReview` mutation. */
+export type DeleteReviewInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `Review` mutation. */
+export type DeleteReviewPayload = {
+  __typename?: 'DeleteReviewPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedReviewNodeId?: Maybe<Scalars['ID']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** The `Review` that was deleted by this mutation. */
+  review?: Maybe<Review>;
+  /** An edge for our `Review`. May be used by Relay 1. */
+  reviewEdge?: Maybe<ReviewsEdge>;
+  /** Reads a single `User` that is related to this `Review`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our delete `Review` mutation. */
+export type DeleteReviewPayloadReviewEdgeArgs = {
+  orderBy?: InputMaybe<Array<ReviewsOrderBy>>;
 };
 
 /** All input for the `deleteRoleByName` mutation. */
@@ -9939,6 +11505,52 @@ export type DeleteWebsocketsStatisticsEntryPayload = {
 /** The output of our delete `WebsocketsStatisticsEntry` mutation. */
 export type DeleteWebsocketsStatisticsEntryPayloadWebsocketsStatisticsEntryEdgeArgs = {
   orderBy?: InputMaybe<Array<WebsocketsStatisticsEntriesOrderBy>>;
+};
+
+/** All input for the `deleteWorkExperienceByNodeId` mutation. */
+export type DeleteWorkExperienceByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `WorkExperience` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteWorkExperience` mutation. */
+export type DeleteWorkExperienceInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `WorkExperience` mutation. */
+export type DeleteWorkExperiencePayload = {
+  __typename?: 'DeleteWorkExperiencePayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedWorkExperienceNodeId?: Maybe<Scalars['ID']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `WorkExperience`. */
+  user?: Maybe<User>;
+  /** The `WorkExperience` that was deleted by this mutation. */
+  workExperience?: Maybe<WorkExperience>;
+  /** An edge for our `WorkExperience`. May be used by Relay 1. */
+  workExperienceEdge?: Maybe<WorkExperiencesEdge>;
+};
+
+
+/** The output of our delete `WorkExperience` mutation. */
+export type DeleteWorkExperiencePayloadWorkExperienceEdgeArgs = {
+  orderBy?: InputMaybe<Array<WorkExperiencesOrderBy>>;
 };
 
 /** All input for the `deleteWorkTypeByNodeId` mutation. */
@@ -17146,6 +18758,8 @@ export type Job = Node & {
   deletedAt?: Maybe<Scalars['Datetime']['output']>;
   description: Scalars['String']['output'];
   id: Scalars['BigInt']['output'];
+  /** Reads and enables pagination through a set of `JobUser`. */
+  jobUsers: JobUsersConnection;
   name: Scalars['String']['output'];
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
@@ -17154,7 +18768,160 @@ export type Job = Node & {
   organizationId: Scalars['BigInt']['output'];
   qrValue?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads and enables pagination through a set of `User`. */
+  usersByJobUserJobIdAndUserId: JobUsersByJobUserJobIdAndUserIdManyToManyConnection;
 };
+
+
+export type JobJobUsersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobUserCondition>;
+  filter?: InputMaybe<JobUserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobUsersOrderBy>>;
+};
+
+
+export type JobUsersByJobUserJobIdAndUserIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+export type JobApplication = Node & {
+  __typename?: 'JobApplication';
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  deletedAt?: Maybe<Scalars['Datetime']['output']>;
+  id: Scalars['BigInt']['output'];
+  /** Reads a single `JobFeed` that is related to this `JobApplication`. */
+  jobFeeds?: Maybe<JobFeed>;
+  jobFeedsId?: Maybe<Scalars['BigInt']['output']>;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  status?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `JobApplication`. */
+  user?: Maybe<User>;
+  userId: Scalars['BigInt']['output'];
+};
+
+/**
+ * A condition to be used against `JobApplication` object types. All fields are
+ * tested for equality and combined with a logical ‘and.’
+ */
+export type JobApplicationCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `jobFeedsId` field. */
+  jobFeedsId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `status` field. */
+  status?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A filter to be used against `JobApplication` object types. All fields are combined with a logical ‘and.’ */
+export type JobApplicationFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<JobApplicationFilter>>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `jobFeedsId` field. */
+  jobFeedsId?: InputMaybe<BigIntFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<JobApplicationFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<JobApplicationFilter>>;
+  /** Filter by the object’s `status` field. */
+  status?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<BigIntFilter>;
+};
+
+/** An input for mutations affecting `JobApplication` */
+export type JobApplicationInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  jobFeedsId?: InputMaybe<Scalars['BigInt']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId: Scalars['BigInt']['input'];
+};
+
+/** Represents an update to a `JobApplication`. Fields that are set will be updated. */
+export type JobApplicationPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  jobFeedsId?: InputMaybe<Scalars['BigInt']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A connection to a list of `JobApplication` values. */
+export type JobApplicationsConnection = {
+  __typename?: 'JobApplicationsConnection';
+  /** A list of edges which contains the `JobApplication` and cursor to aid in pagination. */
+  edges: Array<JobApplicationsEdge>;
+  /** A list of `JobApplication` objects. */
+  nodes: Array<JobApplication>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `JobApplication` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `JobApplication` edge in the connection. */
+export type JobApplicationsEdge = {
+  __typename?: 'JobApplicationsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `JobApplication` at the end of the edge. */
+  node: JobApplication;
+};
+
+/** Methods to use when ordering `JobApplication`. */
+export enum JobApplicationsOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DeletedAtAsc = 'DELETED_AT_ASC',
+  DeletedAtDesc = 'DELETED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  JobFeedsIdAsc = 'JOB_FEEDS_ID_ASC',
+  JobFeedsIdDesc = 'JOB_FEEDS_ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  StatusAsc = 'STATUS_ASC',
+  StatusDesc = 'STATUS_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC'
+}
 
 /** A condition to be used against `Job` object types. All fields are tested for equality and combined with a logical ‘and.’ */
 export type JobCondition = {
@@ -17177,6 +18944,289 @@ export type JobCondition = {
   /** Checks for equality with the object’s `updatedAt` field. */
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
 };
+
+export type JobFeed = Node & {
+  __typename?: 'JobFeed';
+  amount?: Maybe<Scalars['BigFloat']['output']>;
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  deletedAt?: Maybe<Scalars['Datetime']['output']>;
+  expRange?: Maybe<Scalars['String']['output']>;
+  id: Scalars['BigInt']['output'];
+  isActive: Scalars['Boolean']['output'];
+  /** Reads and enables pagination through a set of `JobApplication`. */
+  jobApplicationsByJobFeedsId: JobApplicationsConnection;
+  jobDescription?: Maybe<Scalars['String']['output']>;
+  jobTitle?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `JobType` that is related to this `JobFeed`. */
+  jobTypes?: Maybe<JobType>;
+  jobTypesId?: Maybe<Scalars['BigInt']['output']>;
+  location?: Maybe<Scalars['String']['output']>;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  /** Reads a single `PayPeriod` that is related to this `JobFeed`. */
+  payPeriods?: Maybe<PayPeriod>;
+  payPeriodsId?: Maybe<Scalars['BigInt']['output']>;
+  reqWorkersDate?: Maybe<Scalars['Datetime']['output']>;
+  reqWorkersEndDate?: Maybe<Scalars['Datetime']['output']>;
+  requirement?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `JobFeed`. */
+  user?: Maybe<User>;
+  userId: Scalars['BigInt']['output'];
+  /** Reads and enables pagination through a set of `User`. */
+  usersByJobApplicationJobFeedsIdAndUserId: JobFeedUsersByJobApplicationJobFeedsIdAndUserIdManyToManyConnection;
+  /** Reads a single `WorkType` that is related to this `JobFeed`. */
+  workTypes?: Maybe<WorkType>;
+  workTypesId?: Maybe<Scalars['BigInt']['output']>;
+};
+
+
+export type JobFeedJobApplicationsByJobFeedsIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobApplicationCondition>;
+  filter?: InputMaybe<JobApplicationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobApplicationsOrderBy>>;
+};
+
+
+export type JobFeedUsersByJobApplicationJobFeedsIdAndUserIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+/** A condition to be used against `JobFeed` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type JobFeedCondition = {
+  /** Checks for equality with the object’s `amount` field. */
+  amount?: InputMaybe<Scalars['BigFloat']['input']>;
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `expRange` field. */
+  expRange?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `isActive` field. */
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `jobDescription` field. */
+  jobDescription?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `jobTitle` field. */
+  jobTitle?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `jobTypesId` field. */
+  jobTypesId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `location` field. */
+  location?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `payPeriodsId` field. */
+  payPeriodsId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `reqWorkersDate` field. */
+  reqWorkersDate?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `reqWorkersEndDate` field. */
+  reqWorkersEndDate?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `requirement` field. */
+  requirement?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `workTypesId` field. */
+  workTypesId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A filter to be used against `JobFeed` object types. All fields are combined with a logical ‘and.’ */
+export type JobFeedFilter = {
+  /** Filter by the object’s `amount` field. */
+  amount?: InputMaybe<BigFloatFilter>;
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<JobFeedFilter>>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `expRange` field. */
+  expRange?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `isActive` field. */
+  isActive?: InputMaybe<BooleanFilter>;
+  /** Filter by the object’s `jobDescription` field. */
+  jobDescription?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `jobTitle` field. */
+  jobTitle?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `jobTypesId` field. */
+  jobTypesId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `location` field. */
+  location?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<JobFeedFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<JobFeedFilter>>;
+  /** Filter by the object’s `payPeriodsId` field. */
+  payPeriodsId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `reqWorkersDate` field. */
+  reqWorkersDate?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `reqWorkersEndDate` field. */
+  reqWorkersEndDate?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `requirement` field. */
+  requirement?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `workTypesId` field. */
+  workTypesId?: InputMaybe<BigIntFilter>;
+};
+
+/** An input for mutations affecting `JobFeed` */
+export type JobFeedInput = {
+  amount?: InputMaybe<Scalars['BigFloat']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  expRange?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  jobDescription?: InputMaybe<Scalars['String']['input']>;
+  jobTitle?: InputMaybe<Scalars['String']['input']>;
+  jobTypesId?: InputMaybe<Scalars['BigInt']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  payPeriodsId?: InputMaybe<Scalars['BigInt']['input']>;
+  reqWorkersDate?: InputMaybe<Scalars['Datetime']['input']>;
+  reqWorkersEndDate?: InputMaybe<Scalars['Datetime']['input']>;
+  requirement?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId: Scalars['BigInt']['input'];
+  workTypesId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** Represents an update to a `JobFeed`. Fields that are set will be updated. */
+export type JobFeedPatch = {
+  amount?: InputMaybe<Scalars['BigFloat']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  expRange?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  jobDescription?: InputMaybe<Scalars['String']['input']>;
+  jobTitle?: InputMaybe<Scalars['String']['input']>;
+  jobTypesId?: InputMaybe<Scalars['BigInt']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  payPeriodsId?: InputMaybe<Scalars['BigInt']['input']>;
+  reqWorkersDate?: InputMaybe<Scalars['Datetime']['input']>;
+  reqWorkersEndDate?: InputMaybe<Scalars['Datetime']['input']>;
+  requirement?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+  workTypesId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A connection to a list of `User` values, with data from `JobApplication`. */
+export type JobFeedUsersByJobApplicationJobFeedsIdAndUserIdManyToManyConnection = {
+  __typename?: 'JobFeedUsersByJobApplicationJobFeedsIdAndUserIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `JobApplication`, and the cursor to aid in pagination. */
+  edges: Array<JobFeedUsersByJobApplicationJobFeedsIdAndUserIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `JobApplication`. */
+export type JobFeedUsersByJobApplicationJobFeedsIdAndUserIdManyToManyEdge = {
+  __typename?: 'JobFeedUsersByJobApplicationJobFeedsIdAndUserIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobApplication`. */
+  jobApplications: JobApplicationsConnection;
+  /** The `User` at the end of the edge. */
+  node: User;
+};
+
+
+/** A `User` edge in the connection, with data from `JobApplication`. */
+export type JobFeedUsersByJobApplicationJobFeedsIdAndUserIdManyToManyEdgeJobApplicationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobApplicationCondition>;
+  filter?: InputMaybe<JobApplicationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobApplicationsOrderBy>>;
+};
+
+/** A connection to a list of `JobFeed` values. */
+export type JobFeedsConnection = {
+  __typename?: 'JobFeedsConnection';
+  /** A list of edges which contains the `JobFeed` and cursor to aid in pagination. */
+  edges: Array<JobFeedsEdge>;
+  /** A list of `JobFeed` objects. */
+  nodes: Array<JobFeed>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `JobFeed` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `JobFeed` edge in the connection. */
+export type JobFeedsEdge = {
+  __typename?: 'JobFeedsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `JobFeed` at the end of the edge. */
+  node: JobFeed;
+};
+
+/** Methods to use when ordering `JobFeed`. */
+export enum JobFeedsOrderBy {
+  AmountAsc = 'AMOUNT_ASC',
+  AmountDesc = 'AMOUNT_DESC',
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DeletedAtAsc = 'DELETED_AT_ASC',
+  DeletedAtDesc = 'DELETED_AT_DESC',
+  ExpRangeAsc = 'EXP_RANGE_ASC',
+  ExpRangeDesc = 'EXP_RANGE_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  IsActiveAsc = 'IS_ACTIVE_ASC',
+  IsActiveDesc = 'IS_ACTIVE_DESC',
+  JobDescriptionAsc = 'JOB_DESCRIPTION_ASC',
+  JobDescriptionDesc = 'JOB_DESCRIPTION_DESC',
+  JobTitleAsc = 'JOB_TITLE_ASC',
+  JobTitleDesc = 'JOB_TITLE_DESC',
+  JobTypesIdAsc = 'JOB_TYPES_ID_ASC',
+  JobTypesIdDesc = 'JOB_TYPES_ID_DESC',
+  LocationAsc = 'LOCATION_ASC',
+  LocationDesc = 'LOCATION_DESC',
+  Natural = 'NATURAL',
+  PayPeriodsIdAsc = 'PAY_PERIODS_ID_ASC',
+  PayPeriodsIdDesc = 'PAY_PERIODS_ID_DESC',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  RequirementAsc = 'REQUIREMENT_ASC',
+  RequirementDesc = 'REQUIREMENT_DESC',
+  ReqWorkersDateAsc = 'REQ_WORKERS_DATE_ASC',
+  ReqWorkersDateDesc = 'REQ_WORKERS_DATE_DESC',
+  ReqWorkersEndDateAsc = 'REQ_WORKERS_END_DATE_ASC',
+  ReqWorkersEndDateDesc = 'REQ_WORKERS_END_DATE_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC',
+  WorkTypesIdAsc = 'WORK_TYPES_ID_ASC',
+  WorkTypesIdDesc = 'WORK_TYPES_ID_DESC'
+}
 
 /** A filter to be used against `Job` object types. All fields are combined with a logical ‘and.’ */
 export type JobFilter = {
@@ -17748,6 +19798,483 @@ export enum JobSendingEmailsOrderBy {
   UpdatedAtDesc = 'UPDATED_AT_DESC'
 }
 
+export type JobType = Node & {
+  __typename?: 'JobType';
+  /** Reads and enables pagination through a set of `Available`. */
+  availables: AvailablesConnection;
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  deletedAt?: Maybe<Scalars['Datetime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['BigInt']['output'];
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByJobTypesId: JobFeedsConnection;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  /** Reads and enables pagination through a set of `PayPeriod`. */
+  payPeriodsByJobFeedJobTypesIdAndPayPeriodsId: JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdManyToManyConnection;
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads and enables pagination through a set of `User`. */
+  usersByAvailableJobTypeIdAndUserId: JobTypeUsersByAvailableJobTypeIdAndUserIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `User`. */
+  usersByJobFeedJobTypesIdAndUserId: JobTypeUsersByJobFeedJobTypesIdAndUserIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `WorkType`. */
+  workTypesByJobFeedJobTypesIdAndWorkTypesId: JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdManyToManyConnection;
+};
+
+
+export type JobTypeAvailablesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<AvailableCondition>;
+  filter?: InputMaybe<AvailableFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<AvailablesOrderBy>>;
+};
+
+
+export type JobTypeJobFeedsByJobTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+
+export type JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<PayPeriodCondition>;
+  filter?: InputMaybe<PayPeriodFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<PayPeriodsOrderBy>>;
+};
+
+
+export type JobTypeUsersByAvailableJobTypeIdAndUserIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+
+export type JobTypeUsersByJobFeedJobTypesIdAndUserIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+
+export type JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<WorkTypeCondition>;
+  filter?: InputMaybe<WorkTypeFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WorkTypesOrderBy>>;
+};
+
+/** A condition to be used against `JobType` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type JobTypeCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `description` field. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A filter to be used against `JobType` object types. All fields are combined with a logical ‘and.’ */
+export type JobTypeFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<JobTypeFilter>>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `description` field. */
+  description?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<JobTypeFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<JobTypeFilter>>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+};
+
+/** An input for mutations affecting `JobType` */
+export type JobTypeInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** Represents an update to a `JobType`. Fields that are set will be updated. */
+export type JobTypePatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A connection to a list of `PayPeriod` values, with data from `JobFeed`. */
+export type JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdManyToManyConnection = {
+  __typename?: 'JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdManyToManyConnection';
+  /** A list of edges which contains the `PayPeriod`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdManyToManyEdge>;
+  /** A list of `PayPeriod` objects. */
+  nodes: Array<PayPeriod>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `PayPeriod` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `PayPeriod` edge in the connection, with data from `JobFeed`. */
+export type JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdManyToManyEdge = {
+  __typename?: 'JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByPayPeriodsId: JobFeedsConnection;
+  /** The `PayPeriod` at the end of the edge. */
+  node: PayPeriod;
+};
+
+
+/** A `PayPeriod` edge in the connection, with data from `JobFeed`. */
+export type JobTypePayPeriodsByJobFeedJobTypesIdAndPayPeriodsIdManyToManyEdgeJobFeedsByPayPeriodsIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+/** A connection to a list of `User` values, with data from `Available`. */
+export type JobTypeUsersByAvailableJobTypeIdAndUserIdManyToManyConnection = {
+  __typename?: 'JobTypeUsersByAvailableJobTypeIdAndUserIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `Available`, and the cursor to aid in pagination. */
+  edges: Array<JobTypeUsersByAvailableJobTypeIdAndUserIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `Available`. */
+export type JobTypeUsersByAvailableJobTypeIdAndUserIdManyToManyEdge = {
+  __typename?: 'JobTypeUsersByAvailableJobTypeIdAndUserIdManyToManyEdge';
+  /** Reads and enables pagination through a set of `Available`. */
+  availables: AvailablesConnection;
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `User` at the end of the edge. */
+  node: User;
+};
+
+
+/** A `User` edge in the connection, with data from `Available`. */
+export type JobTypeUsersByAvailableJobTypeIdAndUserIdManyToManyEdgeAvailablesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<AvailableCondition>;
+  filter?: InputMaybe<AvailableFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<AvailablesOrderBy>>;
+};
+
+/** A connection to a list of `User` values, with data from `JobFeed`. */
+export type JobTypeUsersByJobFeedJobTypesIdAndUserIdManyToManyConnection = {
+  __typename?: 'JobTypeUsersByJobFeedJobTypesIdAndUserIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<JobTypeUsersByJobFeedJobTypesIdAndUserIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `JobFeed`. */
+export type JobTypeUsersByJobFeedJobTypesIdAndUserIdManyToManyEdge = {
+  __typename?: 'JobTypeUsersByJobFeedJobTypesIdAndUserIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeeds: JobFeedsConnection;
+  /** The `User` at the end of the edge. */
+  node: User;
+};
+
+
+/** A `User` edge in the connection, with data from `JobFeed`. */
+export type JobTypeUsersByJobFeedJobTypesIdAndUserIdManyToManyEdgeJobFeedsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+/** A connection to a list of `WorkType` values, with data from `JobFeed`. */
+export type JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdManyToManyConnection = {
+  __typename?: 'JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdManyToManyConnection';
+  /** A list of edges which contains the `WorkType`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdManyToManyEdge>;
+  /** A list of `WorkType` objects. */
+  nodes: Array<WorkType>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `WorkType` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `WorkType` edge in the connection, with data from `JobFeed`. */
+export type JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdManyToManyEdge = {
+  __typename?: 'JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByWorkTypesId: JobFeedsConnection;
+  /** The `WorkType` at the end of the edge. */
+  node: WorkType;
+};
+
+
+/** A `WorkType` edge in the connection, with data from `JobFeed`. */
+export type JobTypeWorkTypesByJobFeedJobTypesIdAndWorkTypesIdManyToManyEdgeJobFeedsByWorkTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+/** A connection to a list of `JobType` values. */
+export type JobTypesConnection = {
+  __typename?: 'JobTypesConnection';
+  /** A list of edges which contains the `JobType` and cursor to aid in pagination. */
+  edges: Array<JobTypesEdge>;
+  /** A list of `JobType` objects. */
+  nodes: Array<JobType>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `JobType` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `JobType` edge in the connection. */
+export type JobTypesEdge = {
+  __typename?: 'JobTypesEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `JobType` at the end of the edge. */
+  node: JobType;
+};
+
+/** Methods to use when ordering `JobType`. */
+export enum JobTypesOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DeletedAtAsc = 'DELETED_AT_ASC',
+  DeletedAtDesc = 'DELETED_AT_DESC',
+  DescriptionAsc = 'DESCRIPTION_ASC',
+  DescriptionDesc = 'DESCRIPTION_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC'
+}
+
+export type JobUser = Node & {
+  __typename?: 'JobUser';
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  id: Scalars['BigInt']['output'];
+  /** Reads a single `Job` that is related to this `JobUser`. */
+  job?: Maybe<Job>;
+  jobId: Scalars['BigInt']['output'];
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `JobUser`. */
+  user?: Maybe<User>;
+  userId: Scalars['BigInt']['output'];
+};
+
+/** A condition to be used against `JobUser` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type JobUserCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `jobId` field. */
+  jobId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A filter to be used against `JobUser` object types. All fields are combined with a logical ‘and.’ */
+export type JobUserFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<JobUserFilter>>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `jobId` field. */
+  jobId?: InputMaybe<BigIntFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<JobUserFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<JobUserFilter>>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<BigIntFilter>;
+};
+
+/** An input for mutations affecting `JobUser` */
+export type JobUserInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  jobId: Scalars['BigInt']['input'];
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId: Scalars['BigInt']['input'];
+};
+
+/** Represents an update to a `JobUser`. Fields that are set will be updated. */
+export type JobUserPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  jobId?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A connection to a list of `User` values, with data from `JobUser`. */
+export type JobUsersByJobUserJobIdAndUserIdManyToManyConnection = {
+  __typename?: 'JobUsersByJobUserJobIdAndUserIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `JobUser`, and the cursor to aid in pagination. */
+  edges: Array<JobUsersByJobUserJobIdAndUserIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `JobUser`. */
+export type JobUsersByJobUserJobIdAndUserIdManyToManyEdge = {
+  __typename?: 'JobUsersByJobUserJobIdAndUserIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobUser`. */
+  jobUsers: JobUsersConnection;
+  /** The `User` at the end of the edge. */
+  node: User;
+};
+
+
+/** A `User` edge in the connection, with data from `JobUser`. */
+export type JobUsersByJobUserJobIdAndUserIdManyToManyEdgeJobUsersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobUserCondition>;
+  filter?: InputMaybe<JobUserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobUsersOrderBy>>;
+};
+
+/** A connection to a list of `JobUser` values. */
+export type JobUsersConnection = {
+  __typename?: 'JobUsersConnection';
+  /** A list of edges which contains the `JobUser` and cursor to aid in pagination. */
+  edges: Array<JobUsersEdge>;
+  /** A list of `JobUser` objects. */
+  nodes: Array<JobUser>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `JobUser` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `JobUser` edge in the connection. */
+export type JobUsersEdge = {
+  __typename?: 'JobUsersEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `JobUser` at the end of the edge. */
+  node: JobUser;
+};
+
+/** Methods to use when ordering `JobUser`. */
+export enum JobUsersOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  JobIdAsc = 'JOB_ID_ASC',
+  JobIdDesc = 'JOB_ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC'
+}
+
 /** A connection to a list of `Job` values. */
 export type JobsConnection = {
   __typename?: 'JobsConnection';
@@ -18275,6 +20802,213 @@ export enum LoginTransactionsOrderBy {
   UserIdDesc = 'USER_ID_DESC'
 }
 
+export type Message = Node & {
+  __typename?: 'Message';
+  /** Reads and enables pagination through a set of `ChatNotification`. */
+  chatNotifications: ChatNotificationsConnection;
+  /** Reads a single `Conversation` that is related to this `Message`. */
+  conversation?: Maybe<Conversation>;
+  conversationId?: Maybe<Scalars['BigInt']['output']>;
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  id: Scalars['BigInt']['output'];
+  isRead: Scalars['Boolean']['output'];
+  mediaUrl?: Maybe<Scalars['String']['output']>;
+  messageText?: Maybe<Scalars['String']['output']>;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  readAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `Message`. */
+  sender?: Maybe<User>;
+  senderId?: Maybe<Scalars['BigInt']['output']>;
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads and enables pagination through a set of `User`. */
+  usersByChatNotificationMessageIdAndUserId: MessageUsersByChatNotificationMessageIdAndUserIdManyToManyConnection;
+};
+
+
+export type MessageChatNotificationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ChatNotificationCondition>;
+  filter?: InputMaybe<ChatNotificationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
+};
+
+
+export type MessageUsersByChatNotificationMessageIdAndUserIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+/** A condition to be used against `Message` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type MessageCondition = {
+  /** Checks for equality with the object’s `conversationId` field. */
+  conversationId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `isRead` field. */
+  isRead?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `mediaUrl` field. */
+  mediaUrl?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `messageText` field. */
+  messageText?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `readAt` field. */
+  readAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `senderId` field. */
+  senderId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A filter to be used against `Message` object types. All fields are combined with a logical ‘and.’ */
+export type MessageFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<MessageFilter>>;
+  /** Filter by the object’s `conversationId` field. */
+  conversationId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `isRead` field. */
+  isRead?: InputMaybe<BooleanFilter>;
+  /** Filter by the object’s `mediaUrl` field. */
+  mediaUrl?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `messageText` field. */
+  messageText?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<MessageFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<MessageFilter>>;
+  /** Filter by the object’s `readAt` field. */
+  readAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `senderId` field. */
+  senderId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+};
+
+/** An input for mutations affecting `Message` */
+export type MessageInput = {
+  conversationId?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  isRead?: InputMaybe<Scalars['Boolean']['input']>;
+  mediaUrl?: InputMaybe<Scalars['String']['input']>;
+  messageText?: InputMaybe<Scalars['String']['input']>;
+  readAt?: InputMaybe<Scalars['Datetime']['input']>;
+  senderId?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** Represents an update to a `Message`. Fields that are set will be updated. */
+export type MessagePatch = {
+  conversationId?: InputMaybe<Scalars['BigInt']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  isRead?: InputMaybe<Scalars['Boolean']['input']>;
+  mediaUrl?: InputMaybe<Scalars['String']['input']>;
+  messageText?: InputMaybe<Scalars['String']['input']>;
+  readAt?: InputMaybe<Scalars['Datetime']['input']>;
+  senderId?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A connection to a list of `User` values, with data from `ChatNotification`. */
+export type MessageUsersByChatNotificationMessageIdAndUserIdManyToManyConnection = {
+  __typename?: 'MessageUsersByChatNotificationMessageIdAndUserIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `ChatNotification`, and the cursor to aid in pagination. */
+  edges: Array<MessageUsersByChatNotificationMessageIdAndUserIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `ChatNotification`. */
+export type MessageUsersByChatNotificationMessageIdAndUserIdManyToManyEdge = {
+  __typename?: 'MessageUsersByChatNotificationMessageIdAndUserIdManyToManyEdge';
+  /** Reads and enables pagination through a set of `ChatNotification`. */
+  chatNotifications: ChatNotificationsConnection;
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `User` at the end of the edge. */
+  node: User;
+};
+
+
+/** A `User` edge in the connection, with data from `ChatNotification`. */
+export type MessageUsersByChatNotificationMessageIdAndUserIdManyToManyEdgeChatNotificationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ChatNotificationCondition>;
+  filter?: InputMaybe<ChatNotificationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
+};
+
+/** A connection to a list of `Message` values. */
+export type MessagesConnection = {
+  __typename?: 'MessagesConnection';
+  /** A list of edges which contains the `Message` and cursor to aid in pagination. */
+  edges: Array<MessagesEdge>;
+  /** A list of `Message` objects. */
+  nodes: Array<Message>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Message` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Message` edge in the connection. */
+export type MessagesEdge = {
+  __typename?: 'MessagesEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Message` at the end of the edge. */
+  node: Message;
+};
+
+/** Methods to use when ordering `Message`. */
+export enum MessagesOrderBy {
+  ConversationIdAsc = 'CONVERSATION_ID_ASC',
+  ConversationIdDesc = 'CONVERSATION_ID_DESC',
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  IsReadAsc = 'IS_READ_ASC',
+  IsReadDesc = 'IS_READ_DESC',
+  MediaUrlAsc = 'MEDIA_URL_ASC',
+  MediaUrlDesc = 'MEDIA_URL_DESC',
+  MessageTextAsc = 'MESSAGE_TEXT_ASC',
+  MessageTextDesc = 'MESSAGE_TEXT_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  ReadAtAsc = 'READ_AT_ASC',
+  ReadAtDesc = 'READ_AT_DESC',
+  SenderIdAsc = 'SENDER_ID_ASC',
+  SenderIdDesc = 'SENDER_ID_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC'
+}
+
 export type Metric = Node & {
   __typename?: 'Metric';
   /** Reads and enables pagination through a set of `Admin`. */
@@ -18662,8 +21396,12 @@ export type Mutation = {
   createAllowedSettingValue?: Maybe<CreateAllowedSettingValuePayload>;
   /** Creates a single `Attachment`. */
   createAttachment?: Maybe<CreateAttachmentPayload>;
+  /** Creates a single `Available`. */
+  createAvailable?: Maybe<CreateAvailablePayload>;
   /** Creates a single `Certification`. */
   createCertification?: Maybe<CreateCertificationPayload>;
+  /** Creates a single `ChatNotification`. */
+  createChatNotification?: Maybe<CreateChatNotificationPayload>;
   /** Creates a single `Company`. */
   createCompany?: Maybe<CreateCompanyPayload>;
   /** Creates a single `CompanyUser`. */
@@ -18674,6 +21412,10 @@ export type Mutation = {
   createComponentEvent?: Maybe<CreateComponentEventPayload>;
   /** Creates a single `ComponentProperty`. */
   createComponentProperty?: Maybe<CreateComponentPropertyPayload>;
+  /** Creates a single `Conversation`. */
+  createConversation?: Maybe<CreateConversationPayload>;
+  /** Creates a single `ConversationUser`. */
+  createConversationUser?: Maybe<CreateConversationUserPayload>;
   /** Creates a single `Course`. */
   createCourse?: Maybe<CreateCoursePayload>;
   /** Creates a single `Datatype`. */
@@ -18726,30 +21468,44 @@ export type Mutation = {
   createIssuance?: Maybe<CreateIssuancePayload>;
   /** Creates a single `Job`. */
   createJob?: Maybe<CreateJobPayload>;
+  /** Creates a single `JobApplication`. */
+  createJobApplication?: Maybe<CreateJobApplicationPayload>;
+  /** Creates a single `JobFeed`. */
+  createJobFeed?: Maybe<CreateJobFeedPayload>;
   /** Creates a single `JobSendingEmail`. */
   createJobSendingEmail?: Maybe<CreateJobSendingEmailPayload>;
   /** Creates a single `JobSendingEmailCategory`. */
   createJobSendingEmailCategory?: Maybe<CreateJobSendingEmailCategoryPayload>;
   /** Creates a single `JobSendingEmailLog`. */
   createJobSendingEmailLog?: Maybe<CreateJobSendingEmailLogPayload>;
+  /** Creates a single `JobType`. */
+  createJobType?: Maybe<CreateJobTypePayload>;
+  /** Creates a single `JobUser`. */
+  createJobUser?: Maybe<CreateJobUserPayload>;
   /** Creates a single `Kind`. */
   createKind?: Maybe<CreateKindPayload>;
   /** Creates a single `Language`. */
   createLanguage?: Maybe<CreateLanguagePayload>;
   /** Creates a single `LoginTransaction`. */
   createLoginTransaction?: Maybe<CreateLoginTransactionPayload>;
+  /** Creates a single `Message`. */
+  createMessage?: Maybe<CreateMessagePayload>;
   /** Creates a single `Metric`. */
   createMetric?: Maybe<CreateMetricPayload>;
   /** Creates a single `Migration`. */
   createMigration?: Maybe<CreateMigrationPayload>;
   /** Creates a single `News`. */
   createNews?: Maybe<CreateNewsPayload>;
+  /** Creates a single `Notification`. */
+  createNotification?: Maybe<CreateNotificationPayload>;
   /** Creates a single `Organization`. */
   createOrganization?: Maybe<CreateOrganizationPayload>;
   /** Creates a single `OrganizationUser`. */
   createOrganizationUser?: Maybe<CreateOrganizationUserPayload>;
   /** Creates a single `PasswordReset`. */
   createPasswordReset?: Maybe<CreatePasswordResetPayload>;
+  /** Creates a single `PayPeriod`. */
+  createPayPeriod?: Maybe<CreatePayPeriodPayload>;
   /** Creates a single `PersonalAccessToken`. */
   createPersonalAccessToken?: Maybe<CreatePersonalAccessTokenPayload>;
   /** Creates a single `Profile`. */
@@ -18760,6 +21516,8 @@ export type Mutation = {
   createProjectUser?: Maybe<CreateProjectUserPayload>;
   /** Creates a single `Property`. */
   createProperty?: Maybe<CreatePropertyPayload>;
+  /** Creates a single `Review`. */
+  createReview?: Maybe<CreateReviewPayload>;
   /** Creates a single `Role`. */
   createRole?: Maybe<CreateRolePayload>;
   /** Creates a single `RoleUser`. */
@@ -18812,6 +21570,8 @@ export type Mutation = {
   createVerificationTokenType?: Maybe<CreateVerificationTokenTypePayload>;
   /** Creates a single `WebsocketsStatisticsEntry`. */
   createWebsocketsStatisticsEntry?: Maybe<CreateWebsocketsStatisticsEntryPayload>;
+  /** Creates a single `WorkExperience`. */
+  createWorkExperience?: Maybe<CreateWorkExperiencePayload>;
   /** Creates a single `WorkType`. */
   createWorkType?: Maybe<CreateWorkTypePayload>;
   /** Deletes a single `Ability` using a unique key. */
@@ -18834,10 +21594,18 @@ export type Mutation = {
   deleteAttachment?: Maybe<DeleteAttachmentPayload>;
   /** Deletes a single `Attachment` using its globally unique id. */
   deleteAttachmentByNodeId?: Maybe<DeleteAttachmentPayload>;
+  /** Deletes a single `Available` using a unique key. */
+  deleteAvailable?: Maybe<DeleteAvailablePayload>;
+  /** Deletes a single `Available` using its globally unique id. */
+  deleteAvailableByNodeId?: Maybe<DeleteAvailablePayload>;
   /** Deletes a single `Certification` using a unique key. */
   deleteCertification?: Maybe<DeleteCertificationPayload>;
   /** Deletes a single `Certification` using its globally unique id. */
   deleteCertificationByNodeId?: Maybe<DeleteCertificationPayload>;
+  /** Deletes a single `ChatNotification` using a unique key. */
+  deleteChatNotification?: Maybe<DeleteChatNotificationPayload>;
+  /** Deletes a single `ChatNotification` using its globally unique id. */
+  deleteChatNotificationByNodeId?: Maybe<DeleteChatNotificationPayload>;
   /** Deletes a single `Company` using a unique key. */
   deleteCompany?: Maybe<DeleteCompanyPayload>;
   /** Deletes a single `Company` using its globally unique id. */
@@ -18858,6 +21626,14 @@ export type Mutation = {
   deleteComponentProperty?: Maybe<DeleteComponentPropertyPayload>;
   /** Deletes a single `ComponentProperty` using its globally unique id. */
   deleteComponentPropertyByNodeId?: Maybe<DeleteComponentPropertyPayload>;
+  /** Deletes a single `Conversation` using a unique key. */
+  deleteConversation?: Maybe<DeleteConversationPayload>;
+  /** Deletes a single `Conversation` using its globally unique id. */
+  deleteConversationByNodeId?: Maybe<DeleteConversationPayload>;
+  /** Deletes a single `ConversationUser` using a unique key. */
+  deleteConversationUser?: Maybe<DeleteConversationUserPayload>;
+  /** Deletes a single `ConversationUser` using its globally unique id. */
+  deleteConversationUserByNodeId?: Maybe<DeleteConversationUserPayload>;
   /** Deletes a single `Course` using a unique key. */
   deleteCourse?: Maybe<DeleteCoursePayload>;
   /** Deletes a single `Course` using its globally unique id. */
@@ -18968,8 +21744,16 @@ export type Mutation = {
   deleteIssuanceByNodeId?: Maybe<DeleteIssuancePayload>;
   /** Deletes a single `Job` using a unique key. */
   deleteJob?: Maybe<DeleteJobPayload>;
+  /** Deletes a single `JobApplication` using a unique key. */
+  deleteJobApplication?: Maybe<DeleteJobApplicationPayload>;
+  /** Deletes a single `JobApplication` using its globally unique id. */
+  deleteJobApplicationByNodeId?: Maybe<DeleteJobApplicationPayload>;
   /** Deletes a single `Job` using its globally unique id. */
   deleteJobByNodeId?: Maybe<DeleteJobPayload>;
+  /** Deletes a single `JobFeed` using a unique key. */
+  deleteJobFeed?: Maybe<DeleteJobFeedPayload>;
+  /** Deletes a single `JobFeed` using its globally unique id. */
+  deleteJobFeedByNodeId?: Maybe<DeleteJobFeedPayload>;
   /** Deletes a single `JobSendingEmail` using a unique key. */
   deleteJobSendingEmail?: Maybe<DeleteJobSendingEmailPayload>;
   /** Deletes a single `JobSendingEmail` using its globally unique id. */
@@ -18982,6 +21766,14 @@ export type Mutation = {
   deleteJobSendingEmailLog?: Maybe<DeleteJobSendingEmailLogPayload>;
   /** Deletes a single `JobSendingEmailLog` using its globally unique id. */
   deleteJobSendingEmailLogByNodeId?: Maybe<DeleteJobSendingEmailLogPayload>;
+  /** Deletes a single `JobType` using a unique key. */
+  deleteJobType?: Maybe<DeleteJobTypePayload>;
+  /** Deletes a single `JobType` using its globally unique id. */
+  deleteJobTypeByNodeId?: Maybe<DeleteJobTypePayload>;
+  /** Deletes a single `JobUser` using a unique key. */
+  deleteJobUser?: Maybe<DeleteJobUserPayload>;
+  /** Deletes a single `JobUser` using its globally unique id. */
+  deleteJobUserByNodeId?: Maybe<DeleteJobUserPayload>;
   /** Deletes a single `Kind` using a unique key. */
   deleteKind?: Maybe<DeleteKindPayload>;
   /** Deletes a single `Kind` using a unique key. */
@@ -18998,6 +21790,10 @@ export type Mutation = {
   deleteLoginTransaction?: Maybe<DeleteLoginTransactionPayload>;
   /** Deletes a single `LoginTransaction` using its globally unique id. */
   deleteLoginTransactionByNodeId?: Maybe<DeleteLoginTransactionPayload>;
+  /** Deletes a single `Message` using a unique key. */
+  deleteMessage?: Maybe<DeleteMessagePayload>;
+  /** Deletes a single `Message` using its globally unique id. */
+  deleteMessageByNodeId?: Maybe<DeleteMessagePayload>;
   /** Deletes a single `Metric` using a unique key. */
   deleteMetric?: Maybe<DeleteMetricPayload>;
   /** Deletes a single `Metric` using its globally unique id. */
@@ -19010,6 +21806,10 @@ export type Mutation = {
   deleteNews?: Maybe<DeleteNewsPayload>;
   /** Deletes a single `News` using its globally unique id. */
   deleteNewsByNodeId?: Maybe<DeleteNewsPayload>;
+  /** Deletes a single `Notification` using a unique key. */
+  deleteNotification?: Maybe<DeleteNotificationPayload>;
+  /** Deletes a single `Notification` using its globally unique id. */
+  deleteNotificationByNodeId?: Maybe<DeleteNotificationPayload>;
   /** Deletes a single `Organization` using a unique key. */
   deleteOrganization?: Maybe<DeleteOrganizationPayload>;
   /** Deletes a single `Organization` using its globally unique id. */
@@ -19018,6 +21818,10 @@ export type Mutation = {
   deleteOrganizationUser?: Maybe<DeleteOrganizationUserPayload>;
   /** Deletes a single `OrganizationUser` using its globally unique id. */
   deleteOrganizationUserByNodeId?: Maybe<DeleteOrganizationUserPayload>;
+  /** Deletes a single `PayPeriod` using a unique key. */
+  deletePayPeriod?: Maybe<DeletePayPeriodPayload>;
+  /** Deletes a single `PayPeriod` using its globally unique id. */
+  deletePayPeriodByNodeId?: Maybe<DeletePayPeriodPayload>;
   /** Deletes a single `PersonalAccessToken` using a unique key. */
   deletePersonalAccessToken?: Maybe<DeletePersonalAccessTokenPayload>;
   /** Deletes a single `PersonalAccessToken` using its globally unique id. */
@@ -19046,6 +21850,10 @@ export type Mutation = {
   deletePropertyByNodeId?: Maybe<DeletePropertyPayload>;
   /** Deletes a single `Property` using a unique key. */
   deletePropertyBySlug?: Maybe<DeletePropertyPayload>;
+  /** Deletes a single `Review` using a unique key. */
+  deleteReview?: Maybe<DeleteReviewPayload>;
+  /** Deletes a single `Review` using its globally unique id. */
+  deleteReviewByNodeId?: Maybe<DeleteReviewPayload>;
   /** Deletes a single `Role` using a unique key. */
   deleteRole?: Maybe<DeleteRolePayload>;
   /** Deletes a single `Role` using a unique key. */
@@ -19150,6 +21958,10 @@ export type Mutation = {
   deleteWebsocketsStatisticsEntry?: Maybe<DeleteWebsocketsStatisticsEntryPayload>;
   /** Deletes a single `WebsocketsStatisticsEntry` using its globally unique id. */
   deleteWebsocketsStatisticsEntryByNodeId?: Maybe<DeleteWebsocketsStatisticsEntryPayload>;
+  /** Deletes a single `WorkExperience` using a unique key. */
+  deleteWorkExperience?: Maybe<DeleteWorkExperiencePayload>;
+  /** Deletes a single `WorkExperience` using its globally unique id. */
+  deleteWorkExperienceByNodeId?: Maybe<DeleteWorkExperiencePayload>;
   /** Deletes a single `WorkType` using a unique key. */
   deleteWorkType?: Maybe<DeleteWorkTypePayload>;
   /** Deletes a single `WorkType` using its globally unique id. */
@@ -19174,10 +21986,18 @@ export type Mutation = {
   updateAttachment?: Maybe<UpdateAttachmentPayload>;
   /** Updates a single `Attachment` using its globally unique id and a patch. */
   updateAttachmentByNodeId?: Maybe<UpdateAttachmentPayload>;
+  /** Updates a single `Available` using a unique key and a patch. */
+  updateAvailable?: Maybe<UpdateAvailablePayload>;
+  /** Updates a single `Available` using its globally unique id and a patch. */
+  updateAvailableByNodeId?: Maybe<UpdateAvailablePayload>;
   /** Updates a single `Certification` using a unique key and a patch. */
   updateCertification?: Maybe<UpdateCertificationPayload>;
   /** Updates a single `Certification` using its globally unique id and a patch. */
   updateCertificationByNodeId?: Maybe<UpdateCertificationPayload>;
+  /** Updates a single `ChatNotification` using a unique key and a patch. */
+  updateChatNotification?: Maybe<UpdateChatNotificationPayload>;
+  /** Updates a single `ChatNotification` using its globally unique id and a patch. */
+  updateChatNotificationByNodeId?: Maybe<UpdateChatNotificationPayload>;
   /** Updates a single `Company` using a unique key and a patch. */
   updateCompany?: Maybe<UpdateCompanyPayload>;
   /** Updates a single `Company` using its globally unique id and a patch. */
@@ -19198,6 +22018,14 @@ export type Mutation = {
   updateComponentProperty?: Maybe<UpdateComponentPropertyPayload>;
   /** Updates a single `ComponentProperty` using its globally unique id and a patch. */
   updateComponentPropertyByNodeId?: Maybe<UpdateComponentPropertyPayload>;
+  /** Updates a single `Conversation` using a unique key and a patch. */
+  updateConversation?: Maybe<UpdateConversationPayload>;
+  /** Updates a single `Conversation` using its globally unique id and a patch. */
+  updateConversationByNodeId?: Maybe<UpdateConversationPayload>;
+  /** Updates a single `ConversationUser` using a unique key and a patch. */
+  updateConversationUser?: Maybe<UpdateConversationUserPayload>;
+  /** Updates a single `ConversationUser` using its globally unique id and a patch. */
+  updateConversationUserByNodeId?: Maybe<UpdateConversationUserPayload>;
   /** Updates a single `Course` using a unique key and a patch. */
   updateCourse?: Maybe<UpdateCoursePayload>;
   /** Updates a single `Course` using its globally unique id and a patch. */
@@ -19308,8 +22136,16 @@ export type Mutation = {
   updateIssuanceByNodeId?: Maybe<UpdateIssuancePayload>;
   /** Updates a single `Job` using a unique key and a patch. */
   updateJob?: Maybe<UpdateJobPayload>;
+  /** Updates a single `JobApplication` using a unique key and a patch. */
+  updateJobApplication?: Maybe<UpdateJobApplicationPayload>;
+  /** Updates a single `JobApplication` using its globally unique id and a patch. */
+  updateJobApplicationByNodeId?: Maybe<UpdateJobApplicationPayload>;
   /** Updates a single `Job` using its globally unique id and a patch. */
   updateJobByNodeId?: Maybe<UpdateJobPayload>;
+  /** Updates a single `JobFeed` using a unique key and a patch. */
+  updateJobFeed?: Maybe<UpdateJobFeedPayload>;
+  /** Updates a single `JobFeed` using its globally unique id and a patch. */
+  updateJobFeedByNodeId?: Maybe<UpdateJobFeedPayload>;
   /** Updates a single `JobSendingEmail` using a unique key and a patch. */
   updateJobSendingEmail?: Maybe<UpdateJobSendingEmailPayload>;
   /** Updates a single `JobSendingEmail` using its globally unique id and a patch. */
@@ -19322,6 +22158,14 @@ export type Mutation = {
   updateJobSendingEmailLog?: Maybe<UpdateJobSendingEmailLogPayload>;
   /** Updates a single `JobSendingEmailLog` using its globally unique id and a patch. */
   updateJobSendingEmailLogByNodeId?: Maybe<UpdateJobSendingEmailLogPayload>;
+  /** Updates a single `JobType` using a unique key and a patch. */
+  updateJobType?: Maybe<UpdateJobTypePayload>;
+  /** Updates a single `JobType` using its globally unique id and a patch. */
+  updateJobTypeByNodeId?: Maybe<UpdateJobTypePayload>;
+  /** Updates a single `JobUser` using a unique key and a patch. */
+  updateJobUser?: Maybe<UpdateJobUserPayload>;
+  /** Updates a single `JobUser` using its globally unique id and a patch. */
+  updateJobUserByNodeId?: Maybe<UpdateJobUserPayload>;
   /** Updates a single `Kind` using a unique key and a patch. */
   updateKind?: Maybe<UpdateKindPayload>;
   /** Updates a single `Kind` using a unique key and a patch. */
@@ -19338,6 +22182,10 @@ export type Mutation = {
   updateLoginTransaction?: Maybe<UpdateLoginTransactionPayload>;
   /** Updates a single `LoginTransaction` using its globally unique id and a patch. */
   updateLoginTransactionByNodeId?: Maybe<UpdateLoginTransactionPayload>;
+  /** Updates a single `Message` using a unique key and a patch. */
+  updateMessage?: Maybe<UpdateMessagePayload>;
+  /** Updates a single `Message` using its globally unique id and a patch. */
+  updateMessageByNodeId?: Maybe<UpdateMessagePayload>;
   /** Updates a single `Metric` using a unique key and a patch. */
   updateMetric?: Maybe<UpdateMetricPayload>;
   /** Updates a single `Metric` using its globally unique id and a patch. */
@@ -19350,6 +22198,10 @@ export type Mutation = {
   updateNews?: Maybe<UpdateNewsPayload>;
   /** Updates a single `News` using its globally unique id and a patch. */
   updateNewsByNodeId?: Maybe<UpdateNewsPayload>;
+  /** Updates a single `Notification` using a unique key and a patch. */
+  updateNotification?: Maybe<UpdateNotificationPayload>;
+  /** Updates a single `Notification` using its globally unique id and a patch. */
+  updateNotificationByNodeId?: Maybe<UpdateNotificationPayload>;
   /** Updates a single `Organization` using a unique key and a patch. */
   updateOrganization?: Maybe<UpdateOrganizationPayload>;
   /** Updates a single `Organization` using its globally unique id and a patch. */
@@ -19358,6 +22210,10 @@ export type Mutation = {
   updateOrganizationUser?: Maybe<UpdateOrganizationUserPayload>;
   /** Updates a single `OrganizationUser` using its globally unique id and a patch. */
   updateOrganizationUserByNodeId?: Maybe<UpdateOrganizationUserPayload>;
+  /** Updates a single `PayPeriod` using a unique key and a patch. */
+  updatePayPeriod?: Maybe<UpdatePayPeriodPayload>;
+  /** Updates a single `PayPeriod` using its globally unique id and a patch. */
+  updatePayPeriodByNodeId?: Maybe<UpdatePayPeriodPayload>;
   /** Updates a single `PersonalAccessToken` using a unique key and a patch. */
   updatePersonalAccessToken?: Maybe<UpdatePersonalAccessTokenPayload>;
   /** Updates a single `PersonalAccessToken` using its globally unique id and a patch. */
@@ -19386,6 +22242,10 @@ export type Mutation = {
   updatePropertyByNodeId?: Maybe<UpdatePropertyPayload>;
   /** Updates a single `Property` using a unique key and a patch. */
   updatePropertyBySlug?: Maybe<UpdatePropertyPayload>;
+  /** Updates a single `Review` using a unique key and a patch. */
+  updateReview?: Maybe<UpdateReviewPayload>;
+  /** Updates a single `Review` using its globally unique id and a patch. */
+  updateReviewByNodeId?: Maybe<UpdateReviewPayload>;
   /** Updates a single `Role` using a unique key and a patch. */
   updateRole?: Maybe<UpdateRolePayload>;
   /** Updates a single `Role` using a unique key and a patch. */
@@ -19490,6 +22350,10 @@ export type Mutation = {
   updateWebsocketsStatisticsEntry?: Maybe<UpdateWebsocketsStatisticsEntryPayload>;
   /** Updates a single `WebsocketsStatisticsEntry` using its globally unique id and a patch. */
   updateWebsocketsStatisticsEntryByNodeId?: Maybe<UpdateWebsocketsStatisticsEntryPayload>;
+  /** Updates a single `WorkExperience` using a unique key and a patch. */
+  updateWorkExperience?: Maybe<UpdateWorkExperiencePayload>;
+  /** Updates a single `WorkExperience` using its globally unique id and a patch. */
+  updateWorkExperienceByNodeId?: Maybe<UpdateWorkExperiencePayload>;
   /** Updates a single `WorkType` using a unique key and a patch. */
   updateWorkType?: Maybe<UpdateWorkTypePayload>;
   /** Updates a single `WorkType` using its globally unique id and a patch. */
@@ -19528,8 +22392,20 @@ export type MutationCreateAttachmentArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateAvailableArgs = {
+  input: CreateAvailableInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateCertificationArgs = {
   input: CreateCertificationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateChatNotificationArgs = {
+  input: CreateChatNotificationInput;
 };
 
 
@@ -19560,6 +22436,18 @@ export type MutationCreateComponentEventArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateComponentPropertyArgs = {
   input: CreateComponentPropertyInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateConversationArgs = {
+  input: CreateConversationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateConversationUserArgs = {
+  input: CreateConversationUserInput;
 };
 
 
@@ -19720,6 +22608,18 @@ export type MutationCreateJobArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateJobApplicationArgs = {
+  input: CreateJobApplicationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateJobFeedArgs = {
+  input: CreateJobFeedInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateJobSendingEmailArgs = {
   input: CreateJobSendingEmailInput;
 };
@@ -19734,6 +22634,18 @@ export type MutationCreateJobSendingEmailCategoryArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateJobSendingEmailLogArgs = {
   input: CreateJobSendingEmailLogInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateJobTypeArgs = {
+  input: CreateJobTypeInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateJobUserArgs = {
+  input: CreateJobUserInput;
 };
 
 
@@ -19756,6 +22668,12 @@ export type MutationCreateLoginTransactionArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateMessageArgs = {
+  input: CreateMessageInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateMetricArgs = {
   input: CreateMetricInput;
 };
@@ -19774,6 +22692,12 @@ export type MutationCreateNewsArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateNotificationArgs = {
+  input: CreateNotificationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateOrganizationArgs = {
   input: CreateOrganizationInput;
 };
@@ -19788,6 +22712,12 @@ export type MutationCreateOrganizationUserArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreatePasswordResetArgs = {
   input: CreatePasswordResetInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreatePayPeriodArgs = {
+  input: CreatePayPeriodInput;
 };
 
 
@@ -19818,6 +22748,12 @@ export type MutationCreateProjectUserArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreatePropertyArgs = {
   input: CreatePropertyInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateReviewArgs = {
+  input: CreateReviewInput;
 };
 
 
@@ -19978,6 +22914,12 @@ export type MutationCreateWebsocketsStatisticsEntryArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateWorkExperienceArgs = {
+  input: CreateWorkExperienceInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateWorkTypeArgs = {
   input: CreateWorkTypeInput;
 };
@@ -20044,6 +22986,18 @@ export type MutationDeleteAttachmentByNodeIdArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteAvailableArgs = {
+  input: DeleteAvailableInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteAvailableByNodeIdArgs = {
+  input: DeleteAvailableByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteCertificationArgs = {
   input: DeleteCertificationInput;
 };
@@ -20052,6 +23006,18 @@ export type MutationDeleteCertificationArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteCertificationByNodeIdArgs = {
   input: DeleteCertificationByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteChatNotificationArgs = {
+  input: DeleteChatNotificationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteChatNotificationByNodeIdArgs = {
+  input: DeleteChatNotificationByNodeIdInput;
 };
 
 
@@ -20112,6 +23078,30 @@ export type MutationDeleteComponentPropertyArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteComponentPropertyByNodeIdArgs = {
   input: DeleteComponentPropertyByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteConversationArgs = {
+  input: DeleteConversationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteConversationByNodeIdArgs = {
+  input: DeleteConversationByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteConversationUserArgs = {
+  input: DeleteConversationUserInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteConversationUserByNodeIdArgs = {
+  input: DeleteConversationUserByNodeIdInput;
 };
 
 
@@ -20446,8 +23436,32 @@ export type MutationDeleteJobArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteJobApplicationArgs = {
+  input: DeleteJobApplicationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteJobApplicationByNodeIdArgs = {
+  input: DeleteJobApplicationByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteJobByNodeIdArgs = {
   input: DeleteJobByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteJobFeedArgs = {
+  input: DeleteJobFeedInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteJobFeedByNodeIdArgs = {
+  input: DeleteJobFeedByNodeIdInput;
 };
 
 
@@ -20484,6 +23498,30 @@ export type MutationDeleteJobSendingEmailLogArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteJobSendingEmailLogByNodeIdArgs = {
   input: DeleteJobSendingEmailLogByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteJobTypeArgs = {
+  input: DeleteJobTypeInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteJobTypeByNodeIdArgs = {
+  input: DeleteJobTypeByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteJobUserArgs = {
+  input: DeleteJobUserInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteJobUserByNodeIdArgs = {
+  input: DeleteJobUserByNodeIdInput;
 };
 
 
@@ -20536,6 +23574,18 @@ export type MutationDeleteLoginTransactionByNodeIdArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteMessageArgs = {
+  input: DeleteMessageInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteMessageByNodeIdArgs = {
+  input: DeleteMessageByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteMetricArgs = {
   input: DeleteMetricInput;
 };
@@ -20572,6 +23622,18 @@ export type MutationDeleteNewsByNodeIdArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteNotificationArgs = {
+  input: DeleteNotificationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteNotificationByNodeIdArgs = {
+  input: DeleteNotificationByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteOrganizationArgs = {
   input: DeleteOrganizationInput;
 };
@@ -20592,6 +23654,18 @@ export type MutationDeleteOrganizationUserArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteOrganizationUserByNodeIdArgs = {
   input: DeleteOrganizationUserByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeletePayPeriodArgs = {
+  input: DeletePayPeriodInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeletePayPeriodByNodeIdArgs = {
+  input: DeletePayPeriodByNodeIdInput;
 };
 
 
@@ -20676,6 +23750,18 @@ export type MutationDeletePropertyByNodeIdArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeletePropertyBySlugArgs = {
   input: DeletePropertyBySlugInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteReviewArgs = {
+  input: DeleteReviewInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteReviewByNodeIdArgs = {
+  input: DeleteReviewByNodeIdInput;
 };
 
 
@@ -20992,6 +24078,18 @@ export type MutationDeleteWebsocketsStatisticsEntryByNodeIdArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteWorkExperienceArgs = {
+  input: DeleteWorkExperienceInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteWorkExperienceByNodeIdArgs = {
+  input: DeleteWorkExperienceByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteWorkTypeArgs = {
   input: DeleteWorkTypeInput;
 };
@@ -21064,6 +24162,18 @@ export type MutationUpdateAttachmentByNodeIdArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateAvailableArgs = {
+  input: UpdateAvailableInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateAvailableByNodeIdArgs = {
+  input: UpdateAvailableByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateCertificationArgs = {
   input: UpdateCertificationInput;
 };
@@ -21072,6 +24182,18 @@ export type MutationUpdateCertificationArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateCertificationByNodeIdArgs = {
   input: UpdateCertificationByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateChatNotificationArgs = {
+  input: UpdateChatNotificationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateChatNotificationByNodeIdArgs = {
+  input: UpdateChatNotificationByNodeIdInput;
 };
 
 
@@ -21132,6 +24254,30 @@ export type MutationUpdateComponentPropertyArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateComponentPropertyByNodeIdArgs = {
   input: UpdateComponentPropertyByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateConversationArgs = {
+  input: UpdateConversationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateConversationByNodeIdArgs = {
+  input: UpdateConversationByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateConversationUserArgs = {
+  input: UpdateConversationUserInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateConversationUserByNodeIdArgs = {
+  input: UpdateConversationUserByNodeIdInput;
 };
 
 
@@ -21466,8 +24612,32 @@ export type MutationUpdateJobArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateJobApplicationArgs = {
+  input: UpdateJobApplicationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateJobApplicationByNodeIdArgs = {
+  input: UpdateJobApplicationByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateJobByNodeIdArgs = {
   input: UpdateJobByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateJobFeedArgs = {
+  input: UpdateJobFeedInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateJobFeedByNodeIdArgs = {
+  input: UpdateJobFeedByNodeIdInput;
 };
 
 
@@ -21504,6 +24674,30 @@ export type MutationUpdateJobSendingEmailLogArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateJobSendingEmailLogByNodeIdArgs = {
   input: UpdateJobSendingEmailLogByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateJobTypeArgs = {
+  input: UpdateJobTypeInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateJobTypeByNodeIdArgs = {
+  input: UpdateJobTypeByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateJobUserArgs = {
+  input: UpdateJobUserInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateJobUserByNodeIdArgs = {
+  input: UpdateJobUserByNodeIdInput;
 };
 
 
@@ -21556,6 +24750,18 @@ export type MutationUpdateLoginTransactionByNodeIdArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateMessageArgs = {
+  input: UpdateMessageInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateMessageByNodeIdArgs = {
+  input: UpdateMessageByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateMetricArgs = {
   input: UpdateMetricInput;
 };
@@ -21592,6 +24798,18 @@ export type MutationUpdateNewsByNodeIdArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateNotificationArgs = {
+  input: UpdateNotificationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateNotificationByNodeIdArgs = {
+  input: UpdateNotificationByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateOrganizationArgs = {
   input: UpdateOrganizationInput;
 };
@@ -21612,6 +24830,18 @@ export type MutationUpdateOrganizationUserArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateOrganizationUserByNodeIdArgs = {
   input: UpdateOrganizationUserByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdatePayPeriodArgs = {
+  input: UpdatePayPeriodInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdatePayPeriodByNodeIdArgs = {
+  input: UpdatePayPeriodByNodeIdInput;
 };
 
 
@@ -21696,6 +24926,18 @@ export type MutationUpdatePropertyByNodeIdArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdatePropertyBySlugArgs = {
   input: UpdatePropertyBySlugInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateReviewArgs = {
+  input: UpdateReviewInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateReviewByNodeIdArgs = {
+  input: UpdateReviewByNodeIdInput;
 };
 
 
@@ -22012,6 +25254,18 @@ export type MutationUpdateWebsocketsStatisticsEntryByNodeIdArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateWorkExperienceArgs = {
+  input: UpdateWorkExperienceInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateWorkExperienceByNodeIdArgs = {
+  input: UpdateWorkExperienceByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateWorkTypeArgs = {
   input: UpdateWorkTypeInput;
 };
@@ -22148,17 +25402,138 @@ export type Node = {
   nodeId: Scalars['ID']['output'];
 };
 
+export type Notification = Node & {
+  __typename?: 'Notification';
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  deletedAt?: Maybe<Scalars['Datetime']['output']>;
+  id: Scalars['BigInt']['output'];
+  isRead: Scalars['Boolean']['output'];
+  message?: Maybe<Scalars['String']['output']>;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `Notification`. */
+  user?: Maybe<User>;
+  userId: Scalars['BigInt']['output'];
+};
+
+/**
+ * A condition to be used against `Notification` object types. All fields are
+ * tested for equality and combined with a logical ‘and.’
+ */
+export type NotificationCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `isRead` field. */
+  isRead?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `message` field. */
+  message?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A filter to be used against `Notification` object types. All fields are combined with a logical ‘and.’ */
+export type NotificationFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<NotificationFilter>>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `isRead` field. */
+  isRead?: InputMaybe<BooleanFilter>;
+  /** Filter by the object’s `message` field. */
+  message?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<NotificationFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<NotificationFilter>>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<BigIntFilter>;
+};
+
+/** An input for mutations affecting `Notification` */
+export type NotificationInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  isRead?: InputMaybe<Scalars['Boolean']['input']>;
+  message?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId: Scalars['BigInt']['input'];
+};
+
+/** Represents an update to a `Notification`. Fields that are set will be updated. */
+export type NotificationPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  isRead?: InputMaybe<Scalars['Boolean']['input']>;
+  message?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A connection to a list of `Notification` values. */
+export type NotificationsConnection = {
+  __typename?: 'NotificationsConnection';
+  /** A list of edges which contains the `Notification` and cursor to aid in pagination. */
+  edges: Array<NotificationsEdge>;
+  /** A list of `Notification` objects. */
+  nodes: Array<Notification>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Notification` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Notification` edge in the connection. */
+export type NotificationsEdge = {
+  __typename?: 'NotificationsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Notification` at the end of the edge. */
+  node: Notification;
+};
+
+/** Methods to use when ordering `Notification`. */
+export enum NotificationsOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DeletedAtAsc = 'DELETED_AT_ASC',
+  DeletedAtDesc = 'DELETED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  IsReadAsc = 'IS_READ_ASC',
+  IsReadDesc = 'IS_READ_DESC',
+  MessageAsc = 'MESSAGE_ASC',
+  MessageDesc = 'MESSAGE_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC'
+}
+
 export type Organization = Node & {
   __typename?: 'Organization';
   /** Reads a single `Admin` that is related to this `Organization`. */
   admin?: Maybe<Admin>;
   adminId: Scalars['BigInt']['output'];
   /** Reads and enables pagination through a set of `Admin`. */
-  adminsByCompanyOrganizationIdAndAdminId: OrganizationAdminsByCompanyOrganizationIdAndAdminIdManyToManyConnection;
-  /** Reads and enables pagination through a set of `Admin`. */
   adminsByGroupOrganizationIdAndAdminId: OrganizationAdminsByGroupOrganizationIdAndAdminIdManyToManyConnection;
-  /** Reads and enables pagination through a set of `Admin`. */
-  adminsByProjectOrganizationIdAndAdminId: OrganizationAdminsByProjectOrganizationIdAndAdminIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Admin`. */
   adminsBySchedulerOrgIdAndAdminId: OrganizationAdminsBySchedulerOrgIdAndAdminIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Admin`. */
@@ -22237,6 +25612,8 @@ export type Organization = Node & {
   /** Reads and enables pagination through a set of `User`. */
   usersByCertificationOrganizationIdAndAdminId: OrganizationUsersByCertificationOrganizationIdAndAdminIdManyToManyConnection;
   /** Reads and enables pagination through a set of `User`. */
+  usersByCompanyOrganizationIdAndAdminId: OrganizationUsersByCompanyOrganizationIdAndAdminIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `User`. */
   usersByCourseOrganizationIdAndAdminId: OrganizationUsersByCourseOrganizationIdAndAdminIdManyToManyConnection;
   /** Reads and enables pagination through a set of `User`. */
   usersByEquipmentOrganizationIdAndPreparedBy: OrganizationUsersByEquipmentOrganizationIdAndPreparedByManyToManyConnection;
@@ -22244,6 +25621,8 @@ export type Organization = Node & {
   usersByJobOrganizationIdAndAdminId: OrganizationUsersByJobOrganizationIdAndAdminIdManyToManyConnection;
   /** Reads and enables pagination through a set of `User`. */
   usersByOrganizationUserOrganizationIdAndUserId: OrganizationUsersByOrganizationUserOrganizationIdAndUserIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `User`. */
+  usersByProjectOrganizationIdAndAdminId: OrganizationUsersByProjectOrganizationIdAndAdminIdManyToManyConnection;
   /** Reads and enables pagination through a set of `User`. */
   usersByRoleUserOrganizationOrgIdAndUserId: OrganizationUsersByRoleUserOrganizationOrgIdAndUserIdManyToManyConnection;
   /** Reads and enables pagination through a set of `User`. */
@@ -22256,31 +25635,7 @@ export type Organization = Node & {
 };
 
 
-export type OrganizationAdminsByCompanyOrganizationIdAndAdminIdArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<AdminCondition>;
-  filter?: InputMaybe<AdminFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<AdminsOrderBy>>;
-};
-
-
 export type OrganizationAdminsByGroupOrganizationIdAndAdminIdArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<AdminCondition>;
-  filter?: InputMaybe<AdminFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<AdminsOrderBy>>;
-};
-
-
-export type OrganizationAdminsByProjectOrganizationIdAndAdminIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<AdminCondition>;
@@ -22712,6 +26067,18 @@ export type OrganizationUsersByCertificationOrganizationIdAndAdminIdArgs = {
 };
 
 
+export type OrganizationUsersByCompanyOrganizationIdAndAdminIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+
 export type OrganizationUsersByCourseOrganizationIdAndAdminIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -22749,6 +26116,18 @@ export type OrganizationUsersByJobOrganizationIdAndAdminIdArgs = {
 
 
 export type OrganizationUsersByOrganizationUserOrganizationIdAndUserIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+
+export type OrganizationUsersByProjectOrganizationIdAndAdminIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<UserCondition>;
@@ -22807,43 +26186,6 @@ export type OrganizationWorkTypesArgs = {
   orderBy?: InputMaybe<Array<WorkTypesOrderBy>>;
 };
 
-/** A connection to a list of `Admin` values, with data from `Company`. */
-export type OrganizationAdminsByCompanyOrganizationIdAndAdminIdManyToManyConnection = {
-  __typename?: 'OrganizationAdminsByCompanyOrganizationIdAndAdminIdManyToManyConnection';
-  /** A list of edges which contains the `Admin`, info from the `Company`, and the cursor to aid in pagination. */
-  edges: Array<OrganizationAdminsByCompanyOrganizationIdAndAdminIdManyToManyEdge>;
-  /** A list of `Admin` objects. */
-  nodes: Array<Admin>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `Admin` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-};
-
-/** A `Admin` edge in the connection, with data from `Company`. */
-export type OrganizationAdminsByCompanyOrganizationIdAndAdminIdManyToManyEdge = {
-  __typename?: 'OrganizationAdminsByCompanyOrganizationIdAndAdminIdManyToManyEdge';
-  /** Reads and enables pagination through a set of `Company`. */
-  companies: CompaniesConnection;
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `Admin` at the end of the edge. */
-  node: Admin;
-};
-
-
-/** A `Admin` edge in the connection, with data from `Company`. */
-export type OrganizationAdminsByCompanyOrganizationIdAndAdminIdManyToManyEdgeCompaniesArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<CompanyCondition>;
-  filter?: InputMaybe<CompanyFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<CompaniesOrderBy>>;
-};
-
 /** A connection to a list of `Admin` values, with data from `Group`. */
 export type OrganizationAdminsByGroupOrganizationIdAndAdminIdManyToManyConnection = {
   __typename?: 'OrganizationAdminsByGroupOrganizationIdAndAdminIdManyToManyConnection';
@@ -22879,43 +26221,6 @@ export type OrganizationAdminsByGroupOrganizationIdAndAdminIdManyToManyEdgeGroup
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<GroupsOrderBy>>;
-};
-
-/** A connection to a list of `Admin` values, with data from `Project`. */
-export type OrganizationAdminsByProjectOrganizationIdAndAdminIdManyToManyConnection = {
-  __typename?: 'OrganizationAdminsByProjectOrganizationIdAndAdminIdManyToManyConnection';
-  /** A list of edges which contains the `Admin`, info from the `Project`, and the cursor to aid in pagination. */
-  edges: Array<OrganizationAdminsByProjectOrganizationIdAndAdminIdManyToManyEdge>;
-  /** A list of `Admin` objects. */
-  nodes: Array<Admin>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `Admin` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-};
-
-/** A `Admin` edge in the connection, with data from `Project`. */
-export type OrganizationAdminsByProjectOrganizationIdAndAdminIdManyToManyEdge = {
-  __typename?: 'OrganizationAdminsByProjectOrganizationIdAndAdminIdManyToManyEdge';
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `Admin` at the end of the edge. */
-  node: Admin;
-  /** Reads and enables pagination through a set of `Project`. */
-  projects: ProjectsConnection;
-};
-
-
-/** A `Admin` edge in the connection, with data from `Project`. */
-export type OrganizationAdminsByProjectOrganizationIdAndAdminIdManyToManyEdgeProjectsArgs = {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<ProjectCondition>;
-  filter?: InputMaybe<ProjectFilter>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
 };
 
 /** A connection to a list of `Admin` values, with data from `Scheduler`. */
@@ -23727,6 +27032,43 @@ export type OrganizationUsersByCertificationOrganizationIdAndAdminIdManyToManyEd
   orderBy?: InputMaybe<Array<CertificationsOrderBy>>;
 };
 
+/** A connection to a list of `User` values, with data from `Company`. */
+export type OrganizationUsersByCompanyOrganizationIdAndAdminIdManyToManyConnection = {
+  __typename?: 'OrganizationUsersByCompanyOrganizationIdAndAdminIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `Company`, and the cursor to aid in pagination. */
+  edges: Array<OrganizationUsersByCompanyOrganizationIdAndAdminIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `Company`. */
+export type OrganizationUsersByCompanyOrganizationIdAndAdminIdManyToManyEdge = {
+  __typename?: 'OrganizationUsersByCompanyOrganizationIdAndAdminIdManyToManyEdge';
+  /** Reads and enables pagination through a set of `Company`. */
+  companiesByAdminId: CompaniesConnection;
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `User` at the end of the edge. */
+  node: User;
+};
+
+
+/** A `User` edge in the connection, with data from `Company`. */
+export type OrganizationUsersByCompanyOrganizationIdAndAdminIdManyToManyEdgeCompaniesByAdminIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<CompanyCondition>;
+  filter?: InputMaybe<CompanyFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<CompaniesOrderBy>>;
+};
+
 /** A connection to a list of `User` values, with data from `Course`. */
 export type OrganizationUsersByCourseOrganizationIdAndAdminIdManyToManyConnection = {
   __typename?: 'OrganizationUsersByCourseOrganizationIdAndAdminIdManyToManyConnection';
@@ -23860,6 +27202,43 @@ export type OrganizationUsersByOrganizationUserOrganizationIdAndUserIdManyToMany
   /** The `User` at the end of the edge. */
   node: User;
   updatedAt?: Maybe<Scalars['Datetime']['output']>;
+};
+
+/** A connection to a list of `User` values, with data from `Project`. */
+export type OrganizationUsersByProjectOrganizationIdAndAdminIdManyToManyConnection = {
+  __typename?: 'OrganizationUsersByProjectOrganizationIdAndAdminIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `Project`, and the cursor to aid in pagination. */
+  edges: Array<OrganizationUsersByProjectOrganizationIdAndAdminIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `Project`. */
+export type OrganizationUsersByProjectOrganizationIdAndAdminIdManyToManyEdge = {
+  __typename?: 'OrganizationUsersByProjectOrganizationIdAndAdminIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `User` at the end of the edge. */
+  node: User;
+  /** Reads and enables pagination through a set of `Project`. */
+  projectsByAdminId: ProjectsConnection;
+};
+
+
+/** A `User` edge in the connection, with data from `Project`. */
+export type OrganizationUsersByProjectOrganizationIdAndAdminIdManyToManyEdgeProjectsByAdminIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ProjectCondition>;
+  filter?: InputMaybe<ProjectFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
 };
 
 /** A connection to a list of `User` values, with data from `RoleUserOrganization`. */
@@ -24142,6 +27521,287 @@ export enum PasswordResetsOrderBy {
   TokenDesc = 'TOKEN_DESC'
 }
 
+export type PayPeriod = Node & {
+  __typename?: 'PayPeriod';
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  deletedAt?: Maybe<Scalars['Datetime']['output']>;
+  id: Scalars['BigInt']['output'];
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByPayPeriodsId: JobFeedsConnection;
+  /** Reads and enables pagination through a set of `JobType`. */
+  jobTypesByJobFeedPayPeriodsIdAndJobTypesId: PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdManyToManyConnection;
+  name?: Maybe<Scalars['String']['output']>;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  shortName?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads and enables pagination through a set of `User`. */
+  usersByJobFeedPayPeriodsIdAndUserId: PayPeriodUsersByJobFeedPayPeriodsIdAndUserIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `WorkType`. */
+  workTypesByJobFeedPayPeriodsIdAndWorkTypesId: PayPeriodWorkTypesByJobFeedPayPeriodsIdAndWorkTypesIdManyToManyConnection;
+};
+
+
+export type PayPeriodJobFeedsByPayPeriodsIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+
+export type PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobTypeCondition>;
+  filter?: InputMaybe<JobTypeFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobTypesOrderBy>>;
+};
+
+
+export type PayPeriodUsersByJobFeedPayPeriodsIdAndUserIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+
+export type PayPeriodWorkTypesByJobFeedPayPeriodsIdAndWorkTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<WorkTypeCondition>;
+  filter?: InputMaybe<WorkTypeFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WorkTypesOrderBy>>;
+};
+
+/**
+ * A condition to be used against `PayPeriod` object types. All fields are tested
+ * for equality and combined with a logical ‘and.’
+ */
+export type PayPeriodCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `name` field. */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `shortName` field. */
+  shortName?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A filter to be used against `PayPeriod` object types. All fields are combined with a logical ‘and.’ */
+export type PayPeriodFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<PayPeriodFilter>>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `name` field. */
+  name?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<PayPeriodFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<PayPeriodFilter>>;
+  /** Filter by the object’s `shortName` field. */
+  shortName?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+};
+
+/** An input for mutations affecting `PayPeriod` */
+export type PayPeriodInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  shortName?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A connection to a list of `JobType` values, with data from `JobFeed`. */
+export type PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdManyToManyConnection = {
+  __typename?: 'PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdManyToManyConnection';
+  /** A list of edges which contains the `JobType`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdManyToManyEdge>;
+  /** A list of `JobType` objects. */
+  nodes: Array<JobType>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `JobType` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `JobType` edge in the connection, with data from `JobFeed`. */
+export type PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdManyToManyEdge = {
+  __typename?: 'PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByJobTypesId: JobFeedsConnection;
+  /** The `JobType` at the end of the edge. */
+  node: JobType;
+};
+
+
+/** A `JobType` edge in the connection, with data from `JobFeed`. */
+export type PayPeriodJobTypesByJobFeedPayPeriodsIdAndJobTypesIdManyToManyEdgeJobFeedsByJobTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+/** Represents an update to a `PayPeriod`. Fields that are set will be updated. */
+export type PayPeriodPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  shortName?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A connection to a list of `User` values, with data from `JobFeed`. */
+export type PayPeriodUsersByJobFeedPayPeriodsIdAndUserIdManyToManyConnection = {
+  __typename?: 'PayPeriodUsersByJobFeedPayPeriodsIdAndUserIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<PayPeriodUsersByJobFeedPayPeriodsIdAndUserIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `JobFeed`. */
+export type PayPeriodUsersByJobFeedPayPeriodsIdAndUserIdManyToManyEdge = {
+  __typename?: 'PayPeriodUsersByJobFeedPayPeriodsIdAndUserIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeeds: JobFeedsConnection;
+  /** The `User` at the end of the edge. */
+  node: User;
+};
+
+
+/** A `User` edge in the connection, with data from `JobFeed`. */
+export type PayPeriodUsersByJobFeedPayPeriodsIdAndUserIdManyToManyEdgeJobFeedsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+/** A connection to a list of `WorkType` values, with data from `JobFeed`. */
+export type PayPeriodWorkTypesByJobFeedPayPeriodsIdAndWorkTypesIdManyToManyConnection = {
+  __typename?: 'PayPeriodWorkTypesByJobFeedPayPeriodsIdAndWorkTypesIdManyToManyConnection';
+  /** A list of edges which contains the `WorkType`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<PayPeriodWorkTypesByJobFeedPayPeriodsIdAndWorkTypesIdManyToManyEdge>;
+  /** A list of `WorkType` objects. */
+  nodes: Array<WorkType>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `WorkType` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `WorkType` edge in the connection, with data from `JobFeed`. */
+export type PayPeriodWorkTypesByJobFeedPayPeriodsIdAndWorkTypesIdManyToManyEdge = {
+  __typename?: 'PayPeriodWorkTypesByJobFeedPayPeriodsIdAndWorkTypesIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByWorkTypesId: JobFeedsConnection;
+  /** The `WorkType` at the end of the edge. */
+  node: WorkType;
+};
+
+
+/** A `WorkType` edge in the connection, with data from `JobFeed`. */
+export type PayPeriodWorkTypesByJobFeedPayPeriodsIdAndWorkTypesIdManyToManyEdgeJobFeedsByWorkTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+/** A connection to a list of `PayPeriod` values. */
+export type PayPeriodsConnection = {
+  __typename?: 'PayPeriodsConnection';
+  /** A list of edges which contains the `PayPeriod` and cursor to aid in pagination. */
+  edges: Array<PayPeriodsEdge>;
+  /** A list of `PayPeriod` objects. */
+  nodes: Array<PayPeriod>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `PayPeriod` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `PayPeriod` edge in the connection. */
+export type PayPeriodsEdge = {
+  __typename?: 'PayPeriodsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `PayPeriod` at the end of the edge. */
+  node: PayPeriod;
+};
+
+/** Methods to use when ordering `PayPeriod`. */
+export enum PayPeriodsOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DeletedAtAsc = 'DELETED_AT_ASC',
+  DeletedAtDesc = 'DELETED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  NameAsc = 'NAME_ASC',
+  NameDesc = 'NAME_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  ShortNameAsc = 'SHORT_NAME_ASC',
+  ShortNameDesc = 'SHORT_NAME_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC'
+}
+
 export type PersonalAccessToken = Node & {
   __typename?: 'PersonalAccessToken';
   abilities?: Maybe<Scalars['String']['output']>;
@@ -24300,6 +27960,7 @@ export type Profile = Node & {
   photo?: Maybe<Scalars['String']['output']>;
   /** Reads a single `User` that is related to this `Profile`. */
   pro_id?: Maybe<User>;
+  shareData?: Maybe<Scalars['Boolean']['output']>;
   skills?: Maybe<Scalars['String']['output']>;
   stateProvince?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['Datetime']['output']>;
@@ -24333,6 +27994,8 @@ export type ProfileCondition = {
   middleName?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `photo` field. */
   photo?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `shareData` field. */
+  shareData?: InputMaybe<Scalars['Boolean']['input']>;
   /** Checks for equality with the object’s `skills` field. */
   skills?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `stateProvince` field. */
@@ -24375,6 +28038,8 @@ export type ProfileFilter = {
   or?: InputMaybe<Array<ProfileFilter>>;
   /** Filter by the object’s `photo` field. */
   photo?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `shareData` field. */
+  shareData?: InputMaybe<BooleanFilter>;
   /** Filter by the object’s `skills` field. */
   skills?: InputMaybe<StringFilter>;
   /** Filter by the object’s `stateProvince` field. */
@@ -24400,6 +28065,7 @@ export type ProfileInput = {
   lastName?: InputMaybe<Scalars['String']['input']>;
   middleName?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<Scalars['String']['input']>;
+  shareData?: InputMaybe<Scalars['Boolean']['input']>;
   skills?: InputMaybe<Scalars['String']['input']>;
   stateProvince?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
@@ -24420,6 +28086,7 @@ export type ProfilePatch = {
   lastName?: InputMaybe<Scalars['String']['input']>;
   middleName?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<Scalars['String']['input']>;
+  shareData?: InputMaybe<Scalars['Boolean']['input']>;
   skills?: InputMaybe<Scalars['String']['input']>;
   stateProvince?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
@@ -24476,6 +28143,8 @@ export enum ProfilesOrderBy {
   PhotoDesc = 'PHOTO_DESC',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  ShareDataAsc = 'SHARE_DATA_ASC',
+  ShareDataDesc = 'SHARE_DATA_DESC',
   SkillsAsc = 'SKILLS_ASC',
   SkillsDesc = 'SKILLS_DESC',
   StateProvinceAsc = 'STATE_PROVINCE_ASC',
@@ -24490,8 +28159,8 @@ export enum ProfilesOrderBy {
 
 export type Project = Node & {
   __typename?: 'Project';
-  /** Reads a single `Admin` that is related to this `Project`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Project`. */
+  admin?: Maybe<User>;
   adminId?: Maybe<Scalars['BigInt']['output']>;
   createdAt?: Maybe<Scalars['Datetime']['output']>;
   deletedAt?: Maybe<Scalars['Datetime']['output']>;
@@ -25294,11 +28963,21 @@ export type Query = Node & {
   attachmentByNodeId?: Maybe<Attachment>;
   /** Reads and enables pagination through a set of `Attachment`. */
   attachments?: Maybe<AttachmentsConnection>;
+  available?: Maybe<Available>;
+  /** Reads a single `Available` using its globally unique `ID`. */
+  availableByNodeId?: Maybe<Available>;
+  /** Reads and enables pagination through a set of `Available`. */
+  availables?: Maybe<AvailablesConnection>;
   certification?: Maybe<Certification>;
   /** Reads a single `Certification` using its globally unique `ID`. */
   certificationByNodeId?: Maybe<Certification>;
   /** Reads and enables pagination through a set of `Certification`. */
   certifications?: Maybe<CertificationsConnection>;
+  chatNotification?: Maybe<ChatNotification>;
+  /** Reads a single `ChatNotification` using its globally unique `ID`. */
+  chatNotificationByNodeId?: Maybe<ChatNotification>;
+  /** Reads and enables pagination through a set of `ChatNotification`. */
+  chatNotifications?: Maybe<ChatNotificationsConnection>;
   /** Reads and enables pagination through a set of `Company`. */
   companies?: Maybe<CompaniesConnection>;
   company?: Maybe<Company>;
@@ -25323,6 +29002,16 @@ export type Query = Node & {
   componentPropertyByNodeId?: Maybe<ComponentProperty>;
   /** Reads and enables pagination through a set of `Component`. */
   components?: Maybe<ComponentsConnection>;
+  conversation?: Maybe<Conversation>;
+  /** Reads a single `Conversation` using its globally unique `ID`. */
+  conversationByNodeId?: Maybe<Conversation>;
+  conversationUser?: Maybe<ConversationUser>;
+  /** Reads a single `ConversationUser` using its globally unique `ID`. */
+  conversationUserByNodeId?: Maybe<ConversationUser>;
+  /** Reads and enables pagination through a set of `ConversationUser`. */
+  conversationUsers?: Maybe<ConversationUsersConnection>;
+  /** Reads and enables pagination through a set of `Conversation`. */
+  conversations?: Maybe<ConversationsConnection>;
   course?: Maybe<Course>;
   /** Reads a single `Course` using its globally unique `ID`. */
   courseByNodeId?: Maybe<Course>;
@@ -25454,8 +29143,18 @@ export type Query = Node & {
   /** Reads and enables pagination through a set of `Issuance`. */
   issuances?: Maybe<IssuancesConnection>;
   job?: Maybe<Job>;
+  jobApplication?: Maybe<JobApplication>;
+  /** Reads a single `JobApplication` using its globally unique `ID`. */
+  jobApplicationByNodeId?: Maybe<JobApplication>;
+  /** Reads and enables pagination through a set of `JobApplication`. */
+  jobApplications?: Maybe<JobApplicationsConnection>;
   /** Reads a single `Job` using its globally unique `ID`. */
   jobByNodeId?: Maybe<Job>;
+  jobFeed?: Maybe<JobFeed>;
+  /** Reads a single `JobFeed` using its globally unique `ID`. */
+  jobFeedByNodeId?: Maybe<JobFeed>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeeds?: Maybe<JobFeedsConnection>;
   jobSendingEmail?: Maybe<JobSendingEmail>;
   /** Reads a single `JobSendingEmail` using its globally unique `ID`. */
   jobSendingEmailByNodeId?: Maybe<JobSendingEmail>;
@@ -25471,6 +29170,16 @@ export type Query = Node & {
   jobSendingEmailLogs?: Maybe<JobSendingEmailLogsConnection>;
   /** Reads and enables pagination through a set of `JobSendingEmail`. */
   jobSendingEmails?: Maybe<JobSendingEmailsConnection>;
+  jobType?: Maybe<JobType>;
+  /** Reads a single `JobType` using its globally unique `ID`. */
+  jobTypeByNodeId?: Maybe<JobType>;
+  /** Reads and enables pagination through a set of `JobType`. */
+  jobTypes?: Maybe<JobTypesConnection>;
+  jobUser?: Maybe<JobUser>;
+  /** Reads a single `JobUser` using its globally unique `ID`. */
+  jobUserByNodeId?: Maybe<JobUser>;
+  /** Reads and enables pagination through a set of `JobUser`. */
+  jobUsers?: Maybe<JobUsersConnection>;
   /** Reads and enables pagination through a set of `Job`. */
   jobs?: Maybe<JobsConnection>;
   kind?: Maybe<Kind>;
@@ -25490,6 +29199,11 @@ export type Query = Node & {
   loginTransactionByNodeId?: Maybe<LoginTransaction>;
   /** Reads and enables pagination through a set of `LoginTransaction`. */
   loginTransactions?: Maybe<LoginTransactionsConnection>;
+  message?: Maybe<Message>;
+  /** Reads a single `Message` using its globally unique `ID`. */
+  messageByNodeId?: Maybe<Message>;
+  /** Reads and enables pagination through a set of `Message`. */
+  messages?: Maybe<MessagesConnection>;
   metric?: Maybe<Metric>;
   /** Reads a single `Metric` using its globally unique `ID`. */
   metricByNodeId?: Maybe<Metric>;
@@ -25509,6 +29223,11 @@ export type Query = Node & {
   node?: Maybe<Node>;
   /** The root query type must be a `Node` to work well with Relay 1 mutations. This just resolves to `query`. */
   nodeId: Scalars['ID']['output'];
+  notification?: Maybe<Notification>;
+  /** Reads a single `Notification` using its globally unique `ID`. */
+  notificationByNodeId?: Maybe<Notification>;
+  /** Reads and enables pagination through a set of `Notification`. */
+  notifications?: Maybe<NotificationsConnection>;
   organization?: Maybe<Organization>;
   /** Reads a single `Organization` using its globally unique `ID`. */
   organizationByNodeId?: Maybe<Organization>;
@@ -25521,6 +29240,11 @@ export type Query = Node & {
   organizations?: Maybe<OrganizationsConnection>;
   /** Reads and enables pagination through a set of `PasswordReset`. */
   passwordResets?: Maybe<PasswordResetsConnection>;
+  payPeriod?: Maybe<PayPeriod>;
+  /** Reads a single `PayPeriod` using its globally unique `ID`. */
+  payPeriodByNodeId?: Maybe<PayPeriod>;
+  /** Reads and enables pagination through a set of `PayPeriod`. */
+  payPeriods?: Maybe<PayPeriodsConnection>;
   personalAccessToken?: Maybe<PersonalAccessToken>;
   /** Reads a single `PersonalAccessToken` using its globally unique `ID`. */
   personalAccessTokenByNodeId?: Maybe<PersonalAccessToken>;
@@ -25555,6 +29279,11 @@ export type Query = Node & {
    * which can only query top level fields if they are in a particular form.
    */
   query: Query;
+  review?: Maybe<Review>;
+  /** Reads a single `Review` using its globally unique `ID`. */
+  reviewByNodeId?: Maybe<Review>;
+  /** Reads and enables pagination through a set of `Review`. */
+  reviews?: Maybe<ReviewsConnection>;
   role?: Maybe<Role>;
   roleByName?: Maybe<Role>;
   /** Reads a single `Role` using its globally unique `ID`. */
@@ -25687,6 +29416,11 @@ export type Query = Node & {
   websocketsStatisticsEntry?: Maybe<WebsocketsStatisticsEntry>;
   /** Reads a single `WebsocketsStatisticsEntry` using its globally unique `ID`. */
   websocketsStatisticsEntryByNodeId?: Maybe<WebsocketsStatisticsEntry>;
+  workExperience?: Maybe<WorkExperience>;
+  /** Reads a single `WorkExperience` using its globally unique `ID`. */
+  workExperienceByNodeId?: Maybe<WorkExperience>;
+  /** Reads and enables pagination through a set of `WorkExperience`. */
+  workExperiences?: Maybe<WorkExperiencesConnection>;
   workType?: Maybe<WorkType>;
   /** Reads a single `WorkType` using its globally unique `ID`. */
   workTypeByNodeId?: Maybe<WorkType>;
@@ -25822,6 +29556,31 @@ export type QueryAttachmentsArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
+export type QueryAvailableArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryAvailableByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryAvailablesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<AvailableCondition>;
+  filter?: InputMaybe<AvailableFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<AvailablesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
 export type QueryCertificationArgs = {
   id: Scalars['BigInt']['input'];
 };
@@ -25843,6 +29602,31 @@ export type QueryCertificationsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<CertificationsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryChatNotificationArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryChatNotificationByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryChatNotificationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ChatNotificationCondition>;
+  filter?: InputMaybe<ChatNotificationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
 };
 
 
@@ -25968,6 +29752,56 @@ export type QueryComponentsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<ComponentsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryConversationArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryConversationByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryConversationUserArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryConversationUserByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryConversationUsersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationUserCondition>;
+  filter?: InputMaybe<ConversationUserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryConversationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationCondition>;
+  filter?: InputMaybe<ConversationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationsOrderBy>>;
 };
 
 
@@ -26647,8 +30481,58 @@ export type QueryJobArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
+export type QueryJobApplicationArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryJobApplicationByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryJobApplicationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobApplicationCondition>;
+  filter?: InputMaybe<JobApplicationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobApplicationsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
 export type QueryJobByNodeIdArgs = {
   nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryJobFeedArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryJobFeedByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryJobFeedsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
 };
 
 
@@ -26724,6 +30608,56 @@ export type QueryJobSendingEmailsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<JobSendingEmailsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryJobTypeArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryJobTypeByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryJobTypesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobTypeCondition>;
+  filter?: InputMaybe<JobTypeFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobTypesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryJobUserArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryJobUserByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryJobUsersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobUserCondition>;
+  filter?: InputMaybe<JobUserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobUsersOrderBy>>;
 };
 
 
@@ -26828,6 +30762,31 @@ export type QueryLoginTransactionsArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
+export type QueryMessageArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryMessageByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryMessagesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<MessageCondition>;
+  filter?: InputMaybe<MessageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
 export type QueryMetricArgs = {
   id: Scalars['BigInt']['input'];
 };
@@ -26909,6 +30868,31 @@ export type QueryNodeArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
+export type QueryNotificationArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryNotificationByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryNotificationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<NotificationCondition>;
+  filter?: InputMaybe<NotificationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<NotificationsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
 export type QueryOrganizationArgs = {
   id: Scalars['BigInt']['input'];
 };
@@ -26969,6 +30953,31 @@ export type QueryPasswordResetsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<PasswordResetsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryPayPeriodArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryPayPeriodByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryPayPeriodsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<PayPeriodCondition>;
+  filter?: InputMaybe<PayPeriodFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<PayPeriodsOrderBy>>;
 };
 
 
@@ -27118,6 +31127,31 @@ export type QueryPropertyByNodeIdArgs = {
 /** The root query type which gives access points into the data universe. */
 export type QueryPropertyBySlugArgs = {
   slug: Scalars['String']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryReviewArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryReviewByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryReviewsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ReviewCondition>;
+  filter?: InputMaybe<ReviewFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ReviewsOrderBy>>;
 };
 
 
@@ -27813,6 +31847,31 @@ export type QueryWebsocketsStatisticsEntryByNodeIdArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
+export type QueryWorkExperienceArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWorkExperienceByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryWorkExperiencesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<WorkExperienceCondition>;
+  filter?: InputMaybe<WorkExperienceFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WorkExperiencesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
 export type QueryWorkTypeArgs = {
   id: Scalars['BigInt']['input'];
 };
@@ -27835,6 +31894,146 @@ export type QueryWorkTypesArgs = {
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<WorkTypesOrderBy>>;
 };
+
+export type Review = Node & {
+  __typename?: 'Review';
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  deletedAt?: Maybe<Scalars['Datetime']['output']>;
+  id: Scalars['BigInt']['output'];
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  recText?: Maybe<Scalars['String']['output']>;
+  recValue?: Maybe<Scalars['BigInt']['output']>;
+  recommenderProfilePic?: Maybe<Scalars['String']['output']>;
+  recommenderUserId?: Maybe<Scalars['BigInt']['output']>;
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `Review`. */
+  user?: Maybe<User>;
+  userId: Scalars['BigInt']['output'];
+};
+
+/** A condition to be used against `Review` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type ReviewCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `recText` field. */
+  recText?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `recValue` field. */
+  recValue?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `recommenderProfilePic` field. */
+  recommenderProfilePic?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `recommenderUserId` field. */
+  recommenderUserId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A filter to be used against `Review` object types. All fields are combined with a logical ‘and.’ */
+export type ReviewFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<ReviewFilter>>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<ReviewFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<ReviewFilter>>;
+  /** Filter by the object’s `recText` field. */
+  recText?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `recValue` field. */
+  recValue?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `recommenderProfilePic` field. */
+  recommenderProfilePic?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `recommenderUserId` field. */
+  recommenderUserId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<BigIntFilter>;
+};
+
+/** An input for mutations affecting `Review` */
+export type ReviewInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  recText?: InputMaybe<Scalars['String']['input']>;
+  recValue?: InputMaybe<Scalars['BigInt']['input']>;
+  recommenderProfilePic?: InputMaybe<Scalars['String']['input']>;
+  recommenderUserId?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId: Scalars['BigInt']['input'];
+};
+
+/** Represents an update to a `Review`. Fields that are set will be updated. */
+export type ReviewPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  recText?: InputMaybe<Scalars['String']['input']>;
+  recValue?: InputMaybe<Scalars['BigInt']['input']>;
+  recommenderProfilePic?: InputMaybe<Scalars['String']['input']>;
+  recommenderUserId?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A connection to a list of `Review` values. */
+export type ReviewsConnection = {
+  __typename?: 'ReviewsConnection';
+  /** A list of edges which contains the `Review` and cursor to aid in pagination. */
+  edges: Array<ReviewsEdge>;
+  /** A list of `Review` objects. */
+  nodes: Array<Review>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Review` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Review` edge in the connection. */
+export type ReviewsEdge = {
+  __typename?: 'ReviewsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Review` at the end of the edge. */
+  node: Review;
+};
+
+/** Methods to use when ordering `Review`. */
+export enum ReviewsOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DeletedAtAsc = 'DELETED_AT_ASC',
+  DeletedAtDesc = 'DELETED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  RecommenderProfilePicAsc = 'RECOMMENDER_PROFILE_PIC_ASC',
+  RecommenderProfilePicDesc = 'RECOMMENDER_PROFILE_PIC_DESC',
+  RecommenderUserIdAsc = 'RECOMMENDER_USER_ID_ASC',
+  RecommenderUserIdDesc = 'RECOMMENDER_USER_ID_DESC',
+  RecTextAsc = 'REC_TEXT_ASC',
+  RecTextDesc = 'REC_TEXT_DESC',
+  RecValueAsc = 'REC_VALUE_ASC',
+  RecValueDesc = 'REC_VALUE_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC'
+}
 
 export type Role = Node & {
   __typename?: 'Role';
@@ -32709,6 +36908,57 @@ export type UpdateAttachmentPayloadAttachmentEdgeArgs = {
   orderBy?: InputMaybe<Array<AttachmentsOrderBy>>;
 };
 
+/** All input for the `updateAvailableByNodeId` mutation. */
+export type UpdateAvailableByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Available` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `Available` being updated. */
+  patch: AvailablePatch;
+};
+
+/** All input for the `updateAvailable` mutation. */
+export type UpdateAvailableInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `Available` being updated. */
+  patch: AvailablePatch;
+};
+
+/** The output of our update `Available` mutation. */
+export type UpdateAvailablePayload = {
+  __typename?: 'UpdateAvailablePayload';
+  /** The `Available` that was updated by this mutation. */
+  available?: Maybe<Available>;
+  /** An edge for our `Available`. May be used by Relay 1. */
+  availableEdge?: Maybe<AvailablesEdge>;
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `JobType` that is related to this `Available`. */
+  jobType?: Maybe<JobType>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Available`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our update `Available` mutation. */
+export type UpdateAvailablePayloadAvailableEdgeArgs = {
+  orderBy?: InputMaybe<Array<AvailablesOrderBy>>;
+};
+
 /** All input for the `updateCertificationByNodeId` mutation. */
 export type UpdateCertificationByNodeIdInput = {
   /**
@@ -32760,6 +37010,57 @@ export type UpdateCertificationPayloadCertificationEdgeArgs = {
   orderBy?: InputMaybe<Array<CertificationsOrderBy>>;
 };
 
+/** All input for the `updateChatNotificationByNodeId` mutation. */
+export type UpdateChatNotificationByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `ChatNotification` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `ChatNotification` being updated. */
+  patch: ChatNotificationPatch;
+};
+
+/** All input for the `updateChatNotification` mutation. */
+export type UpdateChatNotificationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `ChatNotification` being updated. */
+  patch: ChatNotificationPatch;
+};
+
+/** The output of our update `ChatNotification` mutation. */
+export type UpdateChatNotificationPayload = {
+  __typename?: 'UpdateChatNotificationPayload';
+  /** The `ChatNotification` that was updated by this mutation. */
+  chatNotification?: Maybe<ChatNotification>;
+  /** An edge for our `ChatNotification`. May be used by Relay 1. */
+  chatNotificationEdge?: Maybe<ChatNotificationsEdge>;
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Message` that is related to this `ChatNotification`. */
+  message?: Maybe<Message>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `ChatNotification`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our update `ChatNotification` mutation. */
+export type UpdateChatNotificationPayloadChatNotificationEdgeArgs = {
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
+};
+
 /** All input for the `updateCompanyByNodeId` mutation. */
 export type UpdateCompanyByNodeIdInput = {
   /**
@@ -32788,8 +37089,8 @@ export type UpdateCompanyInput = {
 /** The output of our update `Company` mutation. */
 export type UpdateCompanyPayload = {
   __typename?: 'UpdateCompanyPayload';
-  /** Reads a single `Admin` that is related to this `Company`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Company`. */
+  admin?: Maybe<User>;
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
@@ -32984,6 +37285,106 @@ export type UpdateComponentPropertyPayload = {
 /** The output of our update `ComponentProperty` mutation. */
 export type UpdateComponentPropertyPayloadComponentPropertyEdgeArgs = {
   orderBy?: InputMaybe<Array<ComponentPropertiesOrderBy>>;
+};
+
+/** All input for the `updateConversationByNodeId` mutation. */
+export type UpdateConversationByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Conversation` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `Conversation` being updated. */
+  patch: ConversationPatch;
+};
+
+/** All input for the `updateConversation` mutation. */
+export type UpdateConversationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `Conversation` being updated. */
+  patch: ConversationPatch;
+};
+
+/** The output of our update `Conversation` mutation. */
+export type UpdateConversationPayload = {
+  __typename?: 'UpdateConversationPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `Conversation` that was updated by this mutation. */
+  conversation?: Maybe<Conversation>;
+  /** An edge for our `Conversation`. May be used by Relay 1. */
+  conversationEdge?: Maybe<ConversationsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Conversation`. */
+  userByCreatedBy?: Maybe<User>;
+};
+
+
+/** The output of our update `Conversation` mutation. */
+export type UpdateConversationPayloadConversationEdgeArgs = {
+  orderBy?: InputMaybe<Array<ConversationsOrderBy>>;
+};
+
+/** All input for the `updateConversationUserByNodeId` mutation. */
+export type UpdateConversationUserByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `ConversationUser` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `ConversationUser` being updated. */
+  patch: ConversationUserPatch;
+};
+
+/** All input for the `updateConversationUser` mutation. */
+export type UpdateConversationUserInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `ConversationUser` being updated. */
+  patch: ConversationUserPatch;
+};
+
+/** The output of our update `ConversationUser` mutation. */
+export type UpdateConversationUserPayload = {
+  __typename?: 'UpdateConversationUserPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Conversation` that is related to this `ConversationUser`. */
+  conversation?: Maybe<Conversation>;
+  /** The `ConversationUser` that was updated by this mutation. */
+  conversationUser?: Maybe<ConversationUser>;
+  /** An edge for our `ConversationUser`. May be used by Relay 1. */
+  conversationUserEdge?: Maybe<ConversationUsersEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `ConversationUser`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our update `ConversationUser` mutation. */
+export type UpdateConversationUserPayloadConversationUserEdgeArgs = {
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
 };
 
 /** All input for the `updateCourseByNodeId` mutation. */
@@ -34284,6 +38685,57 @@ export type UpdateIssuancePayloadIssuanceEdgeArgs = {
   orderBy?: InputMaybe<Array<IssuancesOrderBy>>;
 };
 
+/** All input for the `updateJobApplicationByNodeId` mutation. */
+export type UpdateJobApplicationByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `JobApplication` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `JobApplication` being updated. */
+  patch: JobApplicationPatch;
+};
+
+/** All input for the `updateJobApplication` mutation. */
+export type UpdateJobApplicationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `JobApplication` being updated. */
+  patch: JobApplicationPatch;
+};
+
+/** The output of our update `JobApplication` mutation. */
+export type UpdateJobApplicationPayload = {
+  __typename?: 'UpdateJobApplicationPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `JobApplication` that was updated by this mutation. */
+  jobApplication?: Maybe<JobApplication>;
+  /** An edge for our `JobApplication`. May be used by Relay 1. */
+  jobApplicationEdge?: Maybe<JobApplicationsEdge>;
+  /** Reads a single `JobFeed` that is related to this `JobApplication`. */
+  jobFeeds?: Maybe<JobFeed>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `JobApplication`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our update `JobApplication` mutation. */
+export type UpdateJobApplicationPayloadJobApplicationEdgeArgs = {
+  orderBy?: InputMaybe<Array<JobApplicationsOrderBy>>;
+};
+
 /** All input for the `updateJobByNodeId` mutation. */
 export type UpdateJobByNodeIdInput = {
   /**
@@ -34295,6 +38747,61 @@ export type UpdateJobByNodeIdInput = {
   nodeId: Scalars['ID']['input'];
   /** An object where the defined keys will be set on the `Job` being updated. */
   patch: JobPatch;
+};
+
+/** All input for the `updateJobFeedByNodeId` mutation. */
+export type UpdateJobFeedByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `JobFeed` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `JobFeed` being updated. */
+  patch: JobFeedPatch;
+};
+
+/** All input for the `updateJobFeed` mutation. */
+export type UpdateJobFeedInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `JobFeed` being updated. */
+  patch: JobFeedPatch;
+};
+
+/** The output of our update `JobFeed` mutation. */
+export type UpdateJobFeedPayload = {
+  __typename?: 'UpdateJobFeedPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `JobFeed` that was updated by this mutation. */
+  jobFeed?: Maybe<JobFeed>;
+  /** An edge for our `JobFeed`. May be used by Relay 1. */
+  jobFeedEdge?: Maybe<JobFeedsEdge>;
+  /** Reads a single `JobType` that is related to this `JobFeed`. */
+  jobTypes?: Maybe<JobType>;
+  /** Reads a single `PayPeriod` that is related to this `JobFeed`. */
+  payPeriods?: Maybe<PayPeriod>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `JobFeed`. */
+  user?: Maybe<User>;
+  /** Reads a single `WorkType` that is related to this `JobFeed`. */
+  workTypes?: Maybe<WorkType>;
+};
+
+
+/** The output of our update `JobFeed` mutation. */
+export type UpdateJobFeedPayloadJobFeedEdgeArgs = {
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
 };
 
 /** All input for the `updateJob` mutation. */
@@ -34484,6 +38991,104 @@ export type UpdateJobSendingEmailPayloadJobSendingEmailEdgeArgs = {
   orderBy?: InputMaybe<Array<JobSendingEmailsOrderBy>>;
 };
 
+/** All input for the `updateJobTypeByNodeId` mutation. */
+export type UpdateJobTypeByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `JobType` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `JobType` being updated. */
+  patch: JobTypePatch;
+};
+
+/** All input for the `updateJobType` mutation. */
+export type UpdateJobTypeInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `JobType` being updated. */
+  patch: JobTypePatch;
+};
+
+/** The output of our update `JobType` mutation. */
+export type UpdateJobTypePayload = {
+  __typename?: 'UpdateJobTypePayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `JobType` that was updated by this mutation. */
+  jobType?: Maybe<JobType>;
+  /** An edge for our `JobType`. May be used by Relay 1. */
+  jobTypeEdge?: Maybe<JobTypesEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our update `JobType` mutation. */
+export type UpdateJobTypePayloadJobTypeEdgeArgs = {
+  orderBy?: InputMaybe<Array<JobTypesOrderBy>>;
+};
+
+/** All input for the `updateJobUserByNodeId` mutation. */
+export type UpdateJobUserByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `JobUser` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `JobUser` being updated. */
+  patch: JobUserPatch;
+};
+
+/** All input for the `updateJobUser` mutation. */
+export type UpdateJobUserInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `JobUser` being updated. */
+  patch: JobUserPatch;
+};
+
+/** The output of our update `JobUser` mutation. */
+export type UpdateJobUserPayload = {
+  __typename?: 'UpdateJobUserPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Job` that is related to this `JobUser`. */
+  job?: Maybe<Job>;
+  /** The `JobUser` that was updated by this mutation. */
+  jobUser?: Maybe<JobUser>;
+  /** An edge for our `JobUser`. May be used by Relay 1. */
+  jobUserEdge?: Maybe<JobUsersEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `JobUser`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our update `JobUser` mutation. */
+export type UpdateJobUserPayloadJobUserEdgeArgs = {
+  orderBy?: InputMaybe<Array<JobUsersOrderBy>>;
+};
+
 /** All input for the `updateKindByDescription` mutation. */
 export type UpdateKindByDescriptionInput = {
   /**
@@ -34651,6 +39256,57 @@ export type UpdateLoginTransactionPayloadLoginTransactionEdgeArgs = {
   orderBy?: InputMaybe<Array<LoginTransactionsOrderBy>>;
 };
 
+/** All input for the `updateMessageByNodeId` mutation. */
+export type UpdateMessageByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Message` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `Message` being updated. */
+  patch: MessagePatch;
+};
+
+/** All input for the `updateMessage` mutation. */
+export type UpdateMessageInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `Message` being updated. */
+  patch: MessagePatch;
+};
+
+/** The output of our update `Message` mutation. */
+export type UpdateMessagePayload = {
+  __typename?: 'UpdateMessagePayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Conversation` that is related to this `Message`. */
+  conversation?: Maybe<Conversation>;
+  /** The `Message` that was updated by this mutation. */
+  message?: Maybe<Message>;
+  /** An edge for our `Message`. May be used by Relay 1. */
+  messageEdge?: Maybe<MessagesEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Message`. */
+  sender?: Maybe<User>;
+};
+
+
+/** The output of our update `Message` mutation. */
+export type UpdateMessagePayloadMessageEdgeArgs = {
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
 /** All input for the `updateMetricByNodeId` mutation. */
 export type UpdateMetricByNodeIdInput = {
   /**
@@ -34792,6 +39448,55 @@ export type UpdateNewsPayloadNewsEdgeArgs = {
   orderBy?: InputMaybe<Array<NewsOrderBy>>;
 };
 
+/** All input for the `updateNotificationByNodeId` mutation. */
+export type UpdateNotificationByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Notification` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `Notification` being updated. */
+  patch: NotificationPatch;
+};
+
+/** All input for the `updateNotification` mutation. */
+export type UpdateNotificationInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `Notification` being updated. */
+  patch: NotificationPatch;
+};
+
+/** The output of our update `Notification` mutation. */
+export type UpdateNotificationPayload = {
+  __typename?: 'UpdateNotificationPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `Notification` that was updated by this mutation. */
+  notification?: Maybe<Notification>;
+  /** An edge for our `Notification`. May be used by Relay 1. */
+  notificationEdge?: Maybe<NotificationsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `Notification`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our update `Notification` mutation. */
+export type UpdateNotificationPayloadNotificationEdgeArgs = {
+  orderBy?: InputMaybe<Array<NotificationsOrderBy>>;
+};
+
 /** All input for the `updateOrganizationByNodeId` mutation. */
 export type UpdateOrganizationByNodeIdInput = {
   /**
@@ -34891,6 +39596,53 @@ export type UpdateOrganizationUserPayload = {
 /** The output of our update `OrganizationUser` mutation. */
 export type UpdateOrganizationUserPayloadOrganizationUserEdgeArgs = {
   orderBy?: InputMaybe<Array<OrganizationUsersOrderBy>>;
+};
+
+/** All input for the `updatePayPeriodByNodeId` mutation. */
+export type UpdatePayPeriodByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `PayPeriod` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `PayPeriod` being updated. */
+  patch: PayPeriodPatch;
+};
+
+/** All input for the `updatePayPeriod` mutation. */
+export type UpdatePayPeriodInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `PayPeriod` being updated. */
+  patch: PayPeriodPatch;
+};
+
+/** The output of our update `PayPeriod` mutation. */
+export type UpdatePayPeriodPayload = {
+  __typename?: 'UpdatePayPeriodPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** The `PayPeriod` that was updated by this mutation. */
+  payPeriod?: Maybe<PayPeriod>;
+  /** An edge for our `PayPeriod`. May be used by Relay 1. */
+  payPeriodEdge?: Maybe<PayPeriodsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our update `PayPeriod` mutation. */
+export type UpdatePayPeriodPayloadPayPeriodEdgeArgs = {
+  orderBy?: InputMaybe<Array<PayPeriodsOrderBy>>;
 };
 
 /** All input for the `updatePersonalAccessTokenByNodeId` mutation. */
@@ -35031,8 +39783,8 @@ export type UpdateProjectInput = {
 /** The output of our update `Project` mutation. */
 export type UpdateProjectPayload = {
   __typename?: 'UpdateProjectPayload';
-  /** Reads a single `Admin` that is related to this `Project`. */
-  admin?: Maybe<Admin>;
+  /** Reads a single `User` that is related to this `Project`. */
+  admin?: Maybe<User>;
   /**
    * The exact same `clientMutationId` that was provided in the mutation input,
    * unchanged and unused. May be used by a client to track mutations.
@@ -35190,6 +39942,55 @@ export type UpdatePropertyPayload = {
 /** The output of our update `Property` mutation. */
 export type UpdatePropertyPayloadPropertyEdgeArgs = {
   orderBy?: InputMaybe<Array<PropertiesOrderBy>>;
+};
+
+/** All input for the `updateReviewByNodeId` mutation. */
+export type UpdateReviewByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Review` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `Review` being updated. */
+  patch: ReviewPatch;
+};
+
+/** All input for the `updateReview` mutation. */
+export type UpdateReviewInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `Review` being updated. */
+  patch: ReviewPatch;
+};
+
+/** The output of our update `Review` mutation. */
+export type UpdateReviewPayload = {
+  __typename?: 'UpdateReviewPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** The `Review` that was updated by this mutation. */
+  review?: Maybe<Review>;
+  /** An edge for our `Review`. May be used by Relay 1. */
+  reviewEdge?: Maybe<ReviewsEdge>;
+  /** Reads a single `User` that is related to this `Review`. */
+  user?: Maybe<User>;
+};
+
+
+/** The output of our update `Review` mutation. */
+export type UpdateReviewPayloadReviewEdgeArgs = {
+  orderBy?: InputMaybe<Array<ReviewsOrderBy>>;
 };
 
 /** All input for the `updateRoleByName` mutation. */
@@ -36392,6 +41193,55 @@ export type UpdateWebsocketsStatisticsEntryPayloadWebsocketsStatisticsEntryEdgeA
   orderBy?: InputMaybe<Array<WebsocketsStatisticsEntriesOrderBy>>;
 };
 
+/** All input for the `updateWorkExperienceByNodeId` mutation. */
+export type UpdateWorkExperienceByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `WorkExperience` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `WorkExperience` being updated. */
+  patch: WorkExperiencePatch;
+};
+
+/** All input for the `updateWorkExperience` mutation. */
+export type UpdateWorkExperienceInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `WorkExperience` being updated. */
+  patch: WorkExperiencePatch;
+};
+
+/** The output of our update `WorkExperience` mutation. */
+export type UpdateWorkExperiencePayload = {
+  __typename?: 'UpdateWorkExperiencePayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `User` that is related to this `WorkExperience`. */
+  user?: Maybe<User>;
+  /** The `WorkExperience` that was updated by this mutation. */
+  workExperience?: Maybe<WorkExperience>;
+  /** An edge for our `WorkExperience`. May be used by Relay 1. */
+  workExperienceEdge?: Maybe<WorkExperiencesEdge>;
+};
+
+
+/** The output of our update `WorkExperience` mutation. */
+export type UpdateWorkExperiencePayloadWorkExperienceEdgeArgs = {
+  orderBy?: InputMaybe<Array<WorkExperiencesOrderBy>>;
+};
+
 /** All input for the `updateWorkTypeByNodeId` mutation. */
 export type UpdateWorkTypeByNodeIdInput = {
   /**
@@ -36451,16 +41301,30 @@ export type User = Node & {
   adminsByFillupFormUserIdAndAdminId: UserAdminsByFillupFormUserIdAndAdminIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Admin`. */
   adminsBySchedulerUserIdAndAdminId: UserAdminsBySchedulerUserIdAndAdminIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `Available`. */
+  availables: AvailablesConnection;
   cardBrand?: Maybe<Scalars['String']['output']>;
   cardLastFour?: Maybe<Scalars['String']['output']>;
   /** Reads and enables pagination through a set of `Certification`. */
   certificationsByAdminId: CertificationsConnection;
+  /** Reads and enables pagination through a set of `ChatNotification`. */
+  chatNotifications: ChatNotificationsConnection;
   /** Reads and enables pagination through a set of `User`. */
   childUsers: UsersConnection;
+  /** Reads and enables pagination through a set of `Company`. */
+  companiesByAdminId: CompaniesConnection;
   /** Reads and enables pagination through a set of `Company`. */
   companiesByCompanyUserUserIdAndCompanyId: UserCompaniesByCompanyUserUserIdAndCompanyIdManyToManyConnection;
   /** Reads and enables pagination through a set of `CompanyUser`. */
   companyUsers: CompanyUsersConnection;
+  /** Reads and enables pagination through a set of `ConversationUser`. */
+  conversationUsers: ConversationUsersConnection;
+  /** Reads and enables pagination through a set of `Conversation`. */
+  conversationsByConversationUserUserIdAndConversationId: UserConversationsByConversationUserUserIdAndConversationIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `Conversation`. */
+  conversationsByCreatedBy: ConversationsConnection;
+  /** Reads and enables pagination through a set of `Conversation`. */
+  conversationsByMessageSenderIdAndConversationId: UserConversationsByMessageSenderIdAndConversationIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Course`. */
   coursesByAdminId: CoursesConnection;
   createdAt?: Maybe<Scalars['Datetime']['output']>;
@@ -36509,6 +41373,12 @@ export type User = Node & {
   isActive: Scalars['Boolean']['output'];
   /** Reads and enables pagination through a set of `Issuance`. */
   issuances: IssuancesConnection;
+  /** Reads and enables pagination through a set of `JobApplication`. */
+  jobApplications: JobApplicationsConnection;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeeds: JobFeedsConnection;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByJobApplicationUserIdAndJobFeedsId: UserJobFeedsByJobApplicationUserIdAndJobFeedsIdManyToManyConnection;
   /** Reads and enables pagination through a set of `JobSendingEmailCategory`. */
   jobSendingEmailCategoriesByJobSendingEmailSentFromAndCategoryId: UserJobSendingEmailCategoriesByJobSendingEmailSentFromAndCategoryIdManyToManyConnection;
   /** Reads and enables pagination through a set of `JobSendingEmailCategory`. */
@@ -36517,18 +41387,35 @@ export type User = Node & {
   jobSendingEmailsBySentFrom: JobSendingEmailsConnection;
   /** Reads and enables pagination through a set of `JobSendingEmail`. */
   jobSendingEmailsBySentTo: JobSendingEmailsConnection;
+  jobTitle?: Maybe<Scalars['String']['output']>;
+  /** Reads and enables pagination through a set of `JobType`. */
+  jobTypesByAvailableUserIdAndJobTypeId: UserJobTypesByAvailableUserIdAndJobTypeIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `JobType`. */
+  jobTypesByJobFeedUserIdAndJobTypesId: UserJobTypesByJobFeedUserIdAndJobTypesIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `JobUser`. */
+  jobUsers: JobUsersConnection;
   /** Reads and enables pagination through a set of `Job`. */
   jobsByAdminId: JobsConnection;
+  /** Reads and enables pagination through a set of `Job`. */
+  jobsByJobUserUserIdAndJobId: UserJobsByJobUserUserIdAndJobIdManyToManyConnection;
   /** Reads and enables pagination through a set of `LoginTransaction`. */
   loginTransactions: LoginTransactionsConnection;
+  /** Reads and enables pagination through a set of `Message`. */
+  messagesByChatNotificationUserIdAndMessageId: UserMessagesByChatNotificationUserIdAndMessageIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `Message`. */
+  messagesBySenderId: MessagesConnection;
   /** The user_name on register form. */
   name: Scalars['String']['output'];
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
+  /** Reads and enables pagination through a set of `Notification`. */
+  notifications: NotificationsConnection;
   /** Reads and enables pagination through a set of `OrganizationUser`. */
   organizationUsers: OrganizationUsersConnection;
   /** Reads and enables pagination through a set of `Organization`. */
   organizationsByCertificationAdminIdAndOrganizationId: UserOrganizationsByCertificationAdminIdAndOrganizationIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `Organization`. */
+  organizationsByCompanyAdminIdAndOrganizationId: UserOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
   organizationsByCourseAdminIdAndOrganizationId: UserOrganizationsByCourseAdminIdAndOrganizationIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
@@ -36537,6 +41424,8 @@ export type User = Node & {
   organizationsByJobAdminIdAndOrganizationId: UserOrganizationsByJobAdminIdAndOrganizationIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
   organizationsByOrganizationUserUserIdAndOrganizationId: UserOrganizationsByOrganizationUserUserIdAndOrganizationIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `Organization`. */
+  organizationsByProjectAdminIdAndOrganizationId: UserOrganizationsByProjectAdminIdAndOrganizationIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
   organizationsByRoleUserOrganizationUserIdAndOrgId: UserOrganizationsByRoleUserOrganizationUserIdAndOrgIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
@@ -36547,6 +41436,8 @@ export type User = Node & {
   parent?: Maybe<User>;
   parentId?: Maybe<Scalars['BigInt']['output']>;
   password: Scalars['String']['output'];
+  /** Reads and enables pagination through a set of `PayPeriod`. */
+  payPeriodsByJobFeedUserIdAndPayPeriodsId: UserPayPeriodsByJobFeedUserIdAndPayPeriodsIdManyToManyConnection;
   /** Mobile number useful when sending verification code. */
   phoneNumber?: Maybe<Scalars['String']['output']>;
   /** Make sure to empty before sending another verification. */
@@ -36559,9 +41450,13 @@ export type User = Node & {
   /** Reads and enables pagination through a set of `ProjectUser`. */
   projectUsers: ProjectUsersConnection;
   /** Reads and enables pagination through a set of `Project`. */
+  projectsByAdminId: ProjectsConnection;
+  /** Reads and enables pagination through a set of `Project`. */
   projectsByProjectUserUserIdAndProjectId: UserProjectsByProjectUserUserIdAndProjectIdManyToManyConnection;
   qrValue?: Maybe<Scalars['String']['output']>;
   rememberToken?: Maybe<Scalars['String']['output']>;
+  /** Reads and enables pagination through a set of `Review`. */
+  reviews: ReviewsConnection;
   /** Reads and enables pagination through a set of `RoleUserOrganization`. */
   roleUserOrganizations: RoleUserOrganizationsConnection;
   /** Reads and enables pagination through a set of `RoleUser`. */
@@ -36579,6 +41474,7 @@ export type User = Node & {
   /** Reads and enables pagination through a set of `Setting`. */
   settingsByUserSettingUserIdAndSettingId: UserSettingsByUserSettingUserIdAndSettingIdManyToManyConnection;
   stripeId?: Maybe<Scalars['String']['output']>;
+  summaryBio?: Maybe<Scalars['String']['output']>;
   /** Reads and enables pagination through a set of `TeamUser`. */
   teamUsers: TeamUsersConnection;
   /** Reads and enables pagination through a set of `Team`. */
@@ -36610,6 +41506,10 @@ export type User = Node & {
   verificationTokenTypesByVerificationTokenUserIdAndVerificationTokenTypeId: UserVerificationTokenTypesByVerificationTokenUserIdAndVerificationTokenTypeIdManyToManyConnection;
   /** Reads and enables pagination through a set of `VerificationToken`. */
   verificationTokens: VerificationTokensConnection;
+  /** Reads and enables pagination through a set of `WorkExperience`. */
+  workExperiences: WorkExperiencesConnection;
+  /** Reads and enables pagination through a set of `WorkType`. */
+  workTypesByJobFeedUserIdAndWorkTypesId: UserWorkTypesByJobFeedUserIdAndWorkTypesIdManyToManyConnection;
 };
 
 
@@ -36649,6 +41549,18 @@ export type UserAdminsBySchedulerUserIdAndAdminIdArgs = {
 };
 
 
+export type UserAvailablesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<AvailableCondition>;
+  filter?: InputMaybe<AvailableFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<AvailablesOrderBy>>;
+};
+
+
 export type UserCertificationsByAdminIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -36661,6 +41573,18 @@ export type UserCertificationsByAdminIdArgs = {
 };
 
 
+export type UserChatNotificationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ChatNotificationCondition>;
+  filter?: InputMaybe<ChatNotificationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
+};
+
+
 export type UserChildUsersArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -36670,6 +41594,18 @@ export type UserChildUsersArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
+};
+
+
+export type UserCompaniesByAdminIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<CompanyCondition>;
+  filter?: InputMaybe<CompanyFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<CompaniesOrderBy>>;
 };
 
 
@@ -36694,6 +41630,54 @@ export type UserCompanyUsersArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<CompanyUsersOrderBy>>;
+};
+
+
+export type UserConversationUsersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationUserCondition>;
+  filter?: InputMaybe<ConversationUserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
+};
+
+
+export type UserConversationsByConversationUserUserIdAndConversationIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationCondition>;
+  filter?: InputMaybe<ConversationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationsOrderBy>>;
+};
+
+
+export type UserConversationsByCreatedByArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationCondition>;
+  filter?: InputMaybe<ConversationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationsOrderBy>>;
+};
+
+
+export type UserConversationsByMessageSenderIdAndConversationIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationCondition>;
+  filter?: InputMaybe<ConversationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationsOrderBy>>;
 };
 
 
@@ -36925,6 +41909,42 @@ export type UserIssuancesArgs = {
 };
 
 
+export type UserJobApplicationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobApplicationCondition>;
+  filter?: InputMaybe<JobApplicationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobApplicationsOrderBy>>;
+};
+
+
+export type UserJobFeedsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+
+export type UserJobFeedsByJobApplicationUserIdAndJobFeedsIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+
 export type UserJobSendingEmailCategoriesByJobSendingEmailSentFromAndCategoryIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -36973,7 +41993,55 @@ export type UserJobSendingEmailsBySentToArgs = {
 };
 
 
+export type UserJobTypesByAvailableUserIdAndJobTypeIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobTypeCondition>;
+  filter?: InputMaybe<JobTypeFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobTypesOrderBy>>;
+};
+
+
+export type UserJobTypesByJobFeedUserIdAndJobTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobTypeCondition>;
+  filter?: InputMaybe<JobTypeFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobTypesOrderBy>>;
+};
+
+
+export type UserJobUsersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobUserCondition>;
+  filter?: InputMaybe<JobUserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobUsersOrderBy>>;
+};
+
+
 export type UserJobsByAdminIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobCondition>;
+  filter?: InputMaybe<JobFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobsOrderBy>>;
+};
+
+
+export type UserJobsByJobUserUserIdAndJobIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<JobCondition>;
@@ -36997,6 +42065,42 @@ export type UserLoginTransactionsArgs = {
 };
 
 
+export type UserMessagesByChatNotificationUserIdAndMessageIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<MessageCondition>;
+  filter?: InputMaybe<MessageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
+
+export type UserMessagesBySenderIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<MessageCondition>;
+  filter?: InputMaybe<MessageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
+};
+
+
+export type UserNotificationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<NotificationCondition>;
+  filter?: InputMaybe<NotificationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<NotificationsOrderBy>>;
+};
+
+
 export type UserOrganizationUsersArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -37010,6 +42114,18 @@ export type UserOrganizationUsersArgs = {
 
 
 export type UserOrganizationsByCertificationAdminIdAndOrganizationIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<OrganizationCondition>;
+  filter?: InputMaybe<OrganizationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
+};
+
+
+export type UserOrganizationsByCompanyAdminIdAndOrganizationIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   condition?: InputMaybe<OrganizationCondition>;
@@ -37069,6 +42185,18 @@ export type UserOrganizationsByOrganizationUserUserIdAndOrganizationIdArgs = {
 };
 
 
+export type UserOrganizationsByProjectAdminIdAndOrganizationIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<OrganizationCondition>;
+  filter?: InputMaybe<OrganizationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
+};
+
+
 export type UserOrganizationsByRoleUserOrganizationUserIdAndOrgIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -37105,6 +42233,18 @@ export type UserOrganizationsByUserInviteAdminIdAndOrganizationIdArgs = {
 };
 
 
+export type UserPayPeriodsByJobFeedUserIdAndPayPeriodsIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<PayPeriodCondition>;
+  filter?: InputMaybe<PayPeriodFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<PayPeriodsOrderBy>>;
+};
+
+
 export type UserProfilesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -37129,6 +42269,18 @@ export type UserProjectUsersArgs = {
 };
 
 
+export type UserProjectsByAdminIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ProjectCondition>;
+  filter?: InputMaybe<ProjectFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
+};
+
+
 export type UserProjectsByProjectUserUserIdAndProjectIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -37138,6 +42290,18 @@ export type UserProjectsByProjectUserUserIdAndProjectIdArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
+};
+
+
+export type UserReviewsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ReviewCondition>;
+  filter?: InputMaybe<ReviewFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ReviewsOrderBy>>;
 };
 
 
@@ -37404,6 +42568,30 @@ export type UserVerificationTokensArgs = {
   orderBy?: InputMaybe<Array<VerificationTokensOrderBy>>;
 };
 
+
+export type UserWorkExperiencesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<WorkExperienceCondition>;
+  filter?: InputMaybe<WorkExperienceFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WorkExperiencesOrderBy>>;
+};
+
+
+export type UserWorkTypesByJobFeedUserIdAndWorkTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<WorkTypeCondition>;
+  filter?: InputMaybe<WorkTypeFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<WorkTypesOrderBy>>;
+};
+
 /** A connection to a list of `Admin` values, with data from `FillupForm`. */
 export type UserAdminsByFillupFormApprovedByAndAdminIdManyToManyConnection = {
   __typename?: 'UserAdminsByFillupFormApprovedByAndAdminIdManyToManyConnection';
@@ -37578,6 +42766,8 @@ export type UserCondition = {
   id?: InputMaybe<Scalars['BigInt']['input']>;
   /** Checks for equality with the object’s `isActive` field. */
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Checks for equality with the object’s `jobTitle` field. */
+  jobTitle?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `name` field. */
   name?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `parentId` field. */
@@ -37596,12 +42786,88 @@ export type UserCondition = {
   rememberToken?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `stripeId` field. */
   stripeId?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `summaryBio` field. */
+  summaryBio?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `trialEndsAt` field. */
   trialEndsAt?: InputMaybe<Scalars['Datetime']['input']>;
   /** Checks for equality with the object’s `updatedAt` field. */
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
   /** Checks for equality with the object’s `uuid` field. */
   uuid?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+/** A connection to a list of `Conversation` values, with data from `ConversationUser`. */
+export type UserConversationsByConversationUserUserIdAndConversationIdManyToManyConnection = {
+  __typename?: 'UserConversationsByConversationUserUserIdAndConversationIdManyToManyConnection';
+  /** A list of edges which contains the `Conversation`, info from the `ConversationUser`, and the cursor to aid in pagination. */
+  edges: Array<UserConversationsByConversationUserUserIdAndConversationIdManyToManyEdge>;
+  /** A list of `Conversation` objects. */
+  nodes: Array<Conversation>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Conversation` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Conversation` edge in the connection, with data from `ConversationUser`. */
+export type UserConversationsByConversationUserUserIdAndConversationIdManyToManyEdge = {
+  __typename?: 'UserConversationsByConversationUserUserIdAndConversationIdManyToManyEdge';
+  /** Reads and enables pagination through a set of `ConversationUser`. */
+  conversationUsers: ConversationUsersConnection;
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Conversation` at the end of the edge. */
+  node: Conversation;
+};
+
+
+/** A `Conversation` edge in the connection, with data from `ConversationUser`. */
+export type UserConversationsByConversationUserUserIdAndConversationIdManyToManyEdgeConversationUsersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ConversationUserCondition>;
+  filter?: InputMaybe<ConversationUserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ConversationUsersOrderBy>>;
+};
+
+/** A connection to a list of `Conversation` values, with data from `Message`. */
+export type UserConversationsByMessageSenderIdAndConversationIdManyToManyConnection = {
+  __typename?: 'UserConversationsByMessageSenderIdAndConversationIdManyToManyConnection';
+  /** A list of edges which contains the `Conversation`, info from the `Message`, and the cursor to aid in pagination. */
+  edges: Array<UserConversationsByMessageSenderIdAndConversationIdManyToManyEdge>;
+  /** A list of `Conversation` objects. */
+  nodes: Array<Conversation>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Conversation` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Conversation` edge in the connection, with data from `Message`. */
+export type UserConversationsByMessageSenderIdAndConversationIdManyToManyEdge = {
+  __typename?: 'UserConversationsByMessageSenderIdAndConversationIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `Message`. */
+  messages: MessagesConnection;
+  /** The `Conversation` at the end of the edge. */
+  node: Conversation;
+};
+
+
+/** A `Conversation` edge in the connection, with data from `Message`. */
+export type UserConversationsByMessageSenderIdAndConversationIdManyToManyEdgeMessagesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<MessageCondition>;
+  filter?: InputMaybe<MessageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<MessagesOrderBy>>;
 };
 
 /** A connection to a list of `Equipment` values, with data from `Issuance`. */
@@ -37743,6 +43009,8 @@ export type UserFilter = {
   id?: InputMaybe<BigIntFilter>;
   /** Filter by the object’s `isActive` field. */
   isActive?: InputMaybe<BooleanFilter>;
+  /** Filter by the object’s `jobTitle` field. */
+  jobTitle?: InputMaybe<StringFilter>;
   /** Filter by the object’s `name` field. */
   name?: InputMaybe<StringFilter>;
   /** Negates the expression. */
@@ -37765,6 +43033,8 @@ export type UserFilter = {
   rememberToken?: InputMaybe<StringFilter>;
   /** Filter by the object’s `stripeId` field. */
   stripeId?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `summaryBio` field. */
+  summaryBio?: InputMaybe<StringFilter>;
   /** Filter by the object’s `trialEndsAt` field. */
   trialEndsAt?: InputMaybe<DatetimeFilter>;
   /** Filter by the object’s `updatedAt` field. */
@@ -38059,6 +43329,7 @@ export type UserInput = {
   googleId?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['BigInt']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  jobTitle?: InputMaybe<Scalars['String']['input']>;
   /** The user_name on register form. */
   name: Scalars['String']['input'];
   parentId?: InputMaybe<Scalars['BigInt']['input']>;
@@ -38071,6 +43342,7 @@ export type UserInput = {
   qrValue?: InputMaybe<Scalars['String']['input']>;
   rememberToken?: InputMaybe<Scalars['String']['input']>;
   stripeId?: InputMaybe<Scalars['String']['input']>;
+  summaryBio?: InputMaybe<Scalars['String']['input']>;
   trialEndsAt?: InputMaybe<Scalars['Datetime']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
   uuid?: InputMaybe<Scalars['UUID']['input']>;
@@ -38261,6 +43533,43 @@ export enum UserInvitesOrderBy {
   UpdatedAtDesc = 'UPDATED_AT_DESC'
 }
 
+/** A connection to a list of `JobFeed` values, with data from `JobApplication`. */
+export type UserJobFeedsByJobApplicationUserIdAndJobFeedsIdManyToManyConnection = {
+  __typename?: 'UserJobFeedsByJobApplicationUserIdAndJobFeedsIdManyToManyConnection';
+  /** A list of edges which contains the `JobFeed`, info from the `JobApplication`, and the cursor to aid in pagination. */
+  edges: Array<UserJobFeedsByJobApplicationUserIdAndJobFeedsIdManyToManyEdge>;
+  /** A list of `JobFeed` objects. */
+  nodes: Array<JobFeed>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `JobFeed` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `JobFeed` edge in the connection, with data from `JobApplication`. */
+export type UserJobFeedsByJobApplicationUserIdAndJobFeedsIdManyToManyEdge = {
+  __typename?: 'UserJobFeedsByJobApplicationUserIdAndJobFeedsIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobApplication`. */
+  jobApplicationsByJobFeedsId: JobApplicationsConnection;
+  /** The `JobFeed` at the end of the edge. */
+  node: JobFeed;
+};
+
+
+/** A `JobFeed` edge in the connection, with data from `JobApplication`. */
+export type UserJobFeedsByJobApplicationUserIdAndJobFeedsIdManyToManyEdgeJobApplicationsByJobFeedsIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobApplicationCondition>;
+  filter?: InputMaybe<JobApplicationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobApplicationsOrderBy>>;
+};
+
 /** A connection to a list of `JobSendingEmailCategory` values, with data from `JobSendingEmail`. */
 export type UserJobSendingEmailCategoriesByJobSendingEmailSentFromAndCategoryIdManyToManyConnection = {
   __typename?: 'UserJobSendingEmailCategoriesByJobSendingEmailSentFromAndCategoryIdManyToManyConnection';
@@ -38335,6 +43644,154 @@ export type UserJobSendingEmailCategoriesByJobSendingEmailSentToAndCategoryIdMan
   orderBy?: InputMaybe<Array<JobSendingEmailsOrderBy>>;
 };
 
+/** A connection to a list of `JobType` values, with data from `Available`. */
+export type UserJobTypesByAvailableUserIdAndJobTypeIdManyToManyConnection = {
+  __typename?: 'UserJobTypesByAvailableUserIdAndJobTypeIdManyToManyConnection';
+  /** A list of edges which contains the `JobType`, info from the `Available`, and the cursor to aid in pagination. */
+  edges: Array<UserJobTypesByAvailableUserIdAndJobTypeIdManyToManyEdge>;
+  /** A list of `JobType` objects. */
+  nodes: Array<JobType>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `JobType` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `JobType` edge in the connection, with data from `Available`. */
+export type UserJobTypesByAvailableUserIdAndJobTypeIdManyToManyEdge = {
+  __typename?: 'UserJobTypesByAvailableUserIdAndJobTypeIdManyToManyEdge';
+  /** Reads and enables pagination through a set of `Available`. */
+  availables: AvailablesConnection;
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `JobType` at the end of the edge. */
+  node: JobType;
+};
+
+
+/** A `JobType` edge in the connection, with data from `Available`. */
+export type UserJobTypesByAvailableUserIdAndJobTypeIdManyToManyEdgeAvailablesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<AvailableCondition>;
+  filter?: InputMaybe<AvailableFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<AvailablesOrderBy>>;
+};
+
+/** A connection to a list of `JobType` values, with data from `JobFeed`. */
+export type UserJobTypesByJobFeedUserIdAndJobTypesIdManyToManyConnection = {
+  __typename?: 'UserJobTypesByJobFeedUserIdAndJobTypesIdManyToManyConnection';
+  /** A list of edges which contains the `JobType`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<UserJobTypesByJobFeedUserIdAndJobTypesIdManyToManyEdge>;
+  /** A list of `JobType` objects. */
+  nodes: Array<JobType>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `JobType` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `JobType` edge in the connection, with data from `JobFeed`. */
+export type UserJobTypesByJobFeedUserIdAndJobTypesIdManyToManyEdge = {
+  __typename?: 'UserJobTypesByJobFeedUserIdAndJobTypesIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByJobTypesId: JobFeedsConnection;
+  /** The `JobType` at the end of the edge. */
+  node: JobType;
+};
+
+
+/** A `JobType` edge in the connection, with data from `JobFeed`. */
+export type UserJobTypesByJobFeedUserIdAndJobTypesIdManyToManyEdgeJobFeedsByJobTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+/** A connection to a list of `Job` values, with data from `JobUser`. */
+export type UserJobsByJobUserUserIdAndJobIdManyToManyConnection = {
+  __typename?: 'UserJobsByJobUserUserIdAndJobIdManyToManyConnection';
+  /** A list of edges which contains the `Job`, info from the `JobUser`, and the cursor to aid in pagination. */
+  edges: Array<UserJobsByJobUserUserIdAndJobIdManyToManyEdge>;
+  /** A list of `Job` objects. */
+  nodes: Array<Job>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Job` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Job` edge in the connection, with data from `JobUser`. */
+export type UserJobsByJobUserUserIdAndJobIdManyToManyEdge = {
+  __typename?: 'UserJobsByJobUserUserIdAndJobIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobUser`. */
+  jobUsers: JobUsersConnection;
+  /** The `Job` at the end of the edge. */
+  node: Job;
+};
+
+
+/** A `Job` edge in the connection, with data from `JobUser`. */
+export type UserJobsByJobUserUserIdAndJobIdManyToManyEdgeJobUsersArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobUserCondition>;
+  filter?: InputMaybe<JobUserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobUsersOrderBy>>;
+};
+
+/** A connection to a list of `Message` values, with data from `ChatNotification`. */
+export type UserMessagesByChatNotificationUserIdAndMessageIdManyToManyConnection = {
+  __typename?: 'UserMessagesByChatNotificationUserIdAndMessageIdManyToManyConnection';
+  /** A list of edges which contains the `Message`, info from the `ChatNotification`, and the cursor to aid in pagination. */
+  edges: Array<UserMessagesByChatNotificationUserIdAndMessageIdManyToManyEdge>;
+  /** A list of `Message` objects. */
+  nodes: Array<Message>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Message` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Message` edge in the connection, with data from `ChatNotification`. */
+export type UserMessagesByChatNotificationUserIdAndMessageIdManyToManyEdge = {
+  __typename?: 'UserMessagesByChatNotificationUserIdAndMessageIdManyToManyEdge';
+  /** Reads and enables pagination through a set of `ChatNotification`. */
+  chatNotifications: ChatNotificationsConnection;
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Message` at the end of the edge. */
+  node: Message;
+};
+
+
+/** A `Message` edge in the connection, with data from `ChatNotification`. */
+export type UserMessagesByChatNotificationUserIdAndMessageIdManyToManyEdgeChatNotificationsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ChatNotificationCondition>;
+  filter?: InputMaybe<ChatNotificationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ChatNotificationsOrderBy>>;
+};
+
 /** A connection to a list of `Organization` values, with data from `Certification`. */
 export type UserOrganizationsByCertificationAdminIdAndOrganizationIdManyToManyConnection = {
   __typename?: 'UserOrganizationsByCertificationAdminIdAndOrganizationIdManyToManyConnection';
@@ -38370,6 +43827,43 @@ export type UserOrganizationsByCertificationAdminIdAndOrganizationIdManyToManyEd
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<CertificationsOrderBy>>;
+};
+
+/** A connection to a list of `Organization` values, with data from `Company`. */
+export type UserOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyConnection = {
+  __typename?: 'UserOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyConnection';
+  /** A list of edges which contains the `Organization`, info from the `Company`, and the cursor to aid in pagination. */
+  edges: Array<UserOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdge>;
+  /** A list of `Organization` objects. */
+  nodes: Array<Organization>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Organization` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Organization` edge in the connection, with data from `Company`. */
+export type UserOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdge = {
+  __typename?: 'UserOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdge';
+  /** Reads and enables pagination through a set of `Company`. */
+  companies: CompaniesConnection;
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Organization` at the end of the edge. */
+  node: Organization;
+};
+
+
+/** A `Organization` edge in the connection, with data from `Company`. */
+export type UserOrganizationsByCompanyAdminIdAndOrganizationIdManyToManyEdgeCompaniesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<CompanyCondition>;
+  filter?: InputMaybe<CompanyFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<CompaniesOrderBy>>;
 };
 
 /** A connection to a list of `Organization` values, with data from `Course`. */
@@ -38507,6 +44001,43 @@ export type UserOrganizationsByOrganizationUserUserIdAndOrganizationIdManyToMany
   updatedAt?: Maybe<Scalars['Datetime']['output']>;
 };
 
+/** A connection to a list of `Organization` values, with data from `Project`. */
+export type UserOrganizationsByProjectAdminIdAndOrganizationIdManyToManyConnection = {
+  __typename?: 'UserOrganizationsByProjectAdminIdAndOrganizationIdManyToManyConnection';
+  /** A list of edges which contains the `Organization`, info from the `Project`, and the cursor to aid in pagination. */
+  edges: Array<UserOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdge>;
+  /** A list of `Organization` objects. */
+  nodes: Array<Organization>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Organization` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Organization` edge in the connection, with data from `Project`. */
+export type UserOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdge = {
+  __typename?: 'UserOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Organization` at the end of the edge. */
+  node: Organization;
+  /** Reads and enables pagination through a set of `Project`. */
+  projects: ProjectsConnection;
+};
+
+
+/** A `Organization` edge in the connection, with data from `Project`. */
+export type UserOrganizationsByProjectAdminIdAndOrganizationIdManyToManyEdgeProjectsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ProjectCondition>;
+  filter?: InputMaybe<ProjectFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ProjectsOrderBy>>;
+};
+
 /** A connection to a list of `Organization` values, with data from `RoleUserOrganization`. */
 export type UserOrganizationsByRoleUserOrganizationUserIdAndOrgIdManyToManyConnection = {
   __typename?: 'UserOrganizationsByRoleUserOrganizationUserIdAndOrgIdManyToManyConnection';
@@ -38632,6 +44163,7 @@ export type UserPatch = {
   googleId?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['BigInt']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  jobTitle?: InputMaybe<Scalars['String']['input']>;
   /** The user_name on register form. */
   name?: InputMaybe<Scalars['String']['input']>;
   parentId?: InputMaybe<Scalars['BigInt']['input']>;
@@ -38644,9 +44176,47 @@ export type UserPatch = {
   qrValue?: InputMaybe<Scalars['String']['input']>;
   rememberToken?: InputMaybe<Scalars['String']['input']>;
   stripeId?: InputMaybe<Scalars['String']['input']>;
+  summaryBio?: InputMaybe<Scalars['String']['input']>;
   trialEndsAt?: InputMaybe<Scalars['Datetime']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
   uuid?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+/** A connection to a list of `PayPeriod` values, with data from `JobFeed`. */
+export type UserPayPeriodsByJobFeedUserIdAndPayPeriodsIdManyToManyConnection = {
+  __typename?: 'UserPayPeriodsByJobFeedUserIdAndPayPeriodsIdManyToManyConnection';
+  /** A list of edges which contains the `PayPeriod`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<UserPayPeriodsByJobFeedUserIdAndPayPeriodsIdManyToManyEdge>;
+  /** A list of `PayPeriod` objects. */
+  nodes: Array<PayPeriod>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `PayPeriod` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `PayPeriod` edge in the connection, with data from `JobFeed`. */
+export type UserPayPeriodsByJobFeedUserIdAndPayPeriodsIdManyToManyEdge = {
+  __typename?: 'UserPayPeriodsByJobFeedUserIdAndPayPeriodsIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByPayPeriodsId: JobFeedsConnection;
+  /** The `PayPeriod` at the end of the edge. */
+  node: PayPeriod;
+};
+
+
+/** A `PayPeriod` edge in the connection, with data from `JobFeed`. */
+export type UserPayPeriodsByJobFeedUserIdAndPayPeriodsIdManyToManyEdgeJobFeedsByPayPeriodsIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
 };
 
 /** A connection to a list of `Project` values, with data from `ProjectUser`. */
@@ -39326,6 +44896,43 @@ export type UserVerificationTokenTypesByVerificationTokenUserIdAndVerificationTo
   orderBy?: InputMaybe<Array<VerificationTokensOrderBy>>;
 };
 
+/** A connection to a list of `WorkType` values, with data from `JobFeed`. */
+export type UserWorkTypesByJobFeedUserIdAndWorkTypesIdManyToManyConnection = {
+  __typename?: 'UserWorkTypesByJobFeedUserIdAndWorkTypesIdManyToManyConnection';
+  /** A list of edges which contains the `WorkType`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<UserWorkTypesByJobFeedUserIdAndWorkTypesIdManyToManyEdge>;
+  /** A list of `WorkType` objects. */
+  nodes: Array<WorkType>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `WorkType` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `WorkType` edge in the connection, with data from `JobFeed`. */
+export type UserWorkTypesByJobFeedUserIdAndWorkTypesIdManyToManyEdge = {
+  __typename?: 'UserWorkTypesByJobFeedUserIdAndWorkTypesIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByWorkTypesId: JobFeedsConnection;
+  /** The `WorkType` at the end of the edge. */
+  node: WorkType;
+};
+
+
+/** A `WorkType` edge in the connection, with data from `JobFeed`. */
+export type UserWorkTypesByJobFeedUserIdAndWorkTypesIdManyToManyEdgeJobFeedsByWorkTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
 /** A connection to a list of `User` values. */
 export type UsersConnection = {
   __typename?: 'UsersConnection';
@@ -39374,6 +44981,8 @@ export enum UsersOrderBy {
   IdDesc = 'ID_DESC',
   IsActiveAsc = 'IS_ACTIVE_ASC',
   IsActiveDesc = 'IS_ACTIVE_DESC',
+  JobTitleAsc = 'JOB_TITLE_ASC',
+  JobTitleDesc = 'JOB_TITLE_DESC',
   NameAsc = 'NAME_ASC',
   NameDesc = 'NAME_DESC',
   Natural = 'NATURAL',
@@ -39395,6 +45004,8 @@ export enum UsersOrderBy {
   RememberTokenDesc = 'REMEMBER_TOKEN_DESC',
   StripeIdAsc = 'STRIPE_ID_ASC',
   StripeIdDesc = 'STRIPE_ID_DESC',
+  SummaryBioAsc = 'SUMMARY_BIO_ASC',
+  SummaryBioDesc = 'SUMMARY_BIO_DESC',
   TrialEndsAtAsc = 'TRIAL_ENDS_AT_ASC',
   TrialEndsAtDesc = 'TRIAL_ENDS_AT_DESC',
   UpdatedAtAsc = 'UPDATED_AT_ASC',
@@ -40228,21 +45839,229 @@ export type WebsocketsStatisticsEntryPatch = {
   websocketMessageCount?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export type WorkExperience = Node & {
+  __typename?: 'WorkExperience';
+  companyName?: Maybe<Scalars['String']['output']>;
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  deletedAt?: Maybe<Scalars['Datetime']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  id: Scalars['BigInt']['output'];
+  jobTitle?: Maybe<Scalars['String']['output']>;
+  location?: Maybe<Scalars['String']['output']>;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  photos?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `User` that is related to this `WorkExperience`. */
+  user?: Maybe<User>;
+  userId: Scalars['BigInt']['output'];
+};
+
+/**
+ * A condition to be used against `WorkExperience` object types. All fields are
+ * tested for equality and combined with a logical ‘and.’
+ */
+export type WorkExperienceCondition = {
+  /** Checks for equality with the object’s `companyName` field. */
+  companyName?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `description` field. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `jobTitle` field. */
+  jobTitle?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `location` field. */
+  location?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `photos` field. */
+  photos?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `userId` field. */
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A filter to be used against `WorkExperience` object types. All fields are combined with a logical ‘and.’ */
+export type WorkExperienceFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<WorkExperienceFilter>>;
+  /** Filter by the object’s `companyName` field. */
+  companyName?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `description` field. */
+  description?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `jobTitle` field. */
+  jobTitle?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `location` field. */
+  location?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<WorkExperienceFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<WorkExperienceFilter>>;
+  /** Filter by the object’s `photos` field. */
+  photos?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `userId` field. */
+  userId?: InputMaybe<BigIntFilter>;
+};
+
+/** An input for mutations affecting `WorkExperience` */
+export type WorkExperienceInput = {
+  companyName?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  jobTitle?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  photos?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId: Scalars['BigInt']['input'];
+};
+
+/** Represents an update to a `WorkExperience`. Fields that are set will be updated. */
+export type WorkExperiencePatch = {
+  companyName?: InputMaybe<Scalars['String']['input']>;
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  jobTitle?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  photos?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  userId?: InputMaybe<Scalars['BigInt']['input']>;
+};
+
+/** A connection to a list of `WorkExperience` values. */
+export type WorkExperiencesConnection = {
+  __typename?: 'WorkExperiencesConnection';
+  /** A list of edges which contains the `WorkExperience` and cursor to aid in pagination. */
+  edges: Array<WorkExperiencesEdge>;
+  /** A list of `WorkExperience` objects. */
+  nodes: Array<WorkExperience>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `WorkExperience` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `WorkExperience` edge in the connection. */
+export type WorkExperiencesEdge = {
+  __typename?: 'WorkExperiencesEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `WorkExperience` at the end of the edge. */
+  node: WorkExperience;
+};
+
+/** Methods to use when ordering `WorkExperience`. */
+export enum WorkExperiencesOrderBy {
+  CompanyNameAsc = 'COMPANY_NAME_ASC',
+  CompanyNameDesc = 'COMPANY_NAME_DESC',
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DeletedAtAsc = 'DELETED_AT_ASC',
+  DeletedAtDesc = 'DELETED_AT_DESC',
+  DescriptionAsc = 'DESCRIPTION_ASC',
+  DescriptionDesc = 'DESCRIPTION_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  JobTitleAsc = 'JOB_TITLE_ASC',
+  JobTitleDesc = 'JOB_TITLE_DESC',
+  LocationAsc = 'LOCATION_ASC',
+  LocationDesc = 'LOCATION_DESC',
+  Natural = 'NATURAL',
+  PhotosAsc = 'PHOTOS_ASC',
+  PhotosDesc = 'PHOTOS_DESC',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UserIdAsc = 'USER_ID_ASC',
+  UserIdDesc = 'USER_ID_DESC'
+}
+
 export type WorkType = Node & {
   __typename?: 'WorkType';
   adminId?: Maybe<Scalars['BigInt']['output']>;
   createdAt?: Maybe<Scalars['Datetime']['output']>;
   deletedAt?: Maybe<Scalars['Datetime']['output']>;
   id: Scalars['BigInt']['output'];
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByWorkTypesId: JobFeedsConnection;
+  /** Reads and enables pagination through a set of `JobType`. */
+  jobTypesByJobFeedWorkTypesIdAndJobTypesId: WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdManyToManyConnection;
   name: Scalars['String']['output'];
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
   /** Reads a single `Organization` that is related to this `WorkType`. */
   organization?: Maybe<Organization>;
   organizationId: Scalars['BigInt']['output'];
+  /** Reads and enables pagination through a set of `PayPeriod`. */
+  payPeriodsByJobFeedWorkTypesIdAndPayPeriodsId: WorkTypePayPeriodsByJobFeedWorkTypesIdAndPayPeriodsIdManyToManyConnection;
   qrValue?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads and enables pagination through a set of `User`. */
+  usersByJobFeedWorkTypesIdAndUserId: WorkTypeUsersByJobFeedWorkTypesIdAndUserIdManyToManyConnection;
   uuid?: Maybe<Scalars['UUID']['output']>;
+};
+
+
+export type WorkTypeJobFeedsByWorkTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+
+export type WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobTypeCondition>;
+  filter?: InputMaybe<JobTypeFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobTypesOrderBy>>;
+};
+
+
+export type WorkTypePayPeriodsByJobFeedWorkTypesIdAndPayPeriodsIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<PayPeriodCondition>;
+  filter?: InputMaybe<PayPeriodFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<PayPeriodsOrderBy>>;
+};
+
+
+export type WorkTypeUsersByJobFeedWorkTypesIdAndUserIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<UserCondition>;
+  filter?: InputMaybe<UserFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<UsersOrderBy>>;
 };
 
 /**
@@ -40311,6 +46130,43 @@ export type WorkTypeInput = {
   uuid?: InputMaybe<Scalars['UUID']['input']>;
 };
 
+/** A connection to a list of `JobType` values, with data from `JobFeed`. */
+export type WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdManyToManyConnection = {
+  __typename?: 'WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdManyToManyConnection';
+  /** A list of edges which contains the `JobType`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdManyToManyEdge>;
+  /** A list of `JobType` objects. */
+  nodes: Array<JobType>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `JobType` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `JobType` edge in the connection, with data from `JobFeed`. */
+export type WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdManyToManyEdge = {
+  __typename?: 'WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByJobTypesId: JobFeedsConnection;
+  /** The `JobType` at the end of the edge. */
+  node: JobType;
+};
+
+
+/** A `JobType` edge in the connection, with data from `JobFeed`. */
+export type WorkTypeJobTypesByJobFeedWorkTypesIdAndJobTypesIdManyToManyEdgeJobFeedsByJobTypesIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
 /** Represents an update to a `WorkType`. Fields that are set will be updated. */
 export type WorkTypePatch = {
   adminId?: InputMaybe<Scalars['BigInt']['input']>;
@@ -40322,6 +46178,80 @@ export type WorkTypePatch = {
   qrValue?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
   uuid?: InputMaybe<Scalars['UUID']['input']>;
+};
+
+/** A connection to a list of `PayPeriod` values, with data from `JobFeed`. */
+export type WorkTypePayPeriodsByJobFeedWorkTypesIdAndPayPeriodsIdManyToManyConnection = {
+  __typename?: 'WorkTypePayPeriodsByJobFeedWorkTypesIdAndPayPeriodsIdManyToManyConnection';
+  /** A list of edges which contains the `PayPeriod`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<WorkTypePayPeriodsByJobFeedWorkTypesIdAndPayPeriodsIdManyToManyEdge>;
+  /** A list of `PayPeriod` objects. */
+  nodes: Array<PayPeriod>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `PayPeriod` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `PayPeriod` edge in the connection, with data from `JobFeed`. */
+export type WorkTypePayPeriodsByJobFeedWorkTypesIdAndPayPeriodsIdManyToManyEdge = {
+  __typename?: 'WorkTypePayPeriodsByJobFeedWorkTypesIdAndPayPeriodsIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeedsByPayPeriodsId: JobFeedsConnection;
+  /** The `PayPeriod` at the end of the edge. */
+  node: PayPeriod;
+};
+
+
+/** A `PayPeriod` edge in the connection, with data from `JobFeed`. */
+export type WorkTypePayPeriodsByJobFeedWorkTypesIdAndPayPeriodsIdManyToManyEdgeJobFeedsByPayPeriodsIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
+};
+
+/** A connection to a list of `User` values, with data from `JobFeed`. */
+export type WorkTypeUsersByJobFeedWorkTypesIdAndUserIdManyToManyConnection = {
+  __typename?: 'WorkTypeUsersByJobFeedWorkTypesIdAndUserIdManyToManyConnection';
+  /** A list of edges which contains the `User`, info from the `JobFeed`, and the cursor to aid in pagination. */
+  edges: Array<WorkTypeUsersByJobFeedWorkTypesIdAndUserIdManyToManyEdge>;
+  /** A list of `User` objects. */
+  nodes: Array<User>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `User` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `User` edge in the connection, with data from `JobFeed`. */
+export type WorkTypeUsersByJobFeedWorkTypesIdAndUserIdManyToManyEdge = {
+  __typename?: 'WorkTypeUsersByJobFeedWorkTypesIdAndUserIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `JobFeed`. */
+  jobFeeds: JobFeedsConnection;
+  /** The `User` at the end of the edge. */
+  node: User;
+};
+
+
+/** A `User` edge in the connection, with data from `JobFeed`. */
+export type WorkTypeUsersByJobFeedWorkTypesIdAndUserIdManyToManyEdgeJobFeedsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<JobFeedCondition>;
+  filter?: InputMaybe<JobFeedFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<JobFeedsOrderBy>>;
 };
 
 /** A connection to a list of `WorkType` values. */
@@ -40371,12 +46301,99 @@ export enum WorkTypesOrderBy {
   UuidDesc = 'UUID_DESC'
 }
 
+export type CreateNewConversationMutationVariables = Exact<{
+  input: CreateConversationInput;
+}>;
+
+
+export type CreateNewConversationMutation = { __typename?: 'Mutation', createConversation?: { __typename?: 'CreateConversationPayload', conversation?: { __typename?: 'Conversation', id: any, createdBy?: any | null, updatedAt?: any | null } | null } | null };
+
+export type AddUsersToConversationMutationVariables = Exact<{
+  input: CreateConversationUserInput;
+}>;
+
+
+export type AddUsersToConversationMutation = { __typename?: 'Mutation', createConversationUser?: { __typename?: 'CreateConversationUserPayload', conversationUser?: { __typename?: 'ConversationUser', id: any, createdAt?: any | null, updatedAt?: any | null, conversationId: any } | null } | null };
+
+export type CreateNewMessageMutationVariables = Exact<{
+  input: CreateMessageInput;
+}>;
+
+
+export type CreateNewMessageMutation = { __typename?: 'Mutation', createMessage?: { __typename?: 'CreateMessagePayload', message?: { __typename?: 'Message', id: any, conversationId?: any | null, senderId?: any | null, messageText?: string | null, mediaUrl?: string | null, isRead: boolean, readAt?: any | null, createdAt?: any | null, conversation?: { __typename?: 'Conversation', conversationUsers: { __typename?: 'ConversationUsersConnection', nodes: Array<{ __typename?: 'ConversationUser', id: any, updatedAt?: any | null }> } } | null } | null } | null };
+
+export type UpdateConversationDateMutationVariables = Exact<{
+  patch: UpdateConversationInput;
+}>;
+
+
+export type UpdateConversationDateMutation = { __typename?: 'Mutation', updateConversation?: { __typename?: 'UpdateConversationPayload', conversation?: { __typename?: 'Conversation', id: any, updatedAt?: any | null } | null } | null };
+
+export type UpdatePreferencesMutationVariables = Exact<{
+  patch: UpdateAvailableInput;
+}>;
+
+
+export type UpdatePreferencesMutation = { __typename?: 'Mutation', updateAvailable?: { __typename?: 'UpdateAvailablePayload', available?: { __typename?: 'Available', availableToWork: boolean, jobTypeId?: any | null, preferredLocation?: string | null } | null } | null };
+
+export type UpdateProfileMutationVariables = Exact<{
+  patch: UpdateProfileInput;
+}>;
+
+
+export type UpdateProfileMutation = { __typename?: 'Mutation', updateProfile?: { __typename?: 'UpdateProfilePayload', profile?: { __typename?: 'Profile', id: any, photo?: string | null } | null } | null };
+
+export type UpdateSummaryMutationVariables = Exact<{
+  patch: UpdateUserInput;
+}>;
+
+
+export type UpdateSummaryMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'UpdateUserPayload', user?: { __typename?: 'User', id: any, name: string, phoneNumber?: string | null, jobTitle?: string | null, summaryBio?: string | null } | null } | null };
+
+export type GetConversationIdQueryVariables = Exact<{
+  userIds: Array<Scalars['BigInt']['input']> | Scalars['BigInt']['input'];
+}>;
+
+
+export type GetConversationIdQuery = { __typename?: 'Query', conversations?: { __typename?: 'ConversationUsersConnection', nodes: Array<{ __typename?: 'ConversationUser', id: any, userId: any, conversationId: any, conversation?: { __typename?: 'Conversation', messages: { __typename?: 'MessagesConnection', nodes: Array<{ __typename?: 'Message', id: any, conversationId?: any | null, senderId?: any | null, messageText?: string | null, mediaUrl?: string | null, isRead: boolean, readAt?: any | null, createdAt?: any | null, updatedAt?: any | null }> } } | null }> } | null };
+
+export type GetListOfConversationQueryVariables = Exact<{
+  userId: Scalars['BigInt']['input'];
+}>;
+
+
+export type GetListOfConversationQuery = { __typename?: 'Query', conversationUsers?: { __typename?: 'ConversationUsersConnection', nodes: Array<{ __typename?: 'ConversationUser', id: any, conversationId: any, conversation?: { __typename?: 'Conversation', updatedAt?: any | null, createdAt?: any | null, conversationUsers: { __typename?: 'ConversationUsersConnection', nodes: Array<{ __typename?: 'ConversationUser', userId: any, user?: { __typename?: 'User', name: string, profile?: { __typename?: 'Profile', photo?: string | null } | null } | null }> }, messages: { __typename?: 'MessagesConnection', nodes: Array<{ __typename?: 'Message', conversationId?: any | null, senderId?: any | null, createdAt?: any | null, messageText?: string | null }> } } | null }> } | null };
+
+export type GetJobFeedsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetJobFeedsQuery = { __typename?: 'Query', jobFeeds?: { __typename?: 'JobFeedsConnection', nodes: Array<{ __typename?: 'JobFeed', id: any, userId: any, jobTitle?: string | null, jobDescription?: string | null, location?: string | null, requirement?: string | null, reqWorkersDate?: any | null, createdAt?: any | null, updatedAt?: any | null, expRange?: string | null, amount?: any | null, isActive: boolean, reqWorkersEndDate?: any | null, user?: { __typename?: 'User', id: any, parentId?: any | null, name: string, jobTitle?: string | null, organizationUsers: { __typename?: 'OrganizationUsersConnection', nodes: Array<{ __typename?: 'OrganizationUser', organization?: { __typename?: 'Organization', id: any, name: string, adminId: any } | null }> } } | null, workTypes?: { __typename?: 'WorkType', id: any, name: string, organization?: { __typename?: 'Organization', id: any, name: string, admin?: { __typename?: 'Admin', id: any } | null } | null } | null, payPeriods?: { __typename?: 'PayPeriod', id: any, name?: string | null, shortName?: string | null } | null }> } | null };
+
+export type GetUserListQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserListQuery = { __typename?: 'Query', users?: { __typename?: 'UsersConnection', nodes: Array<{ __typename?: 'User', id: any, name: string, email: string, phoneNumber?: string | null, jobTitle?: string | null, summaryBio?: string | null, profile?: { __typename?: 'Profile', photo?: string | null, firstName?: string | null, lastName?: string | null, address?: string | null, city?: string | null, stateProvince?: string | null, country?: string | null } | null, availables: { __typename?: 'AvailablesConnection', nodes: Array<{ __typename?: 'Available', id: any, availableToWork: boolean, preferredLocation?: string | null, jobType?: { __typename?: 'JobType', id: any, description?: string | null } | null }> }, reviews: { __typename?: 'ReviewsConnection', totalCount: number, nodes: Array<{ __typename?: 'Review', id: any, userId: any, recValue?: any | null }> }, fillupForms: { __typename?: 'FillupFormsConnection', totalCount: number, nodes: Array<{ __typename?: 'FillupForm', id: any, userId: any, isDraft?: number | null, form?: { __typename?: 'Form', id: any, name: string, isSpecial?: number | null } | null }> } }> } | null };
+
+export type GetCompletedFormTrainingQueryVariables = Exact<{
+  userID: Scalars['BigInt']['input'];
+}>;
+
+
+export type GetCompletedFormTrainingQuery = { __typename?: 'Query', fillupForms?: { __typename?: 'FillupFormsConnection', nodes: Array<{ __typename?: 'FillupForm', id: any, userId: any, isDraft?: number | null, form?: { __typename?: 'Form', id: any, name: string, isSpecial?: number | null } | null }> } | null };
+
 export type GetFillupFormIdFromProfileQueryVariables = Exact<{
   userId: Scalars['BigInt']['input'];
 }>;
 
 
 export type GetFillupFormIdFromProfileQuery = { __typename?: 'Query', profiles?: { __typename?: 'ProfilesConnection', nodes: Array<{ __typename?: 'Profile', skills?: string | null }> } | null };
+
+export type GetReviewsQueryVariables = Exact<{
+  userID?: InputMaybe<Scalars['BigInt']['input']>;
+}>;
+
+
+export type GetReviewsQuery = { __typename?: 'Query', reviews?: { __typename?: 'ReviewsConnection', nodes: Array<{ __typename?: 'Review', id: any, userId: any, recValue?: any | null, recText?: string | null, recommenderUserId?: any | null, recommenderProfilePic?: string | null, createdAt?: any | null }> } | null };
 
 export type GetSkillDropdDownListQueryVariables = Exact<{
   fillupFormId?: InputMaybe<Array<Scalars['BigInt']['input']> | Scalars['BigInt']['input']>;
@@ -40385,12 +46402,19 @@ export type GetSkillDropdDownListQueryVariables = Exact<{
 
 export type GetSkillDropdDownListQuery = { __typename?: 'Query', fillupFormFields?: { __typename?: 'FillupFormFieldsConnection', nodes: Array<{ __typename?: 'FillupFormField', id: any, fillupFormId: any, fieldId: any, answer: string, field?: { __typename?: 'Field', fieldProperties: { __typename?: 'FieldPropertiesConnection', nodes: Array<{ __typename?: 'FieldProperty', fieldId: any, propertyId: any, value: string, updatedAt?: any | null }> } } | null }> } | null };
 
-export type GetUserDetailsByIdQueryVariables = Exact<{
+export type GetUploadedPhotosQueryVariables = Exact<{
   userID?: InputMaybe<Scalars['BigInt']['input']>;
 }>;
 
 
-export type GetUserDetailsByIdQuery = { __typename?: 'Query', users?: { __typename?: 'UsersConnection', nodes: Array<{ __typename?: 'User', id: any, name: string, email: string, phoneNumber?: string | null, password: string, facebookId?: string | null }> } | null };
+export type GetUploadedPhotosQuery = { __typename?: 'Query', fillupForms?: { __typename?: 'FillupFormsConnection', nodes: Array<{ __typename?: 'FillupForm', id: any, userId: any, formId: any, updatedAt?: any | null, fillupFormFields: { __typename?: 'FillupFormFieldsConnection', nodes: Array<{ __typename?: 'FillupFormField', id: any, fillupFormId: any, answer: string, updatedAt?: any | null, field?: { __typename?: 'Field', id: any, component?: { __typename?: 'Component', id: any, description: string } | null } | null }> } }> } | null };
+
+export type GetUserDetailsByIdQueryVariables = Exact<{
+  userID: Scalars['BigInt']['input'];
+}>;
+
+
+export type GetUserDetailsByIdQuery = { __typename?: 'Query', users?: { __typename?: 'UsersConnection', nodes: Array<{ __typename?: 'User', id: any, name: string, email: string, phoneNumber?: string | null, jobTitle?: string | null, summaryBio?: string | null, isActive: boolean, profile?: { __typename?: 'Profile', photo?: string | null, firstName?: string | null, lastName?: string | null, address?: string | null, city?: string | null, stateProvince?: string | null, country?: string | null } | null, availables: { __typename?: 'AvailablesConnection', nodes: Array<{ __typename?: 'Available', availableToWork: boolean, preferredLocation?: string | null, jobType?: { __typename?: 'JobType', id: any, description?: string | null } | null }> } }> } | null };
 
 export type LoginSpfQueryVariables = Exact<{
   email: Scalars['String']['input'];
@@ -40400,6 +46424,556 @@ export type LoginSpfQueryVariables = Exact<{
 export type LoginSpfQuery = { __typename?: 'Query', users?: { __typename?: 'UsersConnection', nodes: Array<{ __typename?: 'User', id: any, name: string, email: string, deviceName?: string | null }> } | null };
 
 
+
+export const CreateNewConversationDocument = `
+    mutation createNewConversation($input: CreateConversationInput!) {
+  createConversation(input: $input) {
+    conversation {
+      id
+      createdBy
+      updatedAt
+    }
+  }
+}
+    `;
+
+export const useCreateNewConversationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateNewConversationMutation, TError, CreateNewConversationMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useMutation<CreateNewConversationMutation, TError, CreateNewConversationMutationVariables, TContext>(
+      ['createNewConversation'],
+      (variables?: CreateNewConversationMutationVariables) => fetcher<CreateNewConversationMutation, CreateNewConversationMutationVariables>(client, CreateNewConversationDocument, variables, headers)(),
+      options
+    )};
+
+export const AddUsersToConversationDocument = `
+    mutation AddUsersToConversation($input: CreateConversationUserInput!) {
+  createConversationUser(input: $input) {
+    conversationUser {
+      id
+      createdAt
+      updatedAt
+      conversationId
+    }
+  }
+}
+    `;
+
+export const useAddUsersToConversationMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<AddUsersToConversationMutation, TError, AddUsersToConversationMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useMutation<AddUsersToConversationMutation, TError, AddUsersToConversationMutationVariables, TContext>(
+      ['AddUsersToConversation'],
+      (variables?: AddUsersToConversationMutationVariables) => fetcher<AddUsersToConversationMutation, AddUsersToConversationMutationVariables>(client, AddUsersToConversationDocument, variables, headers)(),
+      options
+    )};
+
+export const CreateNewMessageDocument = `
+    mutation createNewMessage($input: CreateMessageInput!) {
+  createMessage(input: $input) {
+    message {
+      id
+      conversationId
+      senderId
+      messageText
+      mediaUrl
+      isRead
+      readAt
+      createdAt
+      conversation {
+        conversationUsers {
+          nodes {
+            id
+            updatedAt
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+export const useCreateNewMessageMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<CreateNewMessageMutation, TError, CreateNewMessageMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useMutation<CreateNewMessageMutation, TError, CreateNewMessageMutationVariables, TContext>(
+      ['createNewMessage'],
+      (variables?: CreateNewMessageMutationVariables) => fetcher<CreateNewMessageMutation, CreateNewMessageMutationVariables>(client, CreateNewMessageDocument, variables, headers)(),
+      options
+    )};
+
+export const UpdateConversationDateDocument = `
+    mutation updateConversationDate($patch: UpdateConversationInput!) {
+  updateConversation(input: $patch) {
+    conversation {
+      id
+      updatedAt
+    }
+  }
+}
+    `;
+
+export const useUpdateConversationDateMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateConversationDateMutation, TError, UpdateConversationDateMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useMutation<UpdateConversationDateMutation, TError, UpdateConversationDateMutationVariables, TContext>(
+      ['updateConversationDate'],
+      (variables?: UpdateConversationDateMutationVariables) => fetcher<UpdateConversationDateMutation, UpdateConversationDateMutationVariables>(client, UpdateConversationDateDocument, variables, headers)(),
+      options
+    )};
+
+export const UpdatePreferencesDocument = `
+    mutation updatePreferences($patch: UpdateAvailableInput!) {
+  updateAvailable(input: $patch) {
+    available {
+      availableToWork
+      jobTypeId
+      preferredLocation
+    }
+  }
+}
+    `;
+
+export const useUpdatePreferencesMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdatePreferencesMutation, TError, UpdatePreferencesMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useMutation<UpdatePreferencesMutation, TError, UpdatePreferencesMutationVariables, TContext>(
+      ['updatePreferences'],
+      (variables?: UpdatePreferencesMutationVariables) => fetcher<UpdatePreferencesMutation, UpdatePreferencesMutationVariables>(client, UpdatePreferencesDocument, variables, headers)(),
+      options
+    )};
+
+export const UpdateProfileDocument = `
+    mutation updateProfile($patch: UpdateProfileInput!) {
+  updateProfile(input: $patch) {
+    profile {
+      id
+      photo
+    }
+  }
+}
+    `;
+
+export const useUpdateProfileMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateProfileMutation, TError, UpdateProfileMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useMutation<UpdateProfileMutation, TError, UpdateProfileMutationVariables, TContext>(
+      ['updateProfile'],
+      (variables?: UpdateProfileMutationVariables) => fetcher<UpdateProfileMutation, UpdateProfileMutationVariables>(client, UpdateProfileDocument, variables, headers)(),
+      options
+    )};
+
+export const UpdateSummaryDocument = `
+    mutation updateSummary($patch: UpdateUserInput!) {
+  updateUser(input: $patch) {
+    user {
+      id
+      name
+      phoneNumber
+      jobTitle
+      summaryBio
+    }
+  }
+}
+    `;
+
+export const useUpdateSummaryMutation = <
+      TError = unknown,
+      TContext = unknown
+    >(
+      client: GraphQLClient,
+      options?: UseMutationOptions<UpdateSummaryMutation, TError, UpdateSummaryMutationVariables, TContext>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useMutation<UpdateSummaryMutation, TError, UpdateSummaryMutationVariables, TContext>(
+      ['updateSummary'],
+      (variables?: UpdateSummaryMutationVariables) => fetcher<UpdateSummaryMutation, UpdateSummaryMutationVariables>(client, UpdateSummaryDocument, variables, headers)(),
+      options
+    )};
+
+export const GetConversationIdDocument = `
+    query GetConversationId($userIds: [BigInt!]!) {
+  conversations: conversationUsers(filter: {userId: {in: $userIds}}) {
+    nodes {
+      id
+      userId
+      conversationId
+      conversation {
+        messages {
+          nodes {
+            id
+            conversationId
+            senderId
+            messageText
+            mediaUrl
+            isRead
+            readAt
+            createdAt
+            updatedAt
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+export const useGetConversationIdQuery = <
+      TData = GetConversationIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetConversationIdQueryVariables,
+      options?: UseQueryOptions<GetConversationIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useQuery<GetConversationIdQuery, TError, TData>(
+      ['GetConversationId', variables],
+      fetcher<GetConversationIdQuery, GetConversationIdQueryVariables>(client, GetConversationIdDocument, variables, headers),
+      options
+    )};
+
+export const useInfiniteGetConversationIdQuery = <
+      TData = GetConversationIdQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetConversationIdQueryVariables,
+      options?: UseInfiniteQueryOptions<GetConversationIdQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useInfiniteQuery<GetConversationIdQuery, TError, TData>(
+      ['GetConversationId.infinite', variables],
+      (metaData) => fetcher<GetConversationIdQuery, GetConversationIdQueryVariables>(client, GetConversationIdDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      options
+    )};
+
+export const GetListOfConversationDocument = `
+    query GetListOfConversation($userId: BigInt!) {
+  conversationUsers(condition: {userId: $userId}) {
+    nodes {
+      id
+      conversationId
+      conversation {
+        updatedAt
+        createdAt
+        conversationUsers(filter: {userId: {notEqualTo: $userId}}) {
+          nodes {
+            userId
+            user {
+              name
+              profile {
+                photo
+              }
+            }
+          }
+        }
+        messages(last: 1) {
+          nodes {
+            conversationId
+            senderId
+            createdAt
+            messageText
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+export const useGetListOfConversationQuery = <
+      TData = GetListOfConversationQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetListOfConversationQueryVariables,
+      options?: UseQueryOptions<GetListOfConversationQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useQuery<GetListOfConversationQuery, TError, TData>(
+      ['GetListOfConversation', variables],
+      fetcher<GetListOfConversationQuery, GetListOfConversationQueryVariables>(client, GetListOfConversationDocument, variables, headers),
+      options
+    )};
+
+export const useInfiniteGetListOfConversationQuery = <
+      TData = GetListOfConversationQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetListOfConversationQueryVariables,
+      options?: UseInfiniteQueryOptions<GetListOfConversationQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useInfiniteQuery<GetListOfConversationQuery, TError, TData>(
+      ['GetListOfConversation.infinite', variables],
+      (metaData) => fetcher<GetListOfConversationQuery, GetListOfConversationQueryVariables>(client, GetListOfConversationDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      options
+    )};
+
+export const GetJobFeedsDocument = `
+    query GetJobFeeds {
+  jobFeeds {
+    nodes {
+      id
+      userId
+      jobTitle
+      jobDescription
+      location
+      requirement
+      reqWorkersDate
+      createdAt
+      updatedAt
+      expRange
+      amount
+      isActive
+      reqWorkersEndDate
+      user {
+        id
+        parentId
+        name
+        jobTitle
+        organizationUsers {
+          nodes {
+            organization {
+              id
+              name
+              adminId
+            }
+          }
+        }
+      }
+      workTypes {
+        id
+        name
+        organization {
+          id
+          name
+          admin {
+            id
+          }
+        }
+      }
+      payPeriods {
+        id
+        name
+        shortName
+      }
+    }
+  }
+}
+    `;
+
+export const useGetJobFeedsQuery = <
+      TData = GetJobFeedsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetJobFeedsQueryVariables,
+      options?: UseQueryOptions<GetJobFeedsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useQuery<GetJobFeedsQuery, TError, TData>(
+      variables === undefined ? ['GetJobFeeds'] : ['GetJobFeeds', variables],
+      fetcher<GetJobFeedsQuery, GetJobFeedsQueryVariables>(client, GetJobFeedsDocument, variables, headers),
+      options
+    )};
+
+export const useInfiniteGetJobFeedsQuery = <
+      TData = GetJobFeedsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetJobFeedsQueryVariables,
+      options?: UseInfiniteQueryOptions<GetJobFeedsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useInfiniteQuery<GetJobFeedsQuery, TError, TData>(
+      variables === undefined ? ['GetJobFeeds.infinite'] : ['GetJobFeeds.infinite', variables],
+      (metaData) => fetcher<GetJobFeedsQuery, GetJobFeedsQueryVariables>(client, GetJobFeedsDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      options
+    )};
+
+export const GetUserListDocument = `
+    query GetUserList {
+  users {
+    nodes {
+      id
+      name
+      email
+      phoneNumber
+      jobTitle
+      summaryBio
+      profile {
+        photo
+        firstName
+        lastName
+        address
+        city
+        stateProvince
+        country
+      }
+      availables {
+        nodes {
+          id
+          availableToWork
+          preferredLocation
+          jobType {
+            id
+            description
+          }
+        }
+      }
+      reviews {
+        nodes {
+          id
+          userId
+          recValue
+        }
+        totalCount
+      }
+      fillupForms(condition: {isDraft: 0}) {
+        nodes {
+          id
+          userId
+          isDraft
+          form {
+            id
+            name
+            isSpecial
+          }
+        }
+        totalCount
+      }
+    }
+  }
+}
+    `;
+
+export const useGetUserListQuery = <
+      TData = GetUserListQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetUserListQueryVariables,
+      options?: UseQueryOptions<GetUserListQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useQuery<GetUserListQuery, TError, TData>(
+      variables === undefined ? ['GetUserList'] : ['GetUserList', variables],
+      fetcher<GetUserListQuery, GetUserListQueryVariables>(client, GetUserListDocument, variables, headers),
+      options
+    )};
+
+export const useInfiniteGetUserListQuery = <
+      TData = GetUserListQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetUserListQueryVariables,
+      options?: UseInfiniteQueryOptions<GetUserListQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useInfiniteQuery<GetUserListQuery, TError, TData>(
+      variables === undefined ? ['GetUserList.infinite'] : ['GetUserList.infinite', variables],
+      (metaData) => fetcher<GetUserListQuery, GetUserListQueryVariables>(client, GetUserListDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      options
+    )};
+
+export const GetCompletedFormTrainingDocument = `
+    query GetCompletedFormTraining($userID: BigInt!) {
+  fillupForms(condition: {userId: $userID, isDraft: 0}) {
+    nodes {
+      id
+      userId
+      isDraft
+      form {
+        id
+        name
+        isSpecial
+      }
+    }
+  }
+}
+    `;
+
+export const useGetCompletedFormTrainingQuery = <
+      TData = GetCompletedFormTrainingQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetCompletedFormTrainingQueryVariables,
+      options?: UseQueryOptions<GetCompletedFormTrainingQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useQuery<GetCompletedFormTrainingQuery, TError, TData>(
+      ['GetCompletedFormTraining', variables],
+      fetcher<GetCompletedFormTrainingQuery, GetCompletedFormTrainingQueryVariables>(client, GetCompletedFormTrainingDocument, variables, headers),
+      options
+    )};
+
+export const useInfiniteGetCompletedFormTrainingQuery = <
+      TData = GetCompletedFormTrainingQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables: GetCompletedFormTrainingQueryVariables,
+      options?: UseInfiniteQueryOptions<GetCompletedFormTrainingQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useInfiniteQuery<GetCompletedFormTrainingQuery, TError, TData>(
+      ['GetCompletedFormTraining.infinite', variables],
+      (metaData) => fetcher<GetCompletedFormTrainingQuery, GetCompletedFormTrainingQueryVariables>(client, GetCompletedFormTrainingDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      options
+    )};
 
 export const GetFillupFormIdFromProfileDocument = `
     query GetFillupFormIdFromProfile($userId: BigInt!) {
@@ -40440,6 +47014,54 @@ export const useInfiniteGetFillupFormIdFromProfileQuery = <
     return useInfiniteQuery<GetFillupFormIdFromProfileQuery, TError, TData>(
       ['GetFillupFormIdFromProfile.infinite', variables],
       (metaData) => fetcher<GetFillupFormIdFromProfileQuery, GetFillupFormIdFromProfileQueryVariables>(client, GetFillupFormIdFromProfileDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      options
+    )};
+
+export const GetReviewsDocument = `
+    query GetReviews($userID: BigInt) {
+  reviews(condition: {userId: $userID}) {
+    nodes {
+      id
+      userId
+      recValue
+      recText
+      recommenderUserId
+      recommenderProfilePic
+      createdAt
+    }
+  }
+}
+    `;
+
+export const useGetReviewsQuery = <
+      TData = GetReviewsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetReviewsQueryVariables,
+      options?: UseQueryOptions<GetReviewsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useQuery<GetReviewsQuery, TError, TData>(
+      variables === undefined ? ['GetReviews'] : ['GetReviews', variables],
+      fetcher<GetReviewsQuery, GetReviewsQueryVariables>(client, GetReviewsDocument, variables, headers),
+      options
+    )};
+
+export const useInfiniteGetReviewsQuery = <
+      TData = GetReviewsQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetReviewsQueryVariables,
+      options?: UseInfiniteQueryOptions<GetReviewsQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useInfiniteQuery<GetReviewsQuery, TError, TData>(
+      variables === undefined ? ['GetReviews.infinite'] : ['GetReviews.infinite', variables],
+      (metaData) => fetcher<GetReviewsQuery, GetReviewsQueryVariables>(client, GetReviewsDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     )};
 
@@ -40498,16 +47120,96 @@ export const useInfiniteGetSkillDropdDownListQuery = <
       options
     )};
 
+export const GetUploadedPhotosDocument = `
+    query GetUploadedPhotos($userID: BigInt) {
+  fillupForms(condition: {userId: $userID}, orderBy: UPDATED_AT_DESC) {
+    nodes {
+      id
+      userId
+      formId
+      updatedAt
+      fillupFormFields(orderBy: UPDATED_AT_DESC) {
+        nodes {
+          id
+          fillupFormId
+          answer
+          updatedAt
+          field {
+            id
+            component {
+              id
+              description
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+export const useGetUploadedPhotosQuery = <
+      TData = GetUploadedPhotosQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetUploadedPhotosQueryVariables,
+      options?: UseQueryOptions<GetUploadedPhotosQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useQuery<GetUploadedPhotosQuery, TError, TData>(
+      variables === undefined ? ['GetUploadedPhotos'] : ['GetUploadedPhotos', variables],
+      fetcher<GetUploadedPhotosQuery, GetUploadedPhotosQueryVariables>(client, GetUploadedPhotosDocument, variables, headers),
+      options
+    )};
+
+export const useInfiniteGetUploadedPhotosQuery = <
+      TData = GetUploadedPhotosQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetUploadedPhotosQueryVariables,
+      options?: UseInfiniteQueryOptions<GetUploadedPhotosQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useInfiniteQuery<GetUploadedPhotosQuery, TError, TData>(
+      variables === undefined ? ['GetUploadedPhotos.infinite'] : ['GetUploadedPhotos.infinite', variables],
+      (metaData) => fetcher<GetUploadedPhotosQuery, GetUploadedPhotosQueryVariables>(client, GetUploadedPhotosDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      options
+    )};
+
 export const GetUserDetailsByIdDocument = `
-    query GetUserDetailsById($userID: BigInt) {
+    query GetUserDetailsById($userID: BigInt!) {
   users(condition: {id: $userID}) {
     nodes {
       id
       name
       email
       phoneNumber
-      password
-      facebookId
+      jobTitle
+      summaryBio
+      isActive
+      profile {
+        photo
+        firstName
+        lastName
+        address
+        city
+        stateProvince
+        country
+      }
+      availables {
+        nodes {
+          availableToWork
+          preferredLocation
+          jobType {
+            id
+            description
+          }
+        }
+      }
     }
   }
 }
@@ -40518,13 +47220,13 @@ export const useGetUserDetailsByIdQuery = <
       TError = unknown
     >(
       client: GraphQLClient,
-      variables?: GetUserDetailsByIdQueryVariables,
+      variables: GetUserDetailsByIdQueryVariables,
       options?: UseQueryOptions<GetUserDetailsByIdQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) => {
     
     return useQuery<GetUserDetailsByIdQuery, TError, TData>(
-      variables === undefined ? ['GetUserDetailsById'] : ['GetUserDetailsById', variables],
+      ['GetUserDetailsById', variables],
       fetcher<GetUserDetailsByIdQuery, GetUserDetailsByIdQueryVariables>(client, GetUserDetailsByIdDocument, variables, headers),
       options
     )};
@@ -40534,13 +47236,13 @@ export const useInfiniteGetUserDetailsByIdQuery = <
       TError = unknown
     >(
       client: GraphQLClient,
-      variables?: GetUserDetailsByIdQueryVariables,
+      variables: GetUserDetailsByIdQueryVariables,
       options?: UseInfiniteQueryOptions<GetUserDetailsByIdQuery, TError, TData>,
       headers?: RequestInit['headers']
     ) => {
     
     return useInfiniteQuery<GetUserDetailsByIdQuery, TError, TData>(
-      variables === undefined ? ['GetUserDetailsById.infinite'] : ['GetUserDetailsById.infinite', variables],
+      ['GetUserDetailsById.infinite', variables],
       (metaData) => fetcher<GetUserDetailsByIdQuery, GetUserDetailsByIdQueryVariables>(client, GetUserDetailsByIdDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     )};

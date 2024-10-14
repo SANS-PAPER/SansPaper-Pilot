@@ -13,12 +13,12 @@ function showAlert() {
 
 export const getAccessToken = async () => {
     const auth0Endpoint = 'https://sanspaper.au.auth0.com/oauth/token';
-    const clientId = 'N33iarTDdXhC8aWidlOjxYWV7GqSrc2p';
-    const clientSecret = '1hLQJlFrsst9SBZQ18tX-96JsjF-B3pglDQa-P679fVUs2Vrj69mfIhWRn-pzjr5';
+    const clientId = 'rvse9brvfP7G78HFmy9L0sKiH5puELvQ';
+    const clientSecret = 'uFoCLn_dQAuSbqElNWOUFm7hcMqhBhdcULlf0fvxbIcOoFReMp4CsuOaQjaMJB2C';
     const audience = 'https://sanspaper.com/postgraphile';
     const grantType = 'client_credentials';
 
-     console.log('masuk file getAccessToken------------------');
+     //console.log('masuk file getAccessToken------------------');
 
   
     try {
@@ -29,7 +29,7 @@ export const getAccessToken = async () => {
         grant_type: grantType,
       });
 
-      console.log('masuk file getAccessToken------------------', response);
+      //console.log('masuk file getAccessToken------------------', response);
 
   
       const { access_token, token_type, expires_in } = response.data;
@@ -38,7 +38,7 @@ export const getAccessToken = async () => {
 
 
 
-
+      sessionStorage.setItem('@postgraphile_token', JSON.stringify({ access_token, expirationTime }));
       // console.log('access_token------for postgraphile is ------------', access_token);
 
 

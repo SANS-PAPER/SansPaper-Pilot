@@ -1,0 +1,11 @@
+mutation updateSummary($patch: UpdateUserInput!) {
+  updateUser(input: $patch) {
+    user {
+      id
+      name
+      phoneNumber
+      jobTitle
+      summaryBio
+    }
+  }
+}
