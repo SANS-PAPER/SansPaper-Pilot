@@ -28,7 +28,7 @@ const SignIn: React.FC = () => {
               <p 
                 className="2xl:px-20"  
                 style={{fontFamily:"system-ui", fontWeight:"bold", fontSize:"30px", color:"black"}}>
-                  WELCOME TO SANS PAPER ID
+                  WELCOME TO SANS PAPER Pilot
                 </p>
 
                 <span className="mt-15 inline-block">
@@ -163,7 +163,7 @@ const SignIn: React.FC = () => {
 
                   <Image
                     className="animate-pulse duration 800"
-                    src={"/images/logo/SansPaperID.svg"}
+                    src={"/images/logo/SPilot.png"}
                     alt="Logo"
                     width={100}
                     height={32}
@@ -176,12 +176,12 @@ const SignIn: React.FC = () => {
                   className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50"
                 >
                   <Image
-                    src="/images/logo/SansPaperID.svg"
+                    src="/images/logo/SPilot.png"
                     alt="Logo"
                     width={30}
                     height={20}
                   />
-                  Continue with Sans Paper ID
+                  Continue with Sans Paper Pilot
                 </button>
 
                 </Link>

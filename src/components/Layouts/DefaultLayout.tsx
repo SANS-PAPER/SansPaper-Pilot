@@ -13,7 +13,6 @@ export default function DefaultLayout({
   return (
     <>
 
-<CopilotSidebarLayout></CopilotSidebarLayout>
       {/* <!-- ===== Page Wrapper Start ===== --> */}
       <div className="flex h-screen overflow-hidden">
         {/* <!-- ===== Sidebar Start ===== --> */}

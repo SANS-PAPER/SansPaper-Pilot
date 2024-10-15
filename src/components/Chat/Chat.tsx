@@ -213,8 +213,8 @@ const Chat = () => {
             </>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', height: '100vh' }}>
-              <Image src="/images/logo/SansPaperID.svg" alt="Logo" width={205} height={180} />
-              <h1 className="mt-5">Download Sans Paper ID Mobile on PlayStore and AppleStore</h1>
+              <Image src="/images/logo/SPilot.png" alt="Logo" width={205} height={180} />
+              <h1 className="mt-5">Download Sans Paper Pilot Mobile on PlayStore and AppleStore</h1>
               <p>Chat with your Colleagues, Employers, or Employees with just one app!</p>
               <Button className="downloadButton">
                Download Your App Here!

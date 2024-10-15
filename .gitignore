@@ -21,6 +21,7 @@
 *.pem
 .env.local
 .env.staging
+.env
 
 # debug
 npm-debug.log*

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { client } from '@/app/api/client';
 import { GetUserDetailsByIdDocument } from '@/gql/_generated';
-import { UserProfile, UseUserDataResult } from '@/app/profile/types/userProfile';
+import { UserProfile, UseUserDataResult } from '@/app/imageGallery/types/userProfile';
 
 export const useUserData = (userID: string): UseUserDataResult => {
   const [dataUser, setUserData] = useState<UserProfile[]>([]);
