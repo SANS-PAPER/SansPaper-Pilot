@@ -27,6 +27,25 @@ query GetUserDetailsById($userID: BigInt!) {
           }
         }
       }
+      roleUsers{
+        nodes{
+          userId
+          roleId
+        }
+      }
+      roleUserOrganizations{
+        nodes{
+          orgId
+          roleId
+          userId
+        }
+      }
+      organizationUsers{
+        nodes{
+          userId
+          organizationId
+        }
+      }
     }
   }
 }

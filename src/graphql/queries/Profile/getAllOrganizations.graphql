@@ -1,0 +1,10 @@
+query GetAllOrganization($all: Boolean) {
+  organizations(filter: { deletedAt: { isNull: $all } }) {
+    nodes {
+      id
+      name
+      adminId
+    }
+    totalCount
+  }
+}
