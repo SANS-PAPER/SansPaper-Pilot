@@ -31,7 +31,7 @@
     "apollo-link": "^1.2.14",
     "apollo-upload-client": "^18.0.1",
     "aws-sdk": "^2.1679.0",
-    "axios": "^1.7.2",
+    "axios": "^1.7.4",
     "babel-plugin-inline-dotenv": "^1.7.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
