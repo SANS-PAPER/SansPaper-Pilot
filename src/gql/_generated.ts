@@ -41340,6 +41340,7 @@ export type User = Node & {
   equipmentTypesByEquipmentPreparedByAndEquipmentTypeId: UserEquipmentTypesByEquipmentPreparedByAndEquipmentTypeIdManyToManyConnection;
   facebookId?: Maybe<Scalars['String']['output']>;
   favoriteColor?: Maybe<Scalars['String']['output']>;
+  fcmToken?: Maybe<Scalars['String']['output']>;
   /** Reads and enables pagination through a set of `FillupForm`. */
   fillupForms: FillupFormsConnection;
   /** Reads and enables pagination through a set of `FillupForm`. */
@@ -42760,6 +42761,8 @@ export type UserCondition = {
   facebookId?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `favoriteColor` field. */
   favoriteColor?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `fcmToken` field. */
+  fcmToken?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `googleId` field. */
   googleId?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `id` field. */
@@ -43003,6 +43006,8 @@ export type UserFilter = {
   facebookId?: InputMaybe<StringFilter>;
   /** Filter by the object’s `favoriteColor` field. */
   favoriteColor?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `fcmToken` field. */
+  fcmToken?: InputMaybe<StringFilter>;
   /** Filter by the object’s `googleId` field. */
   googleId?: InputMaybe<StringFilter>;
   /** Filter by the object’s `id` field. */
@@ -43326,6 +43331,7 @@ export type UserInput = {
   emailVerifiedAt?: InputMaybe<Scalars['Datetime']['input']>;
   facebookId?: InputMaybe<Scalars['String']['input']>;
   favoriteColor?: InputMaybe<Scalars['String']['input']>;
+  fcmToken?: InputMaybe<Scalars['String']['input']>;
   googleId?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['BigInt']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
@@ -44160,6 +44166,7 @@ export type UserPatch = {
   emailVerifiedAt?: InputMaybe<Scalars['Datetime']['input']>;
   facebookId?: InputMaybe<Scalars['String']['input']>;
   favoriteColor?: InputMaybe<Scalars['String']['input']>;
+  fcmToken?: InputMaybe<Scalars['String']['input']>;
   googleId?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['BigInt']['input']>;
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
@@ -44975,6 +44982,8 @@ export enum UsersOrderBy {
   FacebookIdDesc = 'FACEBOOK_ID_DESC',
   FavoriteColorAsc = 'FAVORITE_COLOR_ASC',
   FavoriteColorDesc = 'FAVORITE_COLOR_DESC',
+  FcmTokenAsc = 'FCM_TOKEN_ASC',
+  FcmTokenDesc = 'FCM_TOKEN_DESC',
   GoogleIdAsc = 'GOOGLE_ID_ASC',
   GoogleIdDesc = 'GOOGLE_ID_DESC',
   IdAsc = 'ID_ASC',
@@ -46374,6 +46383,13 @@ export type GetUserListQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetUserListQuery = { __typename?: 'Query', users?: { __typename?: 'UsersConnection', nodes: Array<{ __typename?: 'User', id: any, name: string, email: string, phoneNumber?: string | null, jobTitle?: string | null, summaryBio?: string | null, profile?: { __typename?: 'Profile', photo?: string | null, firstName?: string | null, lastName?: string | null, address?: string | null, city?: string | null, stateProvince?: string | null, country?: string | null } | null, availables: { __typename?: 'AvailablesConnection', nodes: Array<{ __typename?: 'Available', id: any, availableToWork: boolean, preferredLocation?: string | null, jobType?: { __typename?: 'JobType', id: any, description?: string | null } | null }> }, reviews: { __typename?: 'ReviewsConnection', totalCount: number, nodes: Array<{ __typename?: 'Review', id: any, userId: any, recValue?: any | null }> }, fillupForms: { __typename?: 'FillupFormsConnection', totalCount: number, nodes: Array<{ __typename?: 'FillupForm', id: any, userId: any, isDraft?: number | null, form?: { __typename?: 'Form', id: any, name: string, isSpecial?: number | null } | null }> } }> } | null };
 
+export type GetAllOrganizationQueryVariables = Exact<{
+  all?: InputMaybe<Scalars['Boolean']['input']>;
+}>;
+
+
+export type GetAllOrganizationQuery = { __typename?: 'Query', organizations?: { __typename?: 'OrganizationsConnection', totalCount: number, nodes: Array<{ __typename?: 'Organization', id: any, name: string, adminId: any }> } | null };
+
 export type GetCompletedFormTrainingQueryVariables = Exact<{
   userID: Scalars['BigInt']['input'];
 }>;
@@ -46414,7 +46430,7 @@ export type GetUserDetailsByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetUserDetailsByIdQuery = { __typename?: 'Query', users?: { __typename?: 'UsersConnection', nodes: Array<{ __typename?: 'User', id: any, name: string, email: string, phoneNumber?: string | null, jobTitle?: string | null, summaryBio?: string | null, isActive: boolean, profile?: { __typename?: 'Profile', photo?: string | null, firstName?: string | null, lastName?: string | null, address?: string | null, city?: string | null, stateProvince?: string | null, country?: string | null } | null, availables: { __typename?: 'AvailablesConnection', nodes: Array<{ __typename?: 'Available', availableToWork: boolean, preferredLocation?: string | null, jobType?: { __typename?: 'JobType', id: any, description?: string | null } | null }> } }> } | null };
+export type GetUserDetailsByIdQuery = { __typename?: 'Query', users?: { __typename?: 'UsersConnection', nodes: Array<{ __typename?: 'User', id: any, name: string, email: string, phoneNumber?: string | null, jobTitle?: string | null, summaryBio?: string | null, isActive: boolean, profile?: { __typename?: 'Profile', photo?: string | null, firstName?: string | null, lastName?: string | null, address?: string | null, city?: string | null, stateProvince?: string | null, country?: string | null } | null, availables: { __typename?: 'AvailablesConnection', nodes: Array<{ __typename?: 'Available', availableToWork: boolean, preferredLocation?: string | null, jobType?: { __typename?: 'JobType', id: any, description?: string | null } | null }> }, roleUsers: { __typename?: 'RoleUsersConnection', nodes: Array<{ __typename?: 'RoleUser', userId: any, roleId: any }> }, roleUserOrganizations: { __typename?: 'RoleUserOrganizationsConnection', nodes: Array<{ __typename?: 'RoleUserOrganization', orgId: any, roleId: any, userId: any }> }, organizationUsers: { __typename?: 'OrganizationUsersConnection', nodes: Array<{ __typename?: 'OrganizationUser', userId: any, organizationId: any }> } }> } | null };
 
 export type LoginSpfQueryVariables = Exact<{
   email: Scalars['String']['input'];
@@ -46926,6 +46942,51 @@ export const useInfiniteGetUserListQuery = <
       options
     )};
 
+export const GetAllOrganizationDocument = `
+    query GetAllOrganization($all: Boolean) {
+  organizations(filter: {deletedAt: {isNull: $all}}) {
+    nodes {
+      id
+      name
+      adminId
+    }
+    totalCount
+  }
+}
+    `;
+
+export const useGetAllOrganizationQuery = <
+      TData = GetAllOrganizationQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetAllOrganizationQueryVariables,
+      options?: UseQueryOptions<GetAllOrganizationQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useQuery<GetAllOrganizationQuery, TError, TData>(
+      variables === undefined ? ['GetAllOrganization'] : ['GetAllOrganization', variables],
+      fetcher<GetAllOrganizationQuery, GetAllOrganizationQueryVariables>(client, GetAllOrganizationDocument, variables, headers),
+      options
+    )};
+
+export const useInfiniteGetAllOrganizationQuery = <
+      TData = GetAllOrganizationQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetAllOrganizationQueryVariables,
+      options?: UseInfiniteQueryOptions<GetAllOrganizationQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useInfiniteQuery<GetAllOrganizationQuery, TError, TData>(
+      variables === undefined ? ['GetAllOrganization.infinite'] : ['GetAllOrganization.infinite', variables],
+      (metaData) => fetcher<GetAllOrganizationQuery, GetAllOrganizationQueryVariables>(client, GetAllOrganizationDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      options
+    )};
+
 export const GetCompletedFormTrainingDocument = `
     query GetCompletedFormTraining($userID: BigInt!) {
   fillupForms(condition: {userId: $userID, isDraft: 0}) {
@@ -47208,6 +47269,25 @@ export const GetUserDetailsByIdDocument = `
             id
             description
           }
+        }
+      }
+      roleUsers {
+        nodes {
+          userId
+          roleId
+        }
+      }
+      roleUserOrganizations {
+        nodes {
+          orgId
+          roleId
+          userId
+        }
+      }
+      organizationUsers {
+        nodes {
+          userId
+          organizationId
         }
       }
     }
