@@ -66,10 +66,13 @@ const ImageGallery: FC = () => {
   const { dataUser, errorUser, isLoadingUser } = useUserData(userId || "");
   const { dataOrganizationList, errorOrganizationList, isLoadingOrganizationList } = useGetOrganizationList(true);
 
-  useEffect(() => {
-    console.log(dataUser);
-    console.log(dataOrganizationList);
-  }, [dataUser, dataOrganizationList]);
+  const getValueFromCache = (key: string) => {
+    return localStorage.getItem(key);
+  }
+
+  const [activeOrganization, setActiveOrganization] = useState<any>(getValueFromCache('activeOrganization'));
+
+  //console.log('activeOrganization', activeOrganization);
 
   const organizations = [
     { value: 'mdwind', name: 'MdWind', email: 'mdw_blocked@platformers.com.au', password: '7akKv$$2@CJgNK' },
@@ -110,6 +113,11 @@ const ImageGallery: FC = () => {
   const [batchEnd, setBatchEnd] = useState<any>('100');
   const [showImages, setShowImages] = useState<any>('');
   const [imagesTagList, setImagesTagList] = useState<any>([]);
+
+  // Default is to show the owner view
+  const [isDisplay, setIsDisplay] = useState<any>('block');
+  const [isDisplayOwner, setIsDisplayOwner] = useState<any>('none');
+  const [activeOrganizationArray, setActiveOrganizationArray] = useState<any>([]);
 
   const getImageTags = async () => {
     try {
@@ -243,6 +251,25 @@ const ImageGallery: FC = () => {
   //     { value: 'woodeson', name: 'Woodeson Excavations', email: 'wooex@platformers.com.au', password: 'rb7r9Pg7DYnCuhFxo' },
   // ];
 
+  useEffect(() => {
+    if (!_.isEmpty(dataOrganizationList)) {
+        let actOrg = getValueFromCache('activeOrganization');
+        let foundObj = dataOrganizationList?.find(obj => obj.id === actOrg);
+        if (foundObj && String(userId) !== foundObj.adminId) {
+          setIsDisplay('none');
+          setIsDisplayOwner('block');
+        }
+    }
+  }, [dataOrganizationList]);
+
+  useEffect(() => {
+    if (!_.isEmpty(dataOrganizationList) && !_.isEmpty(activeOrganization)) {
+      let activeOrgArray = dataOrganizationList;
+      activeOrgArray = activeOrgArray ? activeOrgArray.filter(item => item.id === activeOrganization) : null;
+      setActiveOrganizationArray(activeOrgArray ? activeOrgArray[0] : null);
+    }
+  }, [activeOrganization, dataOrganizationList]);
+
 
   return (
     <DefaultLayout>
@@ -250,13 +277,23 @@ const ImageGallery: FC = () => {
         <Breadcrumb pageName="Image Gallery" />
         <div>
         </div>
-
+        <div style={{display: isDisplayOwner}}>
+          <h1 className="font-medium text-black dark:text-white">
+            You are not the owner of the Organization, thus your access is limited.
+          </h1>
+        </div>
+        <div style={{display: isDisplay}}>
         <div className="py-3 gap-8">
           <div className="col-span-5 xl:col-span-3">
             <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
               <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
                 <h3 className="font-medium text-black dark:text-white">
-                  Data Source : Upvise
+                  Data Source : Sans Paper
+                </h3>
+              </div>
+              <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
+                <h3 className="font-medium text-black dark:text-white">
+                  Organization : {activeOrganizationArray.name}
                 </h3>
               </div>
               <div className="p-7">
@@ -279,31 +316,6 @@ const ImageGallery: FC = () => {
                     >
                       Tag 2
                     </button>
-                  </div>
-                </div>
-
-                <div className="mb-5.5">
-                  <label
-                    className="mb-3 block text-sm font-medium text-black dark:text-white"
-                    htmlFor="emailAddress"
-                  >
-                    Select Organization
-                  </label>
-                  <div className="relative">
-                    <Select
-                      showSearch
-                      placeholder="Select an organization"
-                      onChange={(e) => {
-                        setOrgSelect(e);
-                      }}
-                      style={{ width: '100%' }}
-                    >
-                      {organizations.map((value: any, i: any) => (
-                        <Option value={value.value} key={i}>
-                          {value.name}
-                        </Option>
-                      ))}
-                    </Select>
                   </div>
                 </div>
 
@@ -378,6 +390,8 @@ const ImageGallery: FC = () => {
               Image Gallery
             </div>
           </div>
+        </div>
+
         </div>
 
       </div>

@@ -39,5 +39,6 @@
 , "src/graphql/useUserSkill.js", "src/graphql/useUserSkill.js", "src/graphql/useUserSkill.js"  ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "outdir": "./dist"
 }

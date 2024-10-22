@@ -6,9 +6,9 @@ import React, { useEffect, useState } from 'react';
 //import DisplayTop3Photos from '../../../components/DisplayTop3Photos';
 import ProfileAdminViewSection from '@/components/ProfileAdminViewSection';
 //import { Color, Padding, FontFamily, FontSize } from '../../../GlobalStyles';
-import usePhotoData from '@/graphql/usePhotoData';
-import useReviewData from '@/graphql/getReviews';
-import useUserSkill from '@/graphql/useUserSkill';
+// import usePhotoData from '@/graphql/usePhotoData';
+// import useReviewData from '@/graphql/getReviews';
+// import useUserSkill from '@/graphql/useUserSkill';
 import Icon from 'react-icons/md'; // Use react-icons for web
 import { useUserStore } from '@/store/user/userStore';
 import { FaStar } from 'react-icons/fa';
@@ -32,12 +32,21 @@ const ProfileAdminView= () => {
   const [userID, setUserID] = useState<string | null>(null);
   const [receiverID, setReceiverID] = useState<string | null>(null);
   const [profileData, setProfileData] = useState<UserNode | null>(null);
-  const { dataSkill, errorSkill, isLoadingSkill } = useUserSkill(userID || '');
-  const { dataPhoto, errorPhoto, isLoadingPhoto } = usePhotoData(userID || '');
-  const { dataReview, errorReview, isLoadingReview } = useReviewData(userID || '');
+  // const { dataSkill, errorSkill, isLoadingSkill } = useUserSkill(userID || '');
+  // const { dataPhoto, errorPhoto, isLoadingPhoto } = usePhotoData(userID || '');
+  // const { dataReview, errorReview, isLoadingReview } = useReviewData(userID || '');
   const [galleryData, setGalleryData] = useState<{ answer: string; fieldId: string; componentId: string; fillupFormFields: string; }[]>([]);
 
-  const isLoading = isLoadingSkill && isLoadingReview && isLoadingPhoto;
+  //const isLoading = isLoadingSkill && isLoadingReview && isLoadingPhoto;
+  const isLoading = false;
+  const isLoadingSkill = false;
+  const errorReview = false;
+  const errorPhoto = false;
+  const errorSkill = false;
+  const dataSkill: any[] = [];
+  const dataPhoto: any[] = [];
+  const dataReview: any[] = [];
+
 
   useEffect(() => {
     //const userID = searchParams.get("userID") || '';
@@ -61,8 +70,8 @@ const ProfileAdminView= () => {
   useEffect(() => {
     if (dataPhoto?.[0]?.fillupForms?.nodes) {
       const filteredAnswers = dataPhoto[0].fillupForms.nodes
-        .flatMap(form => form.fillupFormFields || [])
-        .filter(field => {
+        .flatMap((form: { fillupFormFields: any; }) => form.fillupFormFields || [])
+        .filter((field: { answer: string; field: { component: { id: string; }; }; }) => {
           const answer = field.answer || '';
           const componentId = field.field?.component?.id || '';
   
@@ -75,7 +84,7 @@ const ProfileAdminView= () => {
   
           return componentId === '125' && isValidAnswer;
         })
-        .map(field => ({
+        .map((field: { answer: any; field: { id: any; component: { id: any; }; }; id: any; }) => ({
           answer: field.answer || '',
           fieldId: field.field?.id || '',
           componentId: field.field?.component?.id || '',

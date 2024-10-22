@@ -5,6 +5,10 @@ import {
   Box,
   Text,
 } from '@chakra-ui/react';
+import { useUserData } from "@/graphql/useUserData";
+import  useGetOrganizationList  from "@/graphql/getOrganizationList";
+import { useUserStore } from "@/store/user/userStore";
+import _ from 'lodash';
 
 const DropdownMessage = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -39,6 +43,33 @@ const DropdownMessage = () => {
     return () => document.removeEventListener("keydown", keyHandler);
   });
 
+  const { userId, userAuth } = useUserStore();
+  const { dataUser, errorUser, isLoadingUser } = useUserData(userId || "");
+  const { dataOrganizationList, errorOrganizationList, isLoadingOrganizationList } = useGetOrganizationList(true);
+  const [userOrg, setUserOrg] = useState<any>([]);
+  
+
+  useEffect(() => {
+    if (!_.isEmpty(dataUser?.organizationUsers?.nodes) && !_.isEmpty(dataOrganizationList)) {
+      let newArray = dataUser?.organizationUsers?.nodes;
+      let display = 'block';
+      newArray = newArray?.map(item => {
+        let foundObj = dataOrganizationList?.find(obj => obj.id === item.organizationId);
+        return { ...item, organization: foundObj, display: display };
+      });
+      setUserOrg(newArray);
+
+
+      let activeOrganization = getValueFromCache('activeOrganization');
+      if (!activeOrganization) {
+        let id = dataUser?.organizationUsers?.nodes[0].organizationId ? dataUser?.organizationUsers?.nodes[0].organizationId : "0";
+        localStorage.setItem('activeOrganization', id);
+      }
+    }
+  }, [dataUser, dataOrganizationList]);
+
+  //console.log(userOrg);
+
   const InitialIcon = ( initials: string ) => {
     return (
       <Box
@@ -55,9 +86,33 @@ const DropdownMessage = () => {
     );
   };
 
+  const getValueFromCache = (key: string) => {
+    return localStorage.getItem(key);
+  }
+  
+  const actionOnClick = (item: any) => {
+    setActiveOrganization(item.organizationId);
+    localStorage.setItem('activeOrganization', item.organizationId);
+    setDropdownOpen(!dropdownOpen);
+    window.location.reload();
+  }
+
+  const [activeOrganization, setActiveOrganization] = useState<any>(getValueFromCache('activeOrganization'));
+  const [activeOrganizationArray, setActiveOrganizationArray] = useState<any>([]);
+
+  useEffect(() => {
+    if (!_.isEmpty(dataOrganizationList) && !_.isEmpty(activeOrganization)) {
+      let activeOrgArray = dataOrganizationList;
+      activeOrgArray = activeOrgArray ? activeOrgArray.filter(item => item.id === activeOrganization) : null;
+      //console.log(activeOrgArray);
+      setActiveOrganizationArray(activeOrgArray ? activeOrgArray[0] : null);
+    }
+  }, [activeOrganization, dataOrganizationList]);
+
+
   return (
     <li className="relative">
-      <Link
+        <Link
         ref={trigger}
         onClick={() => {
           setNotifying(false);
@@ -67,11 +122,13 @@ const DropdownMessage = () => {
         href="#"
       >
         <div className="h-12.5 w-12.5 rounded-full">
-          {InitialIcon('SP')}
+          {InitialIcon(activeOrganizationArray?.name?.match(/\b\w/g).join(''))}
         </div>
 
-        <div style={{ paddingLeft: '5px' }}>Sans Paper Group Organization</div>
+        <div style={{ paddingLeft: '5px' }}>{activeOrganizationArray?.name}</div>
       </Link>
+      
+      
 
       {/* <!-- Dropdown Start --> */}
       <div
@@ -86,83 +143,25 @@ const DropdownMessage = () => {
         </div>
 
         <ul className="flex h-auto flex-col overflow-y-auto">
-          <li>
-            <Link
-              className="flex gap-4.5 align-center border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="/messages"
-            >
-              <div className="h-12.5 w-12.5 rounded-full">
-              {InitialIcon('SP')}
-              </div>
+          {userOrg.map((item: any, i:any) => (
+              <li key={i}>
+                <Link
+                  className="flex gap-4.5 align-center border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
+                  href="#"
+                  onClick={() => {actionOnClick(item)}}
+                >
+                  <div className="h-12.5 w-12.5 rounded-full">
+                    {InitialIcon(item.organization.name.match(/\b\w/g).join(''))}
+                  </div>
 
-              <div style={{ alignSelf: 'center' }}>
-                <h6 className="text-sm font-medium text-black dark:text-white">
-                  Sans Paper Group
-                </h6>
-              </div>
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="flex gap-4.5 align-center border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="/messages"
-            >
-              <div className="h-12.5 w-12.5 rounded-full">
-                {InitialIcon('MW')}
-              </div>
-
-              <div style={{ alignSelf: 'center' }}>
-                <h6 className="text-sm font-medium text-black dark:text-white">
-                  MD Wind
-                </h6>
-              </div>
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="flex gap-4.5 align-center border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="/messages"
-            >
-              <div className="h-12.5 w-12.5 rounded-full">
-                {InitialIcon('PL')}
-              </div>
-
-              <div style={{ alignSelf: 'center' }}>
-                <h6 className="text-sm font-medium text-black dark:text-white">
-                  Platformers
-                </h6>
-              </div>
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="flex gap-4.5 align-center border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="/messages"
-            >
-              <div className="h-12.5 w-12.5 rounded-full">
-                {InitialIcon('GI')}
-              </div>
-
-              <div style={{ alignSelf: 'center' }}>
-                <h6 className="text-sm font-medium text-black dark:text-white">
-                  Go Industries
-                </h6>
-              </div>
-            </Link>
-          </li>
-          {/* <li>
-            <Link
-              className="flex gap-4.5 border-t border-stroke px-4.5 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-              href="/messages"
-            >
-
-              <div>
-                <h6 className="text-sm font-medium text-black dark:text-white">
-                  Default
-                </h6>
-              </div>
-            </Link>
-          </li> */}
+                  <div style={{ alignSelf: 'center' }}>
+                    <h6 className="text-sm font-medium text-black dark:text-white">
+                      {item.organization.name}
+                    </h6>
+                  </div>
+                </Link>
+              </li>
+          ))}
         </ul>
       </div>
       {/* <!-- Dropdown End --> */}

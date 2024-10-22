@@ -1,7 +1,7 @@
 // types/UserProfile.ts
 interface GetUserDetailsByIdResponse {
     users: {
-      nodes: UserProfile[];
+      nodes: UserProfile;
     };
   }
 
@@ -25,6 +25,9 @@ export interface UserProfile {
     availables: {
         nodes: AvailableNode[];
       };
+    organizationUsers?: {
+      nodes: OrganizationUsersNode[];
+    }  
     }
 
     interface AvailableNode {
@@ -33,13 +36,18 @@ export interface UserProfile {
         jobType: JobType;
       }
 
+      interface OrganizationUsersNode {
+        organizationId: string;
+        userId: string;
+      }    
+
       interface JobType {
         id: number;
         description: string;
       }
   
   export interface UseUserDataResult {
-    dataUser: UserProfile[];
+    dataUser: UserProfile;
     errorUser: Error | null;
     isLoadingUser: boolean;
   }
