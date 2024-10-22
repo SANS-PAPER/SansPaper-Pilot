@@ -12,14 +12,14 @@ const CopilotSidebarLayout: FC<any> = (props) => {
 
   const simplifiedUser = {
     id: userId,
-    email: dataUser?.[0]?.email,
-    name: dataUser?.[0]?.name,
+    email: dataUser?.email,
+    name: dataUser?.name,
   };
 
   useCopilotReadable({
     description: "Current state of the application",
     value: {
-      dataUser: { name: dataUser?.[0]?.name, id: userId },
+      dataUser: { name: dataUser?.name, id: userId },
       currentUser: simplifiedUser,
     },
   });

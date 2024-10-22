@@ -4,7 +4,7 @@ import { GetUserDetailsByIdDocument } from '@/gql/_generated';
 import { UserProfile, UseUserDataResult } from '@/app/imageGallery/types/userProfile';
 
 export const useUserData = (userID: string): UseUserDataResult => {
-  const [dataUser, setUserData] = useState<UserProfile[]>([]);
+  const [dataUser, setUserData] = useState<UserProfile>({} as UserProfile);
   const [errorUser, setError] = useState<Error | null>(null);
   const [isLoadingUser, setIsLoading] = useState<boolean>(true);
 
@@ -31,9 +31,9 @@ export const useUserData = (userID: string): UseUserDataResult => {
   return { dataUser, errorUser, isLoadingUser };
 };
 
-const fetchUserData = async (userID: string): Promise<UserProfile[]> => {
+const fetchUserData = async (userID: string): Promise<UserProfile> => {
   const response = await client.request<{ users: { nodes: UserProfile[] } }>(GetUserDetailsByIdDocument, { userID });
-  return response?.users?.nodes ?? [];
+  return response?.users?.nodes[0] ?? {};
 };
 
 export default useUserData;
