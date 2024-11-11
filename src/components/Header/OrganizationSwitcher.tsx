@@ -10,7 +10,7 @@ import  useGetOrganizationList  from "@/graphql/getOrganizationList";
 import { useUserStore } from "@/store/user/userStore";
 import _ from 'lodash';
 
-const DropdownMessage = () => {
+const OrganizationSwitcher = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [notifying, setNotifying] = useState(true);
 
@@ -142,7 +142,7 @@ const DropdownMessage = () => {
           <h5 className="text-sm font-medium text-bodydark2">Select Active Organization</h5>
         </div>
 
-        <ul className="flex h-auto flex-col overflow-y-auto">
+        <ul className="flex h-90 flex-col overflow-y-auto">
           {userOrg.map((item: any, i:any) => (
               <li key={i}>
                 <Link
@@ -169,4 +169,4 @@ const DropdownMessage = () => {
   );
 };
 
-export default DropdownMessage;
+export default OrganizationSwitcher;

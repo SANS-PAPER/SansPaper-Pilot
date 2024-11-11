@@ -1,9 +1,18 @@
-import React from 'react';
+"use client";
+import { FC, useEffect, useState } from "react";
 import Modal from 'react-modal';
 
 //Modal.setAppElement('#root'); // This is important for accessibility
 
-const ImageModal = ({ isOpen, onRequestClose, images }: { isOpen: boolean, onRequestClose: () => void, images: Array<{ url: string }> }) => {
+const ImageModal = ({ isOpen, onRequestClose, images }: { isOpen: boolean, onRequestClose: () => void, images: { src: string; width: number; height: number; thumbnailCaption: any; caption: any; } }) => {
+
+  const [formData, setFormData] = useState<any>([]);
+
+  if (images){
+    console.log(images);
+    console.log('Get fillupform text only data');
+  }
+
   return (
     <Modal
       isOpen={isOpen}
@@ -13,10 +22,11 @@ const ImageModal = ({ isOpen, onRequestClose, images }: { isOpen: boolean, onReq
       overlayClassName="overlay"
     >
       <button onClick={onRequestClose} className="close-button">Close</button>
-      <div className="image-gallery">
-        {images.map((image, index) => (
-          <img key={index} src={image.url} alt={`Image ${index}`} className="gallery-image" />
-        ))}
+      <div className="grid">
+        <img key={images.thumbnailCaption} src={images.src} alt={`Image ${images.thumbnailCaption}`} className="gallery-image" />
+        <div className="caption">
+          <p>{images.caption}</p>
+        </div>
       </div>
     </Modal>
   );

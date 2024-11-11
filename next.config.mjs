@@ -6,7 +6,7 @@ dotenv.config();
 
 export default {
   images: {
-    domains: ['lh3.googleusercontent.com', 's.gravatar.com', 'cdn.auth0.com', 'static.vecteezy.com', 'icons.iconarchive.com', 'media.licdn.com'],
+    domains: ['lh3.googleusercontent.com', 's.gravatar.com', 'cdn.auth0.com', 'static.vecteezy.com', 'icons.iconarchive.com', 'media.licdn.com', 'form-staging2.sanspaper.com', 'form.sanspaper.com', 'spf-assets-aus.syd1.digitaloceanspaces.com'],
     remotePatterns: [
       {
         protocol: 'https',

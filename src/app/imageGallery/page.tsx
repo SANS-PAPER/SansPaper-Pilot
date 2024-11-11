@@ -37,6 +37,9 @@ import {
 } from '@chakra-ui/react';
 import _, { set } from 'lodash';
 import { Gallery } from "react-grid-gallery";
+import { GetImagesResponse, ImagesNode } from '@/components/Images/types/getImages';
+import { GetImagesByOrganizationDocument } from '@/gql/_generated';
+import Swal from 'sweetalert2';
 
 interface GalleryItem {
   answer: string;
@@ -72,8 +75,6 @@ const ImageGallery: FC = () => {
 
   const [activeOrganization, setActiveOrganization] = useState<any>(getValueFromCache('activeOrganization'));
 
-  //console.log('activeOrganization', activeOrganization);
-
   const organizations = [
     { value: 'mdwind', name: 'MdWind', email: 'mdw_blocked@platformers.com.au', password: '7akKv$$2@CJgNK' },
     { value: 'biomix', name: 'Biomix', email: 'biomix_upvise@platformers.com.au', password: 'enmohl2cm6' },
@@ -81,36 +82,26 @@ const ImageGallery: FC = () => {
   ];
 
   const sortOption = [
-    { value: 'asc', name: 'Ascending' },
-    { value: 'desc', name: 'Descending' },
+    { value: 'ID_ASC', name: 'Ascending' },
+    { value: 'ID_DESC', name: 'Descending' },
   ];
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const {
-    isOpen: isOpenTagModal,
-    onOpen: onOpenTagModal,
-    onClose: onCloseTagModal
-  } = useDisclosure();
-  const {
-    isOpen: isShowImageModal,
-    onOpen: onShowImageModal,
-    onClose: onCloseImageModal
-  } = useDisclosure();
+
   const [imageId, setImageId] = useState<any>('');
   const [linkedrecid, setLinkedrecid] = useState<any>('');
   const [newTag, setNewTag] = useState('');
   const [tags, setTags] = useState<any>([]);
   const [imageData, setImageData] = useState<any>([]);
   const [orgSelect, setOrgSelect] = useState<any>('');
-  const [sort, setSort] = useState<any>('');
+  const [sort, setSort] = useState<any>('ID_ASC');
   const [imagesArray, setImagesArray] = useState<any>([]);
   const [formData, setFormData] = useState<any>([]);
   const [pickTag, setPickTag] = useState<any>('');
   const [notAvailable, setNotAvailable] = useState<any>(false);
   const [total, setTotal] = useState<any>('');
-  const [increment, setIncrement] = useState<any>('0');
-  const [batchStart, setBatchStart] = useState<any>('1');
-  const [batchEnd, setBatchEnd] = useState<any>('100');
+  const [increment, setIncrement] = useState<number>(0);
+  const [batchEnd, setBatchEnd] = useState<number>(100);
   const [showImages, setShowImages] = useState<any>('');
   const [imagesTagList, setImagesTagList] = useState<any>([]);
 
@@ -143,25 +134,47 @@ const ImageGallery: FC = () => {
     } catch (error: any) {
       //
     } finally {
-      onCloseTagModal();
       setTags([]);
     }
   };
 
-  const getImageLists = async (org: string, start: string, sort: string) => {
-    setImageData([]);
-    setImagesArray([]);
-    setNotAvailable(true);
+  const fetchImages = async (orgId: any, order_by: any, first: any, offset: any): Promise<ImagesNode[]> => {
     try {
-      // var image_tags = await Helper.getUpviseImages(org, start, sort);
-      // if (!image_tags) {
-      //     setNotAvailable(true);
-      //     setTotal('');
-      // } else {
-      //     setNotAvailable(false);
-      //     setImageData(image_tags[0].images);
-      //     setTotal(image_tags[0].total.toString());
-      // }
+      const response: GetImagesResponse = await client.request(GetImagesByOrganizationDocument, { orgId, order_by, first, offset });
+      if (response?.images?.totalCount) {
+        setTotal(response.images.totalCount);
+      }
+      return response?.images?.nodes || [];
+    } catch (error) {
+      console.log('Error fetching images list:', error);
+      throw error;
+    }
+  };
+
+  const getImageLists = async (start: number, sort: string) => {
+    try {
+      let dataImages = await fetchImages(activeOrganization, sort, 100, start);
+      
+      if (!_.isEmpty(dataImages)) {
+        var imArray: { src: string; width: number; height: number; thumbnailCaption: any; caption: any; }[] = [];
+        dataImages.forEach(function (arrayItem: any) {
+          imArray.push({
+              src: 'https://spf-assets-aus.syd1.digitaloceanspaces.com/'+arrayItem.image,
+              width: 400,
+              height: 300,
+              thumbnailCaption: arrayItem.id,
+              caption: arrayItem.fillupFormId
+          });
+          setImagesArray(imagesArray.concat(imArray));
+      });
+      } else {
+        Swal.fire({
+          title: 'Info',
+          text: 'No image found for this organization',
+          icon: 'info',
+          confirmButtonText: 'OK'
+        });
+      }
     } catch (error: any) {
       //
     }
@@ -327,9 +340,10 @@ const ImageGallery: FC = () => {
                     Sort Images By Date
                   </label>
                   <Select
-                    defaultValue="asc"
+                    defaultValue="ID_ASC"
                     onChange={(e) => {
                       setSort(e);
+                      setImagesArray([]);
                     }}
                     style={{ width: '100%' }}
                   >
@@ -344,7 +358,9 @@ const ImageGallery: FC = () => {
                 <div className="mb-5.5">
                   <button
                     className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
-                    type="submit"
+                    onClick={() => {
+                      getImageLists(increment, sort);
+                  }}
                   >
                     Search
                   </button>
@@ -359,43 +375,62 @@ const ImageGallery: FC = () => {
           </div>
         </div>
 
-        <div className="py-3 gap-8">
-          <div className="col-span-5 xl:col-span-3">
-            <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-              <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
-                <h3 className="font-medium text-black dark:text-white">
-                  Total Images : 1500
-                </h3>
-              </div>
-              <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
-                <h3 className="font-medium text-black dark:text-white">
-                  Current Image Batch : 1 - 100
-                </h3>
-                <div className="py-5">
-                  <button
-                    className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
-                    type="submit"
-                  >
-                    Load next 100 images
-                  </button>
+          {!_.isEmpty(imagesArray) && (
+            <>
+              <div className="py-3 gap-8">
+                <div className="col-span-5 xl:col-span-3">
+                  <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Total Images : {total}
+                      </h3>
+                    </div>
+                    <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Current Image Batch : 1 - {batchEnd}
+                      </h3>
+                      <div className="py-5">
+                        <button
+                          className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
+                          onClick={() => {
+                            setImagesArray([]);
+                            getImageLists(increment + 100, sort);
+                            setIncrement(increment + 100);
+                            setBatchEnd(batchEnd + 100);
+                          }}
+                        >
+                          Load next 100 images
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
 
-        <div className="py-3 gap-8">
-          <div className="col-span-5 xl:col-span-3">
-            <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-              Image Gallery
-            </div>
-          </div>
-        </div>
-
+              <div className="py-3 gap-8">
+                <div className="col-span-5 xl:col-span-3">
+                  <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark px-3 py-3">
+                    {!_.isEmpty(imagesArray) && (
+                      <>
+                      <Gallery images={imagesArray} onClick={(index, image) => {
+                        setImageData(image);
+                        onOpen();
+                      }} />
+                      <ImageModal isOpen={isOpen} onRequestClose={onClose} images={imageData} ></ImageModal>
+                      </>
+                    )
+                    }
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
       </div>
+
     </DefaultLayout>
+    
   );
 };
 
