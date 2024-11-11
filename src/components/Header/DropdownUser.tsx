@@ -257,7 +257,7 @@ const DropdownUser = () => {
                   fill=""
                 />
               </svg>
-              Account Settings
+              Organization Settings
             </Link>
           </li>
           <li>

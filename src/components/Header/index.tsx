@@ -1,6 +1,6 @@
 import Link from "next/link";
 import DarkModeSwitcher from "./DarkModeSwitcher";
-import DropdownMessage from "./DropdownMessage";
+import OrganizationSwitcher from "./OrganizationSwitcher";
 import DropdownNotification from "./DropdownNotification";
 import DropdownUser from "./DropdownUser";
 import Image from "next/image";
@@ -77,7 +77,7 @@ const Header = (props: {
         <div className="flex items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">
             {/* <!-- Organization Switcher Area --> */}
-            <DropdownMessage />
+            <OrganizationSwitcher />
             {/* <!-- Organization Switcher Area --> */}
 
             {/* <!-- Dark Mode Toggler --> */}

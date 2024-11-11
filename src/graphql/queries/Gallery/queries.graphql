@@ -1,0 +1,11 @@
+query GetImagesByOrganization($orgId: BigInt, $order_by: [ImagesOrderBy!], $first: Int, $offset: Int) {
+  images(filter: { organizationId: {equalTo: $orgId} }, orderBy: $order_by, first:$first, offset:$offset) {
+    nodes {
+      id
+      image
+      fillupFormId
+      organizationId
+    }
+    totalCount
+  }
+}

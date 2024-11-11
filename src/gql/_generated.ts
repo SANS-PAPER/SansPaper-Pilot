@@ -5092,6 +5092,80 @@ export type CreateGroupUserPayloadGroupUserEdgeArgs = {
   orderBy?: InputMaybe<Array<GroupUsersOrderBy>>;
 };
 
+/** All input for the create `Image` mutation. */
+export type CreateImageInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `Image` to be created by this mutation. */
+  image: ImageInput;
+};
+
+/** The output of our create `Image` mutation. */
+export type CreateImagePayload = {
+  __typename?: 'CreateImagePayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `FillupForm` that is related to this `Image`. */
+  fillupForm?: Maybe<FillupForm>;
+  /** The `Image` that was created by this mutation. */
+  image?: Maybe<Image>;
+  /** An edge for our `Image`. May be used by Relay 1. */
+  imageEdge?: Maybe<ImagesEdge>;
+  /** Reads a single `Organization` that is related to this `Image`. */
+  organization?: Maybe<Organization>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our create `Image` mutation. */
+export type CreateImagePayloadImageEdgeArgs = {
+  orderBy?: InputMaybe<Array<ImagesOrderBy>>;
+};
+
+/** All input for the create `ImageTag` mutation. */
+export type CreateImageTagInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `ImageTag` to be created by this mutation. */
+  imageTag: ImageTagInput;
+};
+
+/** The output of our create `ImageTag` mutation. */
+export type CreateImageTagPayload = {
+  __typename?: 'CreateImageTagPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Image` that is related to this `ImageTag`. */
+  image?: Maybe<Image>;
+  /** The `ImageTag` that was created by this mutation. */
+  imageTag?: Maybe<ImageTag>;
+  /** An edge for our `ImageTag`. May be used by Relay 1. */
+  imageTagEdge?: Maybe<ImageTagsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `Tag` that is related to this `ImageTag`. */
+  tag?: Maybe<Tag>;
+};
+
+
+/** The output of our create `ImageTag` mutation. */
+export type CreateImageTagPayloadImageTagEdgeArgs = {
+  orderBy?: InputMaybe<Array<ImageTagsOrderBy>>;
+};
+
 /** All input for the create `Issuance` mutation. */
 export type CreateIssuanceInput = {
   /**
@@ -5726,6 +5800,43 @@ export type CreateOrganizationPayload = {
 /** The output of our create `Organization` mutation. */
 export type CreateOrganizationPayloadOrganizationEdgeArgs = {
   orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
+};
+
+/** All input for the create `OrganizationSetting` mutation. */
+export type CreateOrganizationSettingInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `OrganizationSetting` to be created by this mutation. */
+  organizationSetting: OrganizationSettingInput;
+};
+
+/** The output of our create `OrganizationSetting` mutation. */
+export type CreateOrganizationSettingPayload = {
+  __typename?: 'CreateOrganizationSettingPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Organization` that is related to this `OrganizationSetting`. */
+  organization?: Maybe<Organization>;
+  /** The `OrganizationSetting` that was created by this mutation. */
+  organizationSetting?: Maybe<OrganizationSetting>;
+  /** An edge for our `OrganizationSetting`. May be used by Relay 1. */
+  organizationSettingEdge?: Maybe<OrganizationSettingsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `Setting` that is related to this `OrganizationSetting`. */
+  setting?: Maybe<Setting>;
+};
+
+
+/** The output of our create `OrganizationSetting` mutation. */
+export type CreateOrganizationSettingPayloadOrganizationSettingEdgeArgs = {
+  orderBy?: InputMaybe<Array<OrganizationSettingsOrderBy>>;
 };
 
 /** All input for the create `OrganizationUser` mutation. */
@@ -6479,6 +6590,41 @@ export type CreateSystemEventPayload = {
 /** The output of our create `SystemEvent` mutation. */
 export type CreateSystemEventPayloadSystemEventEdgeArgs = {
   orderBy?: InputMaybe<Array<SystemEventsOrderBy>>;
+};
+
+/** All input for the create `Tag` mutation. */
+export type CreateTagInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The `Tag` to be created by this mutation. */
+  tag: TagInput;
+};
+
+/** The output of our create `Tag` mutation. */
+export type CreateTagPayload = {
+  __typename?: 'CreateTagPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Organization` that is related to this `Tag`. */
+  organization?: Maybe<Organization>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** The `Tag` that was created by this mutation. */
+  tag?: Maybe<Tag>;
+  /** An edge for our `Tag`. May be used by Relay 1. */
+  tagEdge?: Maybe<TagsEdge>;
+};
+
+
+/** The output of our create `Tag` mutation. */
+export type CreateTagPayloadTagEdgeArgs = {
+  orderBy?: InputMaybe<Array<TagsOrderBy>>;
 };
 
 /** All input for the create `Team` mutation. */
@@ -9109,6 +9255,54 @@ export type DeleteGroupPayloadGroupEdgeArgs = {
   orderBy?: InputMaybe<Array<GroupsOrderBy>>;
 };
 
+/** All input for the `deleteImageByNodeId` mutation. */
+export type DeleteImageByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Image` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteImage` mutation. */
+export type DeleteImageInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `Image` mutation. */
+export type DeleteImagePayload = {
+  __typename?: 'DeleteImagePayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedImageNodeId?: Maybe<Scalars['ID']['output']>;
+  /** Reads a single `FillupForm` that is related to this `Image`. */
+  fillupForm?: Maybe<FillupForm>;
+  /** The `Image` that was deleted by this mutation. */
+  image?: Maybe<Image>;
+  /** An edge for our `Image`. May be used by Relay 1. */
+  imageEdge?: Maybe<ImagesEdge>;
+  /** Reads a single `Organization` that is related to this `Image`. */
+  organization?: Maybe<Organization>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our delete `Image` mutation. */
+export type DeleteImagePayloadImageEdgeArgs = {
+  orderBy?: InputMaybe<Array<ImagesOrderBy>>;
+};
+
 /** All input for the `deleteIssuanceByEquipmentIdAndSerialNumber` mutation. */
 export type DeleteIssuanceByEquipmentIdAndSerialNumberInput = {
   /**
@@ -9972,6 +10166,54 @@ export type DeleteOrganizationPayload = {
 /** The output of our delete `Organization` mutation. */
 export type DeleteOrganizationPayloadOrganizationEdgeArgs = {
   orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
+};
+
+/** All input for the `deleteOrganizationSettingByNodeId` mutation. */
+export type DeleteOrganizationSettingByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `OrganizationSetting` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteOrganizationSetting` mutation. */
+export type DeleteOrganizationSettingInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `OrganizationSetting` mutation. */
+export type DeleteOrganizationSettingPayload = {
+  __typename?: 'DeleteOrganizationSettingPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedOrganizationSettingNodeId?: Maybe<Scalars['ID']['output']>;
+  /** Reads a single `Organization` that is related to this `OrganizationSetting`. */
+  organization?: Maybe<Organization>;
+  /** The `OrganizationSetting` that was deleted by this mutation. */
+  organizationSetting?: Maybe<OrganizationSetting>;
+  /** An edge for our `OrganizationSetting`. May be used by Relay 1. */
+  organizationSettingEdge?: Maybe<OrganizationSettingsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `Setting` that is related to this `OrganizationSetting`. */
+  setting?: Maybe<Setting>;
+};
+
+
+/** The output of our delete `OrganizationSetting` mutation. */
+export type DeleteOrganizationSettingPayloadOrganizationSettingEdgeArgs = {
+  orderBy?: InputMaybe<Array<OrganizationSettingsOrderBy>>;
 };
 
 /** All input for the `deleteOrganizationUserByNodeId` mutation. */
@@ -10995,6 +11237,52 @@ export type DeleteSystemEventPayload = {
 /** The output of our delete `SystemEvent` mutation. */
 export type DeleteSystemEventPayloadSystemEventEdgeArgs = {
   orderBy?: InputMaybe<Array<SystemEventsOrderBy>>;
+};
+
+/** All input for the `deleteTagByNodeId` mutation. */
+export type DeleteTagByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Tag` to be deleted. */
+  nodeId: Scalars['ID']['input'];
+};
+
+/** All input for the `deleteTag` mutation. */
+export type DeleteTagInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+};
+
+/** The output of our delete `Tag` mutation. */
+export type DeleteTagPayload = {
+  __typename?: 'DeleteTagPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  deletedTagNodeId?: Maybe<Scalars['ID']['output']>;
+  /** Reads a single `Organization` that is related to this `Tag`. */
+  organization?: Maybe<Organization>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** The `Tag` that was deleted by this mutation. */
+  tag?: Maybe<Tag>;
+  /** An edge for our `Tag`. May be used by Relay 1. */
+  tagEdge?: Maybe<TagsEdge>;
+};
+
+
+/** The output of our delete `Tag` mutation. */
+export type DeleteTagPayloadTagEdgeArgs = {
+  orderBy?: InputMaybe<Array<TagsOrderBy>>;
 };
 
 /** All input for the `deleteTeamByNodeId` mutation. */
@@ -13623,11 +13911,15 @@ export type FillupForm = Node & {
   /** Reads and enables pagination through a set of `Group`. */
   groupsBySchedulerFillupformIdAndGroupId: FillupFormGroupsBySchedulerFillupformIdAndGroupIdManyToManyConnection;
   id: Scalars['BigInt']['output'];
+  /** Reads and enables pagination through a set of `Image`. */
+  images: ImagesConnection;
   isApproved: Scalars['Int']['output'];
   isDraft?: Maybe<Scalars['Int']['output']>;
   isReadonly: Scalars['Int']['output'];
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
+  /** Reads and enables pagination through a set of `Organization`. */
+  organizationsByImageFillupFormIdAndOrganizationId: FillupFormOrganizationsByImageFillupFormIdAndOrganizationIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Organization`. */
   organizationsBySchedulerFillupformIdAndOrgId: FillupFormOrganizationsBySchedulerFillupformIdAndOrgIdManyToManyConnection;
   /** Reads and enables pagination through a set of `SchedulerField`. */
@@ -13717,6 +14009,30 @@ export type FillupFormGroupsBySchedulerFillupformIdAndGroupIdArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<GroupsOrderBy>>;
+};
+
+
+export type FillupFormImagesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ImageCondition>;
+  filter?: InputMaybe<ImageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ImagesOrderBy>>;
+};
+
+
+export type FillupFormOrganizationsByImageFillupFormIdAndOrganizationIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<OrganizationCondition>;
+  filter?: InputMaybe<OrganizationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
 };
 
 
@@ -14185,6 +14501,43 @@ export type FillupFormInput = {
   status: Scalars['Int']['input'];
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
   userId: Scalars['BigInt']['input'];
+};
+
+/** A connection to a list of `Organization` values, with data from `Image`. */
+export type FillupFormOrganizationsByImageFillupFormIdAndOrganizationIdManyToManyConnection = {
+  __typename?: 'FillupFormOrganizationsByImageFillupFormIdAndOrganizationIdManyToManyConnection';
+  /** A list of edges which contains the `Organization`, info from the `Image`, and the cursor to aid in pagination. */
+  edges: Array<FillupFormOrganizationsByImageFillupFormIdAndOrganizationIdManyToManyEdge>;
+  /** A list of `Organization` objects. */
+  nodes: Array<Organization>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Organization` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Organization` edge in the connection, with data from `Image`. */
+export type FillupFormOrganizationsByImageFillupFormIdAndOrganizationIdManyToManyEdge = {
+  __typename?: 'FillupFormOrganizationsByImageFillupFormIdAndOrganizationIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `Image`. */
+  images: ImagesConnection;
+  /** The `Organization` at the end of the edge. */
+  node: Organization;
+};
+
+
+/** A `Organization` edge in the connection, with data from `Image`. */
+export type FillupFormOrganizationsByImageFillupFormIdAndOrganizationIdManyToManyEdgeImagesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ImageCondition>;
+  filter?: InputMaybe<ImageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ImagesOrderBy>>;
 };
 
 /** A connection to a list of `Organization` values, with data from `Scheduler`. */
@@ -18515,6 +18868,283 @@ export enum GroupsOrderBy {
   UuidDesc = 'UUID_DESC'
 }
 
+export type Image = Node & {
+  __typename?: 'Image';
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  deletedAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `FillupForm` that is related to this `Image`. */
+  fillupForm?: Maybe<FillupForm>;
+  fillupFormId: Scalars['BigInt']['output'];
+  id: Scalars['BigInt']['output'];
+  image: Scalars['String']['output'];
+  /** Reads and enables pagination through a set of `ImageTag`. */
+  imageTags: ImageTagsConnection;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  /** Reads a single `Organization` that is related to this `Image`. */
+  organization?: Maybe<Organization>;
+  organizationId: Scalars['BigInt']['output'];
+  /** Reads and enables pagination through a set of `Tag`. */
+  tagsByImageTagImageIdAndTagId: ImageTagsByImageTagImageIdAndTagIdManyToManyConnection;
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+};
+
+
+export type ImageImageTagsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ImageTagCondition>;
+  filter?: InputMaybe<ImageTagFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ImageTagsOrderBy>>;
+};
+
+
+export type ImageTagsByImageTagImageIdAndTagIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<TagCondition>;
+  filter?: InputMaybe<TagFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<TagsOrderBy>>;
+};
+
+/** A condition to be used against `Image` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type ImageCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `fillupFormId` field. */
+  fillupFormId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `image` field. */
+  image?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `organizationId` field. */
+  organizationId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A filter to be used against `Image` object types. All fields are combined with a logical ‘and.’ */
+export type ImageFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<ImageFilter>>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `fillupFormId` field. */
+  fillupFormId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `image` field. */
+  image?: InputMaybe<StringFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<ImageFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<ImageFilter>>;
+  /** Filter by the object’s `organizationId` field. */
+  organizationId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+};
+
+/** An input for mutations affecting `Image` */
+export type ImageInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  fillupFormId: Scalars['BigInt']['input'];
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  image: Scalars['String']['input'];
+  organizationId: Scalars['BigInt']['input'];
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** Represents an update to a `Image`. Fields that are set will be updated. */
+export type ImagePatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  fillupFormId?: InputMaybe<Scalars['BigInt']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  organizationId?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+export type ImageTag = {
+  __typename?: 'ImageTag';
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  /** Reads a single `Image` that is related to this `ImageTag`. */
+  image?: Maybe<Image>;
+  imageId: Scalars['BigInt']['output'];
+  /** Reads a single `Tag` that is related to this `ImageTag`. */
+  tag?: Maybe<Tag>;
+  tagId: Scalars['BigInt']['output'];
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+};
+
+/**
+ * A condition to be used against `ImageTag` object types. All fields are tested
+ * for equality and combined with a logical ‘and.’
+ */
+export type ImageTagCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `imageId` field. */
+  imageId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `tagId` field. */
+  tagId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A filter to be used against `ImageTag` object types. All fields are combined with a logical ‘and.’ */
+export type ImageTagFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<ImageTagFilter>>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `imageId` field. */
+  imageId?: InputMaybe<BigIntFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<ImageTagFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<ImageTagFilter>>;
+  /** Filter by the object’s `tagId` field. */
+  tagId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+};
+
+/** An input for mutations affecting `ImageTag` */
+export type ImageTagInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  imageId: Scalars['BigInt']['input'];
+  tagId: Scalars['BigInt']['input'];
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A connection to a list of `Tag` values, with data from `ImageTag`. */
+export type ImageTagsByImageTagImageIdAndTagIdManyToManyConnection = {
+  __typename?: 'ImageTagsByImageTagImageIdAndTagIdManyToManyConnection';
+  /** A list of edges which contains the `Tag`, info from the `ImageTag`, and the cursor to aid in pagination. */
+  edges: Array<ImageTagsByImageTagImageIdAndTagIdManyToManyEdge>;
+  /** A list of `Tag` objects. */
+  nodes: Array<Tag>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Tag` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Tag` edge in the connection, with data from `ImageTag`. */
+export type ImageTagsByImageTagImageIdAndTagIdManyToManyEdge = {
+  __typename?: 'ImageTagsByImageTagImageIdAndTagIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `ImageTag`. */
+  imageTags: ImageTagsConnection;
+  /** The `Tag` at the end of the edge. */
+  node: Tag;
+};
+
+
+/** A `Tag` edge in the connection, with data from `ImageTag`. */
+export type ImageTagsByImageTagImageIdAndTagIdManyToManyEdgeImageTagsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ImageTagCondition>;
+  filter?: InputMaybe<ImageTagFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ImageTagsOrderBy>>;
+};
+
+/** A connection to a list of `ImageTag` values. */
+export type ImageTagsConnection = {
+  __typename?: 'ImageTagsConnection';
+  /** A list of edges which contains the `ImageTag` and cursor to aid in pagination. */
+  edges: Array<ImageTagsEdge>;
+  /** A list of `ImageTag` objects. */
+  nodes: Array<ImageTag>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `ImageTag` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `ImageTag` edge in the connection. */
+export type ImageTagsEdge = {
+  __typename?: 'ImageTagsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `ImageTag` at the end of the edge. */
+  node: ImageTag;
+};
+
+/** Methods to use when ordering `ImageTag`. */
+export enum ImageTagsOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  ImageIdAsc = 'IMAGE_ID_ASC',
+  ImageIdDesc = 'IMAGE_ID_DESC',
+  Natural = 'NATURAL',
+  TagIdAsc = 'TAG_ID_ASC',
+  TagIdDesc = 'TAG_ID_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC'
+}
+
+/** A connection to a list of `Image` values. */
+export type ImagesConnection = {
+  __typename?: 'ImagesConnection';
+  /** A list of edges which contains the `Image` and cursor to aid in pagination. */
+  edges: Array<ImagesEdge>;
+  /** A list of `Image` objects. */
+  nodes: Array<Image>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Image` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Image` edge in the connection. */
+export type ImagesEdge = {
+  __typename?: 'ImagesEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Image` at the end of the edge. */
+  node: Image;
+};
+
+/** Methods to use when ordering `Image`. */
+export enum ImagesOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DeletedAtAsc = 'DELETED_AT_ASC',
+  DeletedAtDesc = 'DELETED_AT_DESC',
+  FillupFormIdAsc = 'FILLUP_FORM_ID_ASC',
+  FillupFormIdDesc = 'FILLUP_FORM_ID_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  ImageAsc = 'IMAGE_ASC',
+  ImageDesc = 'IMAGE_DESC',
+  Natural = 'NATURAL',
+  OrganizationIdAsc = 'ORGANIZATION_ID_ASC',
+  OrganizationIdDesc = 'ORGANIZATION_ID_DESC',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC'
+}
+
 /** A filter to be used against Int fields. All fields are combined with a logical ‘and.’ */
 export type IntFilter = {
   /** Not equal to the specified value, treating null like an ordinary value. */
@@ -21464,6 +22094,10 @@ export type Mutation = {
   createGroup?: Maybe<CreateGroupPayload>;
   /** Creates a single `GroupUser`. */
   createGroupUser?: Maybe<CreateGroupUserPayload>;
+  /** Creates a single `Image`. */
+  createImage?: Maybe<CreateImagePayload>;
+  /** Creates a single `ImageTag`. */
+  createImageTag?: Maybe<CreateImageTagPayload>;
   /** Creates a single `Issuance`. */
   createIssuance?: Maybe<CreateIssuancePayload>;
   /** Creates a single `Job`. */
@@ -21500,6 +22134,8 @@ export type Mutation = {
   createNotification?: Maybe<CreateNotificationPayload>;
   /** Creates a single `Organization`. */
   createOrganization?: Maybe<CreateOrganizationPayload>;
+  /** Creates a single `OrganizationSetting`. */
+  createOrganizationSetting?: Maybe<CreateOrganizationSettingPayload>;
   /** Creates a single `OrganizationUser`. */
   createOrganizationUser?: Maybe<CreateOrganizationUserPayload>;
   /** Creates a single `PasswordReset`. */
@@ -21542,6 +22178,8 @@ export type Mutation = {
   createSubscriptionItem?: Maybe<CreateSubscriptionItemPayload>;
   /** Creates a single `SystemEvent`. */
   createSystemEvent?: Maybe<CreateSystemEventPayload>;
+  /** Creates a single `Tag`. */
+  createTag?: Maybe<CreateTagPayload>;
   /** Creates a single `Team`. */
   createTeam?: Maybe<CreateTeamPayload>;
   /** Creates a single `TeamUser`. */
@@ -21736,6 +22374,10 @@ export type Mutation = {
   deleteGroup?: Maybe<DeleteGroupPayload>;
   /** Deletes a single `Group` using its globally unique id. */
   deleteGroupByNodeId?: Maybe<DeleteGroupPayload>;
+  /** Deletes a single `Image` using a unique key. */
+  deleteImage?: Maybe<DeleteImagePayload>;
+  /** Deletes a single `Image` using its globally unique id. */
+  deleteImageByNodeId?: Maybe<DeleteImagePayload>;
   /** Deletes a single `Issuance` using a unique key. */
   deleteIssuance?: Maybe<DeleteIssuancePayload>;
   /** Deletes a single `Issuance` using a unique key. */
@@ -21814,6 +22456,10 @@ export type Mutation = {
   deleteOrganization?: Maybe<DeleteOrganizationPayload>;
   /** Deletes a single `Organization` using its globally unique id. */
   deleteOrganizationByNodeId?: Maybe<DeleteOrganizationPayload>;
+  /** Deletes a single `OrganizationSetting` using a unique key. */
+  deleteOrganizationSetting?: Maybe<DeleteOrganizationSettingPayload>;
+  /** Deletes a single `OrganizationSetting` using its globally unique id. */
+  deleteOrganizationSettingByNodeId?: Maybe<DeleteOrganizationSettingPayload>;
   /** Deletes a single `OrganizationUser` using a unique key. */
   deleteOrganizationUser?: Maybe<DeleteOrganizationUserPayload>;
   /** Deletes a single `OrganizationUser` using its globally unique id. */
@@ -21910,6 +22556,10 @@ export type Mutation = {
   deleteSystemEvent?: Maybe<DeleteSystemEventPayload>;
   /** Deletes a single `SystemEvent` using its globally unique id. */
   deleteSystemEventByNodeId?: Maybe<DeleteSystemEventPayload>;
+  /** Deletes a single `Tag` using a unique key. */
+  deleteTag?: Maybe<DeleteTagPayload>;
+  /** Deletes a single `Tag` using its globally unique id. */
+  deleteTagByNodeId?: Maybe<DeleteTagPayload>;
   /** Deletes a single `Team` using a unique key. */
   deleteTeam?: Maybe<DeleteTeamPayload>;
   /** Deletes a single `Team` using its globally unique id. */
@@ -22128,6 +22778,10 @@ export type Mutation = {
   updateGroup?: Maybe<UpdateGroupPayload>;
   /** Updates a single `Group` using its globally unique id and a patch. */
   updateGroupByNodeId?: Maybe<UpdateGroupPayload>;
+  /** Updates a single `Image` using a unique key and a patch. */
+  updateImage?: Maybe<UpdateImagePayload>;
+  /** Updates a single `Image` using its globally unique id and a patch. */
+  updateImageByNodeId?: Maybe<UpdateImagePayload>;
   /** Updates a single `Issuance` using a unique key and a patch. */
   updateIssuance?: Maybe<UpdateIssuancePayload>;
   /** Updates a single `Issuance` using a unique key and a patch. */
@@ -22206,6 +22860,10 @@ export type Mutation = {
   updateOrganization?: Maybe<UpdateOrganizationPayload>;
   /** Updates a single `Organization` using its globally unique id and a patch. */
   updateOrganizationByNodeId?: Maybe<UpdateOrganizationPayload>;
+  /** Updates a single `OrganizationSetting` using a unique key and a patch. */
+  updateOrganizationSetting?: Maybe<UpdateOrganizationSettingPayload>;
+  /** Updates a single `OrganizationSetting` using its globally unique id and a patch. */
+  updateOrganizationSettingByNodeId?: Maybe<UpdateOrganizationSettingPayload>;
   /** Updates a single `OrganizationUser` using a unique key and a patch. */
   updateOrganizationUser?: Maybe<UpdateOrganizationUserPayload>;
   /** Updates a single `OrganizationUser` using its globally unique id and a patch. */
@@ -22302,6 +22960,10 @@ export type Mutation = {
   updateSystemEvent?: Maybe<UpdateSystemEventPayload>;
   /** Updates a single `SystemEvent` using its globally unique id and a patch. */
   updateSystemEventByNodeId?: Maybe<UpdateSystemEventPayload>;
+  /** Updates a single `Tag` using a unique key and a patch. */
+  updateTag?: Maybe<UpdateTagPayload>;
+  /** Updates a single `Tag` using its globally unique id and a patch. */
+  updateTagByNodeId?: Maybe<UpdateTagPayload>;
   /** Updates a single `Team` using a unique key and a patch. */
   updateTeam?: Maybe<UpdateTeamPayload>;
   /** Updates a single `Team` using its globally unique id and a patch. */
@@ -22596,6 +23258,18 @@ export type MutationCreateGroupUserArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateImageArgs = {
+  input: CreateImageInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateImageTagArgs = {
+  input: CreateImageTagInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateIssuanceArgs = {
   input: CreateIssuanceInput;
 };
@@ -22700,6 +23374,12 @@ export type MutationCreateNotificationArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateOrganizationArgs = {
   input: CreateOrganizationInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateOrganizationSettingArgs = {
+  input: CreateOrganizationSettingInput;
 };
 
 
@@ -22826,6 +23506,12 @@ export type MutationCreateSubscriptionItemArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationCreateSystemEventArgs = {
   input: CreateSystemEventInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationCreateTagArgs = {
+  input: CreateTagInput;
 };
 
 
@@ -23412,6 +24098,18 @@ export type MutationDeleteGroupByNodeIdArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteImageArgs = {
+  input: DeleteImageInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteImageByNodeIdArgs = {
+  input: DeleteImageByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteIssuanceArgs = {
   input: DeleteIssuanceInput;
 };
@@ -23642,6 +24340,18 @@ export type MutationDeleteOrganizationArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteOrganizationByNodeIdArgs = {
   input: DeleteOrganizationByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteOrganizationSettingArgs = {
+  input: DeleteOrganizationSettingInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteOrganizationSettingByNodeIdArgs = {
+  input: DeleteOrganizationSettingByNodeIdInput;
 };
 
 
@@ -23930,6 +24640,18 @@ export type MutationDeleteSystemEventArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationDeleteSystemEventByNodeIdArgs = {
   input: DeleteSystemEventByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteTagArgs = {
+  input: DeleteTagInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationDeleteTagByNodeIdArgs = {
+  input: DeleteTagByNodeIdInput;
 };
 
 
@@ -24588,6 +25310,18 @@ export type MutationUpdateGroupByNodeIdArgs = {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateImageArgs = {
+  input: UpdateImageInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateImageByNodeIdArgs = {
+  input: UpdateImageByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateIssuanceArgs = {
   input: UpdateIssuanceInput;
 };
@@ -24818,6 +25552,18 @@ export type MutationUpdateOrganizationArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateOrganizationByNodeIdArgs = {
   input: UpdateOrganizationByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateOrganizationSettingArgs = {
+  input: UpdateOrganizationSettingInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateOrganizationSettingByNodeIdArgs = {
+  input: UpdateOrganizationSettingByNodeIdInput;
 };
 
 
@@ -25106,6 +25852,18 @@ export type MutationUpdateSystemEventArgs = {
 /** The root mutation type which contains root level fields which mutate data. */
 export type MutationUpdateSystemEventByNodeIdArgs = {
   input: UpdateSystemEventByNodeIdInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateTagArgs = {
+  input: UpdateTagInput;
+};
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export type MutationUpdateTagByNodeIdArgs = {
+  input: UpdateTagByNodeIdInput;
 };
 
 
@@ -25555,6 +26313,8 @@ export type Organization = Node & {
   /** Reads and enables pagination through a set of `Equipment`. */
   equipments: EquipmentConnection;
   /** Reads and enables pagination through a set of `FillupForm`. */
+  fillupFormsByImageOrganizationIdAndFillupFormId: OrganizationFillupFormsByImageOrganizationIdAndFillupFormIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `FillupForm`. */
   fillupFormsBySchedulerOrgIdAndFillupformId: OrganizationFillupFormsBySchedulerOrgIdAndFillupformIdManyToManyConnection;
   /** Reads and enables pagination through a set of `FormOrganization`. */
   formOrganizations: FormOrganizationsConnection;
@@ -25575,6 +26335,8 @@ export type Organization = Node & {
   /** Reads and enables pagination through a set of `Group`. */
   groupsBySchedulerOrgIdAndGroupId: OrganizationGroupsBySchedulerOrgIdAndGroupIdManyToManyConnection;
   id: Scalars['BigInt']['output'];
+  /** Reads and enables pagination through a set of `Image`. */
+  images: ImagesConnection;
   /** Reads and enables pagination through a set of `Job`. */
   jobs: JobsConnection;
   /** Reads and enables pagination through a set of `Metric`. */
@@ -25582,6 +26344,8 @@ export type Organization = Node & {
   name: Scalars['String']['output'];
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
+  /** Reads and enables pagination through a set of `OrganizationSetting`. */
+  organizationSettings: OrganizationSettingsConnection;
   /** Reads and enables pagination through a set of `OrganizationUser`. */
   organizationUsers: OrganizationUsersConnection;
   /** Reads and enables pagination through a set of `Project`. */
@@ -25596,6 +26360,10 @@ export type Organization = Node & {
   schedulerFieldsBySchedulerOrgIdAndSchedulerFieldsId: OrganizationSchedulerFieldsBySchedulerOrgIdAndSchedulerFieldsIdManyToManyConnection;
   /** Reads and enables pagination through a set of `Scheduler`. */
   schedulersByOrgId: SchedulersConnection;
+  /** Reads and enables pagination through a set of `Setting`. */
+  settingsByOrganizationSettingOrganizationIdAndSettingId: OrganizationSettingsByOrganizationSettingOrganizationIdAndSettingIdManyToManyConnection;
+  /** Reads and enables pagination through a set of `Tag`. */
+  tags: TagsConnection;
   /** Reads and enables pagination through a set of `Team`. */
   teams: TeamsConnection;
   /** Reads and enables pagination through a set of `Team`. */
@@ -25755,6 +26523,18 @@ export type OrganizationEquipmentsArgs = {
 };
 
 
+export type OrganizationFillupFormsByImageOrganizationIdAndFillupFormIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<FillupFormCondition>;
+  filter?: InputMaybe<FillupFormFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<FillupFormsOrderBy>>;
+};
+
+
 export type OrganizationFillupFormsBySchedulerOrgIdAndFillupformIdArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -25875,6 +26655,18 @@ export type OrganizationGroupsBySchedulerOrgIdAndGroupIdArgs = {
 };
 
 
+export type OrganizationImagesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ImageCondition>;
+  filter?: InputMaybe<ImageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ImagesOrderBy>>;
+};
+
+
 export type OrganizationJobsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
@@ -25896,6 +26688,18 @@ export type OrganizationMetricsByToolOrganizationIdAndMetricIdArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<MetricsOrderBy>>;
+};
+
+
+export type OrganizationOrganizationSettingsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<OrganizationSettingCondition>;
+  filter?: InputMaybe<OrganizationSettingFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrganizationSettingsOrderBy>>;
 };
 
 
@@ -25980,6 +26784,30 @@ export type OrganizationSchedulersByOrgIdArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<SchedulersOrderBy>>;
+};
+
+
+export type OrganizationSettingsByOrganizationSettingOrganizationIdAndSettingIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<SettingCondition>;
+  filter?: InputMaybe<SettingFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<SettingsOrderBy>>;
+};
+
+
+export type OrganizationTagsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<TagCondition>;
+  filter?: InputMaybe<TagFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<TagsOrderBy>>;
 };
 
 
@@ -26390,6 +27218,43 @@ export type OrganizationEquipmentTypesByEquipmentOrganizationIdAndEquipmentTypeI
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<EquipmentOrderBy>>;
+};
+
+/** A connection to a list of `FillupForm` values, with data from `Image`. */
+export type OrganizationFillupFormsByImageOrganizationIdAndFillupFormIdManyToManyConnection = {
+  __typename?: 'OrganizationFillupFormsByImageOrganizationIdAndFillupFormIdManyToManyConnection';
+  /** A list of edges which contains the `FillupForm`, info from the `Image`, and the cursor to aid in pagination. */
+  edges: Array<OrganizationFillupFormsByImageOrganizationIdAndFillupFormIdManyToManyEdge>;
+  /** A list of `FillupForm` objects. */
+  nodes: Array<FillupForm>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `FillupForm` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `FillupForm` edge in the connection, with data from `Image`. */
+export type OrganizationFillupFormsByImageOrganizationIdAndFillupFormIdManyToManyEdge = {
+  __typename?: 'OrganizationFillupFormsByImageOrganizationIdAndFillupFormIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `Image`. */
+  images: ImagesConnection;
+  /** The `FillupForm` at the end of the edge. */
+  node: FillupForm;
+};
+
+
+/** A `FillupForm` edge in the connection, with data from `Image`. */
+export type OrganizationFillupFormsByImageOrganizationIdAndFillupFormIdManyToManyEdgeImagesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ImageCondition>;
+  filter?: InputMaybe<ImageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ImagesOrderBy>>;
 };
 
 /** A connection to a list of `FillupForm` values, with data from `Scheduler`. */
@@ -26820,6 +27685,177 @@ export type OrganizationSchedulerFieldsBySchedulerOrgIdAndSchedulerFieldsIdManyT
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<SchedulersOrderBy>>;
 };
+
+export type OrganizationSetting = Node & {
+  __typename?: 'OrganizationSetting';
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  deletedAt?: Maybe<Scalars['Datetime']['output']>;
+  id: Scalars['BigInt']['output'];
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  /** Reads a single `Organization` that is related to this `OrganizationSetting`. */
+  organization?: Maybe<Organization>;
+  organizationId: Scalars['BigInt']['output'];
+  /** Reads a single `Setting` that is related to this `OrganizationSetting`. */
+  setting?: Maybe<Setting>;
+  settingId: Scalars['BigInt']['output'];
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+  uuid?: Maybe<Scalars['UUID']['output']>;
+  value: Scalars['JSON']['output'];
+};
+
+/**
+ * A condition to be used against `OrganizationSetting` object types. All fields
+ * are tested for equality and combined with a logical ‘and.’
+ */
+export type OrganizationSettingCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `organizationId` field. */
+  organizationId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `settingId` field. */
+  settingId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `uuid` field. */
+  uuid?: InputMaybe<Scalars['UUID']['input']>;
+  /** Checks for equality with the object’s `value` field. */
+  value?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+/** A filter to be used against `OrganizationSetting` object types. All fields are combined with a logical ‘and.’ */
+export type OrganizationSettingFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<OrganizationSettingFilter>>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<OrganizationSettingFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<OrganizationSettingFilter>>;
+  /** Filter by the object’s `organizationId` field. */
+  organizationId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `settingId` field. */
+  settingId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `uuid` field. */
+  uuid?: InputMaybe<UuidFilter>;
+};
+
+/** An input for mutations affecting `OrganizationSetting` */
+export type OrganizationSettingInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  organizationId: Scalars['BigInt']['input'];
+  settingId: Scalars['BigInt']['input'];
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  uuid?: InputMaybe<Scalars['UUID']['input']>;
+  value: Scalars['JSON']['input'];
+};
+
+/** Represents an update to a `OrganizationSetting`. Fields that are set will be updated. */
+export type OrganizationSettingPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  organizationId?: InputMaybe<Scalars['BigInt']['input']>;
+  settingId?: InputMaybe<Scalars['BigInt']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  uuid?: InputMaybe<Scalars['UUID']['input']>;
+  value?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+/** A connection to a list of `Setting` values, with data from `OrganizationSetting`. */
+export type OrganizationSettingsByOrganizationSettingOrganizationIdAndSettingIdManyToManyConnection = {
+  __typename?: 'OrganizationSettingsByOrganizationSettingOrganizationIdAndSettingIdManyToManyConnection';
+  /** A list of edges which contains the `Setting`, info from the `OrganizationSetting`, and the cursor to aid in pagination. */
+  edges: Array<OrganizationSettingsByOrganizationSettingOrganizationIdAndSettingIdManyToManyEdge>;
+  /** A list of `Setting` objects. */
+  nodes: Array<Setting>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Setting` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Setting` edge in the connection, with data from `OrganizationSetting`. */
+export type OrganizationSettingsByOrganizationSettingOrganizationIdAndSettingIdManyToManyEdge = {
+  __typename?: 'OrganizationSettingsByOrganizationSettingOrganizationIdAndSettingIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Setting` at the end of the edge. */
+  node: Setting;
+  /** Reads and enables pagination through a set of `OrganizationSetting`. */
+  organizationSettings: OrganizationSettingsConnection;
+};
+
+
+/** A `Setting` edge in the connection, with data from `OrganizationSetting`. */
+export type OrganizationSettingsByOrganizationSettingOrganizationIdAndSettingIdManyToManyEdgeOrganizationSettingsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<OrganizationSettingCondition>;
+  filter?: InputMaybe<OrganizationSettingFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrganizationSettingsOrderBy>>;
+};
+
+/** A connection to a list of `OrganizationSetting` values. */
+export type OrganizationSettingsConnection = {
+  __typename?: 'OrganizationSettingsConnection';
+  /** A list of edges which contains the `OrganizationSetting` and cursor to aid in pagination. */
+  edges: Array<OrganizationSettingsEdge>;
+  /** A list of `OrganizationSetting` objects. */
+  nodes: Array<OrganizationSetting>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `OrganizationSetting` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `OrganizationSetting` edge in the connection. */
+export type OrganizationSettingsEdge = {
+  __typename?: 'OrganizationSettingsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `OrganizationSetting` at the end of the edge. */
+  node: OrganizationSetting;
+};
+
+/** Methods to use when ordering `OrganizationSetting`. */
+export enum OrganizationSettingsOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DeletedAtAsc = 'DELETED_AT_ASC',
+  DeletedAtDesc = 'DELETED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  OrganizationIdAsc = 'ORGANIZATION_ID_ASC',
+  OrganizationIdDesc = 'ORGANIZATION_ID_DESC',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  SettingIdAsc = 'SETTING_ID_ASC',
+  SettingIdDesc = 'SETTING_ID_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC',
+  UuidAsc = 'UUID_ASC',
+  UuidDesc = 'UUID_DESC',
+  ValueAsc = 'VALUE_ASC',
+  ValueDesc = 'VALUE_DESC'
+}
 
 /** A connection to a list of `Team` values, with data from `Scheduler`. */
 export type OrganizationTeamsBySchedulerOrgIdAndTeamIdManyToManyConnection = {
@@ -27953,7 +28989,10 @@ export type Profile = Node & {
   deletedAt?: Maybe<Scalars['Datetime']['output']>;
   firstName?: Maybe<Scalars['String']['output']>;
   id: Scalars['BigInt']['output'];
+  isOnline: Scalars['Boolean']['output'];
   lastName?: Maybe<Scalars['String']['output']>;
+  latitude?: Maybe<Scalars['BigFloat']['output']>;
+  longitude?: Maybe<Scalars['BigFloat']['output']>;
   middleName?: Maybe<Scalars['String']['output']>;
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
@@ -27988,8 +29027,14 @@ export type ProfileCondition = {
   firstName?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `id` field. */
   id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `isOnline` field. */
+  isOnline?: InputMaybe<Scalars['Boolean']['input']>;
   /** Checks for equality with the object’s `lastName` field. */
   lastName?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `latitude` field. */
+  latitude?: InputMaybe<Scalars['BigFloat']['input']>;
+  /** Checks for equality with the object’s `longitude` field. */
+  longitude?: InputMaybe<Scalars['BigFloat']['input']>;
   /** Checks for equality with the object’s `middleName` field. */
   middleName?: InputMaybe<Scalars['String']['input']>;
   /** Checks for equality with the object’s `photo` field. */
@@ -28028,8 +29073,14 @@ export type ProfileFilter = {
   firstName?: InputMaybe<StringFilter>;
   /** Filter by the object’s `id` field. */
   id?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `isOnline` field. */
+  isOnline?: InputMaybe<BooleanFilter>;
   /** Filter by the object’s `lastName` field. */
   lastName?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `latitude` field. */
+  latitude?: InputMaybe<BigFloatFilter>;
+  /** Filter by the object’s `longitude` field. */
+  longitude?: InputMaybe<BigFloatFilter>;
   /** Filter by the object’s `middleName` field. */
   middleName?: InputMaybe<StringFilter>;
   /** Negates the expression. */
@@ -28062,7 +29113,10 @@ export type ProfileInput = {
   deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
   firstName?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['BigInt']['input']>;
+  isOnline?: InputMaybe<Scalars['Boolean']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
+  latitude?: InputMaybe<Scalars['BigFloat']['input']>;
+  longitude?: InputMaybe<Scalars['BigFloat']['input']>;
   middleName?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<Scalars['String']['input']>;
   shareData?: InputMaybe<Scalars['Boolean']['input']>;
@@ -28083,7 +29137,10 @@ export type ProfilePatch = {
   deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
   firstName?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['BigInt']['input']>;
+  isOnline?: InputMaybe<Scalars['Boolean']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
+  latitude?: InputMaybe<Scalars['BigFloat']['input']>;
+  longitude?: InputMaybe<Scalars['BigFloat']['input']>;
   middleName?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<Scalars['String']['input']>;
   shareData?: InputMaybe<Scalars['Boolean']['input']>;
@@ -28134,8 +29191,14 @@ export enum ProfilesOrderBy {
   FirstNameDesc = 'FIRST_NAME_DESC',
   IdAsc = 'ID_ASC',
   IdDesc = 'ID_DESC',
+  IsOnlineAsc = 'IS_ONLINE_ASC',
+  IsOnlineDesc = 'IS_ONLINE_DESC',
   LastNameAsc = 'LAST_NAME_ASC',
   LastNameDesc = 'LAST_NAME_DESC',
+  LatitudeAsc = 'LATITUDE_ASC',
+  LatitudeDesc = 'LATITUDE_DESC',
+  LongitudeAsc = 'LONGITUDE_ASC',
+  LongitudeDesc = 'LONGITUDE_DESC',
   MiddleNameAsc = 'MIDDLE_NAME_ASC',
   MiddleNameDesc = 'MIDDLE_NAME_DESC',
   Natural = 'NATURAL',
@@ -29134,6 +30197,13 @@ export type Query = Node & {
   groupUsers?: Maybe<GroupUsersConnection>;
   /** Reads and enables pagination through a set of `Group`. */
   groups?: Maybe<GroupsConnection>;
+  image?: Maybe<Image>;
+  /** Reads a single `Image` using its globally unique `ID`. */
+  imageByNodeId?: Maybe<Image>;
+  /** Reads and enables pagination through a set of `ImageTag`. */
+  imageTags?: Maybe<ImageTagsConnection>;
+  /** Reads and enables pagination through a set of `Image`. */
+  images?: Maybe<ImagesConnection>;
   isValidJson?: Maybe<Scalars['Boolean']['output']>;
   isValidJsonArray?: Maybe<Scalars['Boolean']['output']>;
   issuance?: Maybe<Issuance>;
@@ -29231,6 +30301,11 @@ export type Query = Node & {
   organization?: Maybe<Organization>;
   /** Reads a single `Organization` using its globally unique `ID`. */
   organizationByNodeId?: Maybe<Organization>;
+  organizationSetting?: Maybe<OrganizationSetting>;
+  /** Reads a single `OrganizationSetting` using its globally unique `ID`. */
+  organizationSettingByNodeId?: Maybe<OrganizationSetting>;
+  /** Reads and enables pagination through a set of `OrganizationSetting`. */
+  organizationSettings?: Maybe<OrganizationSettingsConnection>;
   organizationUser?: Maybe<OrganizationUser>;
   /** Reads a single `OrganizationUser` using its globally unique `ID`. */
   organizationUserByNodeId?: Maybe<OrganizationUser>;
@@ -29348,6 +30423,11 @@ export type Query = Node & {
   systemEventByNodeId?: Maybe<SystemEvent>;
   /** Reads and enables pagination through a set of `SystemEvent`. */
   systemEvents?: Maybe<SystemEventsConnection>;
+  tag?: Maybe<Tag>;
+  /** Reads a single `Tag` using its globally unique `ID`. */
+  tagByNodeId?: Maybe<Tag>;
+  /** Reads and enables pagination through a set of `Tag`. */
+  tags?: Maybe<TagsConnection>;
   team?: Maybe<Team>;
   /** Reads a single `Team` using its globally unique `ID`. */
   teamByNodeId?: Maybe<Team>;
@@ -30431,6 +31511,44 @@ export type QueryGroupsArgs = {
 
 
 /** The root query type which gives access points into the data universe. */
+export type QueryImageArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryImageByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryImageTagsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ImageTagCondition>;
+  filter?: InputMaybe<ImageTagFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ImageTagsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryImagesArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ImageCondition>;
+  filter?: InputMaybe<ImageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ImagesOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
 export type QueryIsValidJsonArgs = {
   pValue?: InputMaybe<Scalars['String']['input']>;
 };
@@ -30901,6 +32019,31 @@ export type QueryOrganizationArgs = {
 /** The root query type which gives access points into the data universe. */
 export type QueryOrganizationByNodeIdArgs = {
   nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryOrganizationSettingArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryOrganizationSettingByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryOrganizationSettingsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<OrganizationSettingCondition>;
+  filter?: InputMaybe<OrganizationSettingFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrganizationSettingsOrderBy>>;
 };
 
 
@@ -31478,6 +32621,31 @@ export type QuerySystemEventsArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<SystemEventsOrderBy>>;
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryTagArgs = {
+  id: Scalars['BigInt']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryTagByNodeIdArgs = {
+  nodeId: Scalars['ID']['input'];
+};
+
+
+/** The root query type which gives access points into the data universe. */
+export type QueryTagsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<TagCondition>;
+  filter?: InputMaybe<TagFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<TagsOrderBy>>;
 };
 
 
@@ -33800,6 +34968,10 @@ export type Setting = Node & {
   id: Scalars['BigInt']['output'];
   /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
   nodeId: Scalars['ID']['output'];
+  /** Reads and enables pagination through a set of `OrganizationSetting`. */
+  organizationSettings: OrganizationSettingsConnection;
+  /** Reads and enables pagination through a set of `Organization`. */
+  organizationsByOrganizationSettingSettingIdAndOrganizationId: SettingOrganizationsByOrganizationSettingSettingIdAndOrganizationIdManyToManyConnection;
   updatedAt?: Maybe<Scalars['Datetime']['output']>;
   /** Reads and enables pagination through a set of `UserSetting`. */
   userSettings: UserSettingsConnection;
@@ -33818,6 +34990,30 @@ export type SettingAllowedSettingValuesArgs = {
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
   orderBy?: InputMaybe<Array<AllowedSettingValuesOrderBy>>;
+};
+
+
+export type SettingOrganizationSettingsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<OrganizationSettingCondition>;
+  filter?: InputMaybe<OrganizationSettingFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrganizationSettingsOrderBy>>;
+};
+
+
+export type SettingOrganizationsByOrganizationSettingSettingIdAndOrganizationIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<OrganizationCondition>;
+  filter?: InputMaybe<OrganizationFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
 };
 
 
@@ -34023,6 +35219,43 @@ export type SettingInput = {
   id?: InputMaybe<Scalars['BigInt']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
   uuid: Scalars['UUID']['input'];
+};
+
+/** A connection to a list of `Organization` values, with data from `OrganizationSetting`. */
+export type SettingOrganizationsByOrganizationSettingSettingIdAndOrganizationIdManyToManyConnection = {
+  __typename?: 'SettingOrganizationsByOrganizationSettingSettingIdAndOrganizationIdManyToManyConnection';
+  /** A list of edges which contains the `Organization`, info from the `OrganizationSetting`, and the cursor to aid in pagination. */
+  edges: Array<SettingOrganizationsByOrganizationSettingSettingIdAndOrganizationIdManyToManyEdge>;
+  /** A list of `Organization` objects. */
+  nodes: Array<Organization>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Organization` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Organization` edge in the connection, with data from `OrganizationSetting`. */
+export type SettingOrganizationsByOrganizationSettingSettingIdAndOrganizationIdManyToManyEdge = {
+  __typename?: 'SettingOrganizationsByOrganizationSettingSettingIdAndOrganizationIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Organization` at the end of the edge. */
+  node: Organization;
+  /** Reads and enables pagination through a set of `OrganizationSetting`. */
+  organizationSettings: OrganizationSettingsConnection;
+};
+
+
+/** A `Organization` edge in the connection, with data from `OrganizationSetting`. */
+export type SettingOrganizationsByOrganizationSettingSettingIdAndOrganizationIdManyToManyEdgeOrganizationSettingsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<OrganizationSettingCondition>;
+  filter?: InputMaybe<OrganizationSettingFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<OrganizationSettingsOrderBy>>;
 };
 
 /** Represents an update to a `Setting`. Fields that are set will be updated. */
@@ -34586,6 +35819,184 @@ export enum SystemEventsOrderBy {
   Natural = 'NATURAL',
   PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
   PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  UpdatedAtAsc = 'UPDATED_AT_ASC',
+  UpdatedAtDesc = 'UPDATED_AT_DESC'
+}
+
+export type Tag = Node & {
+  __typename?: 'Tag';
+  createdAt?: Maybe<Scalars['Datetime']['output']>;
+  deletedAt?: Maybe<Scalars['Datetime']['output']>;
+  id: Scalars['BigInt']['output'];
+  /** Reads and enables pagination through a set of `ImageTag`. */
+  imageTags: ImageTagsConnection;
+  /** Reads and enables pagination through a set of `Image`. */
+  imagesByImageTagTagIdAndImageId: TagImagesByImageTagTagIdAndImageIdManyToManyConnection;
+  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
+  nodeId: Scalars['ID']['output'];
+  /** Reads a single `Organization` that is related to this `Tag`. */
+  organization?: Maybe<Organization>;
+  organizationId: Scalars['BigInt']['output'];
+  tagName: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['Datetime']['output']>;
+};
+
+
+export type TagImageTagsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ImageTagCondition>;
+  filter?: InputMaybe<ImageTagFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ImageTagsOrderBy>>;
+};
+
+
+export type TagImagesByImageTagTagIdAndImageIdArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ImageCondition>;
+  filter?: InputMaybe<ImageFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ImagesOrderBy>>;
+};
+
+/** A condition to be used against `Tag` object types. All fields are tested for equality and combined with a logical ‘and.’ */
+export type TagCondition = {
+  /** Checks for equality with the object’s `createdAt` field. */
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  /** Checks for equality with the object’s `id` field. */
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `organizationId` field. */
+  organizationId?: InputMaybe<Scalars['BigInt']['input']>;
+  /** Checks for equality with the object’s `tagName` field. */
+  tagName?: InputMaybe<Scalars['String']['input']>;
+  /** Checks for equality with the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A filter to be used against `Tag` object types. All fields are combined with a logical ‘and.’ */
+export type TagFilter = {
+  /** Checks for all expressions in this list. */
+  and?: InputMaybe<Array<TagFilter>>;
+  /** Filter by the object’s `createdAt` field. */
+  createdAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `deletedAt` field. */
+  deletedAt?: InputMaybe<DatetimeFilter>;
+  /** Filter by the object’s `id` field. */
+  id?: InputMaybe<BigIntFilter>;
+  /** Negates the expression. */
+  not?: InputMaybe<TagFilter>;
+  /** Checks for any expressions in this list. */
+  or?: InputMaybe<Array<TagFilter>>;
+  /** Filter by the object’s `organizationId` field. */
+  organizationId?: InputMaybe<BigIntFilter>;
+  /** Filter by the object’s `tagName` field. */
+  tagName?: InputMaybe<StringFilter>;
+  /** Filter by the object’s `updatedAt` field. */
+  updatedAt?: InputMaybe<DatetimeFilter>;
+};
+
+/** A connection to a list of `Image` values, with data from `ImageTag`. */
+export type TagImagesByImageTagTagIdAndImageIdManyToManyConnection = {
+  __typename?: 'TagImagesByImageTagTagIdAndImageIdManyToManyConnection';
+  /** A list of edges which contains the `Image`, info from the `ImageTag`, and the cursor to aid in pagination. */
+  edges: Array<TagImagesByImageTagTagIdAndImageIdManyToManyEdge>;
+  /** A list of `Image` objects. */
+  nodes: Array<Image>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Image` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Image` edge in the connection, with data from `ImageTag`. */
+export type TagImagesByImageTagTagIdAndImageIdManyToManyEdge = {
+  __typename?: 'TagImagesByImageTagTagIdAndImageIdManyToManyEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** Reads and enables pagination through a set of `ImageTag`. */
+  imageTags: ImageTagsConnection;
+  /** The `Image` at the end of the edge. */
+  node: Image;
+};
+
+
+/** A `Image` edge in the connection, with data from `ImageTag`. */
+export type TagImagesByImageTagTagIdAndImageIdManyToManyEdgeImageTagsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  condition?: InputMaybe<ImageTagCondition>;
+  filter?: InputMaybe<ImageTagFilter>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  orderBy?: InputMaybe<Array<ImageTagsOrderBy>>;
+};
+
+/** An input for mutations affecting `Tag` */
+export type TagInput = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  organizationId: Scalars['BigInt']['input'];
+  tagName: Scalars['String']['input'];
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** Represents an update to a `Tag`. Fields that are set will be updated. */
+export type TagPatch = {
+  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
+  deletedAt?: InputMaybe<Scalars['Datetime']['input']>;
+  id?: InputMaybe<Scalars['BigInt']['input']>;
+  organizationId?: InputMaybe<Scalars['BigInt']['input']>;
+  tagName?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
+};
+
+/** A connection to a list of `Tag` values. */
+export type TagsConnection = {
+  __typename?: 'TagsConnection';
+  /** A list of edges which contains the `Tag` and cursor to aid in pagination. */
+  edges: Array<TagsEdge>;
+  /** A list of `Tag` objects. */
+  nodes: Array<Tag>;
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo;
+  /** The count of *all* `Tag` you could get from the connection. */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** A `Tag` edge in the connection. */
+export type TagsEdge = {
+  __typename?: 'TagsEdge';
+  /** A cursor for use in pagination. */
+  cursor?: Maybe<Scalars['Cursor']['output']>;
+  /** The `Tag` at the end of the edge. */
+  node: Tag;
+};
+
+/** Methods to use when ordering `Tag`. */
+export enum TagsOrderBy {
+  CreatedAtAsc = 'CREATED_AT_ASC',
+  CreatedAtDesc = 'CREATED_AT_DESC',
+  DeletedAtAsc = 'DELETED_AT_ASC',
+  DeletedAtDesc = 'DELETED_AT_DESC',
+  IdAsc = 'ID_ASC',
+  IdDesc = 'ID_DESC',
+  Natural = 'NATURAL',
+  OrganizationIdAsc = 'ORGANIZATION_ID_ASC',
+  OrganizationIdDesc = 'ORGANIZATION_ID_DESC',
+  PrimaryKeyAsc = 'PRIMARY_KEY_ASC',
+  PrimaryKeyDesc = 'PRIMARY_KEY_DESC',
+  TagNameAsc = 'TAG_NAME_ASC',
+  TagNameDesc = 'TAG_NAME_DESC',
   UpdatedAtAsc = 'UPDATED_AT_ASC',
   UpdatedAtDesc = 'UPDATED_AT_DESC'
 }
@@ -38621,6 +40032,57 @@ export type UpdateGroupPayloadGroupEdgeArgs = {
   orderBy?: InputMaybe<Array<GroupsOrderBy>>;
 };
 
+/** All input for the `updateImageByNodeId` mutation. */
+export type UpdateImageByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Image` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `Image` being updated. */
+  patch: ImagePatch;
+};
+
+/** All input for the `updateImage` mutation. */
+export type UpdateImageInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `Image` being updated. */
+  patch: ImagePatch;
+};
+
+/** The output of our update `Image` mutation. */
+export type UpdateImagePayload = {
+  __typename?: 'UpdateImagePayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `FillupForm` that is related to this `Image`. */
+  fillupForm?: Maybe<FillupForm>;
+  /** The `Image` that was updated by this mutation. */
+  image?: Maybe<Image>;
+  /** An edge for our `Image`. May be used by Relay 1. */
+  imageEdge?: Maybe<ImagesEdge>;
+  /** Reads a single `Organization` that is related to this `Image`. */
+  organization?: Maybe<Organization>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+};
+
+
+/** The output of our update `Image` mutation. */
+export type UpdateImagePayloadImageEdgeArgs = {
+  orderBy?: InputMaybe<Array<ImagesOrderBy>>;
+};
+
 /** All input for the `updateIssuanceByEquipmentIdAndSerialNumber` mutation. */
 export type UpdateIssuanceByEquipmentIdAndSerialNumberInput = {
   /**
@@ -39544,6 +41006,57 @@ export type UpdateOrganizationPayload = {
 /** The output of our update `Organization` mutation. */
 export type UpdateOrganizationPayloadOrganizationEdgeArgs = {
   orderBy?: InputMaybe<Array<OrganizationsOrderBy>>;
+};
+
+/** All input for the `updateOrganizationSettingByNodeId` mutation. */
+export type UpdateOrganizationSettingByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `OrganizationSetting` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `OrganizationSetting` being updated. */
+  patch: OrganizationSettingPatch;
+};
+
+/** All input for the `updateOrganizationSetting` mutation. */
+export type UpdateOrganizationSettingInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `OrganizationSetting` being updated. */
+  patch: OrganizationSettingPatch;
+};
+
+/** The output of our update `OrganizationSetting` mutation. */
+export type UpdateOrganizationSettingPayload = {
+  __typename?: 'UpdateOrganizationSettingPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Organization` that is related to this `OrganizationSetting`. */
+  organization?: Maybe<Organization>;
+  /** The `OrganizationSetting` that was updated by this mutation. */
+  organizationSetting?: Maybe<OrganizationSetting>;
+  /** An edge for our `OrganizationSetting`. May be used by Relay 1. */
+  organizationSettingEdge?: Maybe<OrganizationSettingsEdge>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** Reads a single `Setting` that is related to this `OrganizationSetting`. */
+  setting?: Maybe<Setting>;
+};
+
+
+/** The output of our update `OrganizationSetting` mutation. */
+export type UpdateOrganizationSettingPayloadOrganizationSettingEdgeArgs = {
+  orderBy?: InputMaybe<Array<OrganizationSettingsOrderBy>>;
 };
 
 /** All input for the `updateOrganizationUserByNodeId` mutation. */
@@ -40643,6 +42156,55 @@ export type UpdateSystemEventPayload = {
 /** The output of our update `SystemEvent` mutation. */
 export type UpdateSystemEventPayloadSystemEventEdgeArgs = {
   orderBy?: InputMaybe<Array<SystemEventsOrderBy>>;
+};
+
+/** All input for the `updateTagByNodeId` mutation. */
+export type UpdateTagByNodeIdInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The globally unique `ID` which will identify a single `Tag` to be updated. */
+  nodeId: Scalars['ID']['input'];
+  /** An object where the defined keys will be set on the `Tag` being updated. */
+  patch: TagPatch;
+};
+
+/** All input for the `updateTag` mutation. */
+export type UpdateTagInput = {
+  /**
+   * An arbitrary string value with no semantic meaning. Will be included in the
+   * payload verbatim. May be used to track mutations by the client.
+   */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['BigInt']['input'];
+  /** An object where the defined keys will be set on the `Tag` being updated. */
+  patch: TagPatch;
+};
+
+/** The output of our update `Tag` mutation. */
+export type UpdateTagPayload = {
+  __typename?: 'UpdateTagPayload';
+  /**
+   * The exact same `clientMutationId` that was provided in the mutation input,
+   * unchanged and unused. May be used by a client to track mutations.
+   */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Reads a single `Organization` that is related to this `Tag`. */
+  organization?: Maybe<Organization>;
+  /** Our root query field type. Allows us to run any query from our mutation payload. */
+  query?: Maybe<Query>;
+  /** The `Tag` that was updated by this mutation. */
+  tag?: Maybe<Tag>;
+  /** An edge for our `Tag`. May be used by Relay 1. */
+  tagEdge?: Maybe<TagsEdge>;
+};
+
+
+/** The output of our update `Tag` mutation. */
+export type UpdateTagPayloadTagEdgeArgs = {
+  orderBy?: InputMaybe<Array<TagsOrderBy>>;
 };
 
 /** All input for the `updateTeamByNodeId` mutation. */
@@ -46373,6 +47935,16 @@ export type GetListOfConversationQueryVariables = Exact<{
 
 export type GetListOfConversationQuery = { __typename?: 'Query', conversationUsers?: { __typename?: 'ConversationUsersConnection', nodes: Array<{ __typename?: 'ConversationUser', id: any, conversationId: any, conversation?: { __typename?: 'Conversation', updatedAt?: any | null, createdAt?: any | null, conversationUsers: { __typename?: 'ConversationUsersConnection', nodes: Array<{ __typename?: 'ConversationUser', userId: any, user?: { __typename?: 'User', name: string, profile?: { __typename?: 'Profile', photo?: string | null } | null } | null }> }, messages: { __typename?: 'MessagesConnection', nodes: Array<{ __typename?: 'Message', conversationId?: any | null, senderId?: any | null, createdAt?: any | null, messageText?: string | null }> } } | null }> } | null };
 
+export type GetImagesByOrganizationQueryVariables = Exact<{
+  orgId?: InputMaybe<Scalars['BigInt']['input']>;
+  order_by?: InputMaybe<Array<ImagesOrderBy> | ImagesOrderBy>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type GetImagesByOrganizationQuery = { __typename?: 'Query', images?: { __typename?: 'ImagesConnection', totalCount: number, nodes: Array<{ __typename?: 'Image', id: any, image: string, fillupFormId: any, organizationId: any }> } | null };
+
 export type GetJobFeedsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -46766,6 +48338,57 @@ export const useInfiniteGetListOfConversationQuery = <
     return useInfiniteQuery<GetListOfConversationQuery, TError, TData>(
       ['GetListOfConversation.infinite', variables],
       (metaData) => fetcher<GetListOfConversationQuery, GetListOfConversationQueryVariables>(client, GetListOfConversationDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
+      options
+    )};
+
+export const GetImagesByOrganizationDocument = `
+    query GetImagesByOrganization($orgId: BigInt, $order_by: [ImagesOrderBy!], $first: Int, $offset: Int) {
+  images(
+    filter: {organizationId: {equalTo: $orgId}}
+    orderBy: $order_by
+    first: $first
+    offset: $offset
+  ) {
+    nodes {
+      id
+      image
+      fillupFormId
+      organizationId
+    }
+    totalCount
+  }
+}
+    `;
+
+export const useGetImagesByOrganizationQuery = <
+      TData = GetImagesByOrganizationQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetImagesByOrganizationQueryVariables,
+      options?: UseQueryOptions<GetImagesByOrganizationQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useQuery<GetImagesByOrganizationQuery, TError, TData>(
+      variables === undefined ? ['GetImagesByOrganization'] : ['GetImagesByOrganization', variables],
+      fetcher<GetImagesByOrganizationQuery, GetImagesByOrganizationQueryVariables>(client, GetImagesByOrganizationDocument, variables, headers),
+      options
+    )};
+
+export const useInfiniteGetImagesByOrganizationQuery = <
+      TData = GetImagesByOrganizationQuery,
+      TError = unknown
+    >(
+      client: GraphQLClient,
+      variables?: GetImagesByOrganizationQueryVariables,
+      options?: UseInfiniteQueryOptions<GetImagesByOrganizationQuery, TError, TData>,
+      headers?: RequestInit['headers']
+    ) => {
+    
+    return useInfiniteQuery<GetImagesByOrganizationQuery, TError, TData>(
+      variables === undefined ? ['GetImagesByOrganization.infinite'] : ['GetImagesByOrganization.infinite', variables],
+      (metaData) => fetcher<GetImagesByOrganizationQuery, GetImagesByOrganizationQueryVariables>(client, GetImagesByOrganizationDocument, {...variables, ...(metaData.pageParam ?? {})}, headers)(),
       options
     )};
 
