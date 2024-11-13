@@ -4,21 +4,11 @@ import OrganizationSwitcher from "./OrganizationSwitcher";
 import DropdownNotification from "./DropdownNotification";
 import DropdownUser from "./DropdownUser";
 import Image from "next/image";
-import { useUpdateCheck } from 'react-update-notification';
-import { Box, Flex, Icon, useColorModeValue, Tooltip, Text } from '@chakra-ui/react';
-import { FaExclamationCircle } from "react-icons/fa";
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
-
-  const { status, reloadPage } = useUpdateCheck({
-    type: 'interval',
-    interval: 10000,
-  });
-
-  console.log(status);
 
   return (
     <header className="sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
@@ -87,19 +77,6 @@ const Header = (props: {
 
         <div className="flex items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">
-            {status === 'available' && (
-              <div onClick={() => {window.location.reload();}}>
-                <Icon
-                  as={FaExclamationCircle}
-                  boxSize="25px"
-                  color="red"
-                  cursor="pointer"
-                />
-                <Text as="mark" borderRadius="10px" cursor="pointer" pl="5px">
-                  New update available. Click here to refresh the app.
-                </Text>
-              </div>
-            )}
             {/* <!-- Organization Switcher Area --> */}
             <OrganizationSwitcher />
             {/* <!-- Organization Switcher Area --> */}
