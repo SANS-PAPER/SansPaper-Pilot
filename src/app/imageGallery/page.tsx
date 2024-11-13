@@ -301,7 +301,7 @@ const ImageGallery: FC = () => {
             <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
               <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
                 <h3 className="font-medium text-black dark:text-white">
-                  Data Source : Sans Paper
+                  Data Source : Sans Paper Upvise
                 </h3>
               </div>
               <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
